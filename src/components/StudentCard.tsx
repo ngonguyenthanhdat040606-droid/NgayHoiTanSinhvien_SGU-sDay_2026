@@ -39,7 +39,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
   useEffect(() => {
     // Generate QR for student e-Pass: contains MSSV and student ID
     const payload = JSON.stringify({
-      type: 'FRESHMAN_PASS',
+      type: 'FRESHMAN_PASS_SGU_2025',
       mssv: student.mssv,
       id: student.id,
       name: student.fullName,
@@ -58,9 +58,10 @@ export const StudentCard: React.FC<StudentCardProps> = ({
       .catch((err) => console.error('Error generating QR code', err));
   }, [student]);
 
+  const totalStations = stations.length || 8;
   const completedStationsCount = student.completedStations.length;
-  const isRewardEligible = completedStationsCount >= 4;
-  const isFullComplete = completedStationsCount === 6;
+  const isRewardEligible = completedStationsCount >= 5;
+  const isFullComplete = completedStationsCount === totalStations;
 
   const handleCopyMSSV = () => {
     navigator.clipboard.writeText(student.mssv);
@@ -89,20 +90,20 @@ export const StudentCard: React.FC<StudentCardProps> = ({
               <div className="font-bold text-base sm:text-lg flex items-center gap-2">
                 <span>
                   {isFullComplete 
-                    ? 'Xuất sắc! Bạn đã hoàn thành trọn vẹn 6/6 trạm!' 
+                    ? `Xuất sắc! Bạn đã chinh phục trọn vẹn ${totalStations}/${totalStations} trạm SGU’s Day 2025!` 
                     : isRewardEligible
-                    ? 'Chúc mừng! Đã đạt mốc nhận Quà Ngày Hội (4+ trạm)!'
-                    : `Hành trình Hộ chiếu Tân Sinh viên (${completedStationsCount}/6 trạm)`}
+                    ? `Chúc mừng! Đã đạt mốc nhận Quà Ngày Hội (5+ / ${totalStations} trạm)!`
+                    : `Hành trình Hộ chiếu Tân Sinh viên SGU (${completedStationsCount}/${totalStations} trạm)`}
                 </span>
               </div>
               <p className={`text-xs sm:text-sm mt-0.5 ${
                 isFullComplete || isRewardEligible ? 'text-white/90' : 'text-blue-700'
               }`}>
                 {isFullComplete
-                  ? 'Đến ngay Trạm 6 (Sân khấu chính) để nhận Áo thun Ngày Hội, Bình giữ nhiệt và tham gia Rút thăm may mắn lớn!'
+                  ? 'Đến ngay Bàn Đổi Quà BTC để nhận Áo thun SGU’s Day 2025, Bình giữ nhiệt cao cấp và nhận Quà Đặc Biệt vinh danh!'
                   : isRewardEligible
-                  ? `Hãy tiếp tục chinh phục ${6 - completedStationsCount} trạm còn lại để mở khóa Quà Đặc Biệt và mã dự thưởng!`
-                  : `Chỉ cần hoàn thành thêm ${4 - completedStationsCount} trạm nữa là bạn sẽ đủ điều kiện nhận quà tặng từ Ban Tổ chức.`}
+                  ? `Hãy tiếp tục khám phá ${totalStations - completedStationsCount} trạm còn lại để mở khóa trọn bộ Quà Đặc Biệt cùng Mã cá nhân vinh danh!`
+                  : `Chỉ cần tích lũy thêm ${5 - completedStationsCount} trạm nữa là bạn sẽ đủ điều kiện nhận quà tặng từ Ban Tổ chức.`}
               </p>
             </div>
           </div>
@@ -135,11 +136,11 @@ export const StudentCard: React.FC<StudentCardProps> = ({
             <div className="flex items-center justify-between relative z-10">
               <div className="flex items-center gap-2">
                 <span className="bg-white/20 px-2.5 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase backdrop-blur-xs">
-                  Thẻ Tân Sinh Viên 2026
+                  Thẻ Tân Sinh Viên SGU
                 </span>
               </div>
               <span className="text-xs font-mono font-bold bg-amber-400 text-slate-950 px-2 py-0.5 rounded-md shadow-xs">
-                KHOÁ 2026
+                SGU’S DAY 2025
               </span>
             </div>
 
@@ -173,7 +174,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
           <div className="p-6 space-y-5">
             <div className="grid grid-cols-2 gap-3 text-xs bg-slate-50 p-3.5 rounded-2xl border border-slate-100">
               <div>
-                <span className="text-slate-400 font-medium block">Khoa / Viện</span>
+                <span className="text-slate-400 font-medium block">Khoa</span>
                 <span className="text-slate-800 font-semibold mt-0.5 line-clamp-1">{student.faculty}</span>
               </div>
               <div>
@@ -185,8 +186,8 @@ export const StudentCard: React.FC<StudentCardProps> = ({
                 <span className="text-slate-800 font-semibold mt-0.5 font-mono">{student.phone}</span>
               </div>
               <div>
-                <span className="text-slate-400 font-medium block">Mã may mắn</span>
-                <span className="text-indigo-600 font-bold mt-0.5 font-mono">{student.luckyDrawCode || 'TSV-2026'}</span>
+                <span className="text-slate-400 font-medium block">Mã cá nhân</span>
+                <span className="text-indigo-600 font-bold mt-0.5 font-mono">{student.luckyDrawCode || 'SGU-2025'}</span>
               </div>
             </div>
 
@@ -194,7 +195,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
             <div className="flex flex-col items-center justify-center p-4 bg-gradient-to-b from-slate-50 to-white rounded-2xl border border-slate-200 text-center">
               <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-1">
                 <QrCode className="w-3.5 h-3.5 text-blue-600" />
-                Mã QR Thẻ Sinh Viên (Dùng khi Quản lý quét)
+                Mã QR e-Pass (Quản lý trạm quét điểm danh)
               </span>
               
               {qrDataUrl ? (
@@ -211,7 +212,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
                 </div>
               )}
               <p className="text-[11px] text-slate-500 mt-2 max-w-xs">
-                Xuất trình mã này tại 6 trạm nếu bạn muốn quản lý trạm quét mã trực tiếp để điểm danh.
+                Xuất trình mã này tại 8 trạm sự kiện để Quản lý trạm quét điểm danh nhanh.
               </p>
             </div>
 
@@ -228,24 +229,24 @@ export const StudentCard: React.FC<StudentCardProps> = ({
           </div>
         </div>
 
-        {/* RIGHT: Stamp Rally Passport (6 Station Badges) */}
+        {/* RIGHT: Stamp Rally Passport (8 Station Badges) */}
         <div className="lg:col-span-7 space-y-6">
           <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
                   <Award className="w-5 h-5 text-amber-500" />
-                  <span>Hộ Chiếu 6 Dấu Trạm Ngày Hội</span>
+                  <span>Hộ Chiếu 8 Dấu Trạm SGU’s Day 2025</span>
                 </h3>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  Chạm thẻ NFC tại mỗi trạm hoặc nhờ quản lý trạm nhập MSSV để thu thập đủ 6 con dấu.
+                  Tương ứng 8 hoạt động có tính điểm danh (HĐ 3, 6, 8, 9, 10, 12, 13, 17) trong Kế hoạch.
                 </p>
               </div>
 
               <div className="text-right">
                 <span className="text-2xl font-black text-blue-600">
                   {completedStationsCount}
-                  <span className="text-slate-400 text-sm font-medium">/6</span>
+                  <span className="text-slate-400 text-sm font-medium">/{totalStations}</span>
                 </span>
                 <span className="block text-[11px] text-slate-500 font-medium">Con dấu</span>
               </div>
@@ -255,12 +256,12 @@ export const StudentCard: React.FC<StudentCardProps> = ({
             <div className="w-full bg-slate-100 h-3 rounded-full overflow-hidden p-0.5 border border-slate-200">
               <div 
                 className="bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-500 h-full rounded-full transition-all duration-500 shadow-xs"
-                style={{ width: `${(completedStationsCount / 6) * 100}%` }}
+                style={{ width: `${(completedStationsCount / totalStations) * 100}%` }}
               />
             </div>
 
-            {/* 6 Stations Stamp Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5 mt-5">
+            {/* 8 Stations Stamp Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5">
               {stations.map((station) => {
                 const isCompleted = student.completedStations.includes(station.id);
                 const checkinInfo = student.checkinHistory.find((c) => c.stationId === station.id);
@@ -270,7 +271,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
                     key={station.id}
                     id={`stamp-card-${station.id}`}
                     onClick={() => onSelectStation(station)}
-                    className={`relative p-3.5 rounded-2xl border transition-all cursor-pointer text-left flex flex-col justify-between min-h-[140px] group hover:shadow-md ${
+                    className={`relative p-3 rounded-2xl border transition-all cursor-pointer text-left flex flex-col justify-between min-h-[140px] group hover:shadow-md ${
                       isCompleted
                         ? 'bg-gradient-to-br from-emerald-50 via-teal-50 to-white border-emerald-300 shadow-xs ring-1 ring-emerald-400/30'
                         : 'bg-slate-50/70 border-slate-200 hover:border-blue-300 hover:bg-slate-50'
@@ -278,22 +279,17 @@ export const StudentCard: React.FC<StudentCardProps> = ({
                   >
                     {/* Badge Stamp Header */}
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-bold font-mono px-2 py-0.5 rounded-md bg-white border border-slate-200 text-slate-700 shadow-2xs">
-                        Trạm {station.stationNumber}
+                      <span className="text-[9px] font-bold font-mono px-1.5 py-0.5 rounded-md bg-white border border-slate-200 text-slate-700 shadow-2xs">
+                        Trạm {station.stationNumber} (HĐ {station.activityNumber})
                       </span>
-                      {isCompleted ? (
-                        <span className="flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded-md">
-                          <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-                          Đã đóng dấu
-                        </span>
-                      ) : (
-                        <span className="text-[10px] text-slate-400 font-medium">Chưa check-in</span>
+                      {isCompleted && (
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                       )}
                     </div>
 
                     {/* Central Icon / Stamp Badge */}
-                    <div className="my-2 flex items-center justify-center">
-                      <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-2xl transition-transform group-hover:scale-110 shadow-xs ${
+                    <div className="my-1.5 flex items-center justify-center">
+                      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-xl transition-transform group-hover:scale-110 shadow-xs ${
                         isCompleted
                           ? 'bg-gradient-to-tr from-emerald-500 to-teal-400 text-white shadow-emerald-500/20 ring-4 ring-emerald-100'
                           : 'bg-slate-200/80 text-slate-400 grayscale opacity-60'
@@ -310,7 +306,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
                         {station.shortName}
                       </h4>
                       {isCompleted && checkinInfo ? (
-                        <p className="text-[10px] text-emerald-700 font-mono mt-0.5 flex items-center gap-1">
+                        <p className="text-[9px] text-emerald-700 font-mono mt-0.5 flex items-center gap-1">
                           <Clock className="w-2.5 h-2.5" />
                           <span>{checkinInfo.timestamp.split(' ')[0]}</span>
                         </p>
@@ -328,8 +324,8 @@ export const StudentCard: React.FC<StudentCardProps> = ({
             {/* Checkin Action CTA */}
             <div className="mt-5 p-4 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 flex flex-col sm:flex-row items-center justify-between gap-3">
               <div className="text-left text-xs text-blue-900">
-                <span className="font-bold block text-sm text-blue-950">Bạn đang đứng tại một trạm sự kiện?</span>
-                <span>Chạm lưng điện thoại vào thẻ NFC của Quản lý trạm hoặc quét mã QR trạm để nhận con dấu ngay!</span>
+                <span className="font-bold block text-sm text-blue-950">Bạn đang đứng tại trạm nào trong số 8 trạm?</span>
+                <span>Chạm lưng điện thoại vào thẻ NFC của Quản lý trạm hoặc quét mã QR để nhận con dấu ngay!</span>
               </div>
               <button
                 onClick={onOpenCheckin}
@@ -350,7 +346,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
 
             {student.checkinHistory.length === 0 ? (
               <div className="text-center py-6 text-slate-400 text-xs">
-                Chưa có lịch sử điểm danh nào. Hãy di chuyển đến Trạm 1 để bắt đầu hành trình nhé!
+                Chưa có lịch sử điểm danh nào. Hãy di chuyển đến Trạm 1 (Sảnh Hội trường A) để bắt đầu hành trình nhé!
               </div>
             ) : (
               <div className="divide-y divide-slate-100">

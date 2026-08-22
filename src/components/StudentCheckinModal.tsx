@@ -20,6 +20,7 @@ import {
 import { Student, Station } from '../types';
 import { isWebNFCSupported, startNFCScan } from '../utils/nfcHelper';
 import { NFCAndroidPermissionCard } from './NFCAndroidPermissionCard';
+import { isOrganizerAuthenticated } from '../utils/storage';
 
 interface StudentCheckinModalProps {
   isOpen: boolean;
@@ -144,7 +145,7 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
         if (matchedStation) {
           handleStationCheckin(matchedStation.id, 'nfc_tap');
         } else {
-          setErrorMessage('Đã đọc thẻ NFC nhưng mã thẻ chưa được gán vào 6 trạm sự kiện.');
+          setErrorMessage('Đã đọc thẻ NFC nhưng mã thẻ chưa được gán vào 8 trạm sự kiện.');
         }
       },
       (error) => {
@@ -272,7 +273,7 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
                   onClick={onClose}
                   className="flex-1 py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-1.5"
                 >
-                  <span>Xem Hộ chiếu 6 Dấu</span>
+                  <span>Xem Hộ chiếu 8 Dấu</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>
@@ -280,43 +281,50 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
           ) : (
             <>
               {/* Scan Mode Toggle Tabs */}
-              <div className="grid grid-cols-3 gap-1.5 bg-slate-100 p-1 rounded-xl">
-                <button
-                  onClick={() => setScanMode('nfc')}
-                  className={`py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
-                    scanMode === 'nfc'
-                      ? 'bg-white text-blue-700 shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900'
-                  }`}
-                >
-                  <Smartphone className="w-3.5 h-3.5" />
-                  <span>Chạm NFC</span>
-                </button>
+              {(() => {
+                const isOrg = isOrganizerAuthenticated();
+                return (
+                  <div className={`grid ${isOrg ? 'grid-cols-3' : 'grid-cols-2'} gap-1.5 bg-slate-100 p-1 rounded-xl`}>
+                    <button
+                      onClick={() => setScanMode('nfc')}
+                      className={`py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+                        scanMode === 'nfc'
+                          ? 'bg-white text-blue-700 shadow-xs'
+                          : 'text-slate-600 hover:text-slate-900'
+                      }`}
+                    >
+                      <Smartphone className="w-3.5 h-3.5" />
+                      <span>Chạm NFC</span>
+                    </button>
 
-                <button
-                  onClick={() => setScanMode('qr')}
-                  className={`py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
-                    scanMode === 'qr'
-                      ? 'bg-white text-blue-700 shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900'
-                  }`}
-                >
-                  <QrCode className="w-3.5 h-3.5" />
-                  <span>Quét QR Trạm</span>
-                </button>
+                    <button
+                      onClick={() => setScanMode('qr')}
+                      className={`py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+                        scanMode === 'qr'
+                          ? 'bg-white text-blue-700 shadow-xs'
+                          : 'text-slate-600 hover:text-slate-900'
+                      }`}
+                    >
+                      <QrCode className="w-3.5 h-3.5" />
+                      <span>Quét QR Trạm</span>
+                    </button>
 
-                <button
-                  onClick={() => setScanMode('simulate')}
-                  className={`py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
-                    scanMode === 'simulate'
-                      ? 'bg-white text-amber-700 shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900'
-                  }`}
-                >
-                  <Zap className="w-3.5 h-3.5" />
-                  <span>Mô phỏng Chạm</span>
-                </button>
-              </div>
+                    {isOrg && (
+                      <button
+                        onClick={() => setScanMode('simulate')}
+                        className={`py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+                          scanMode === 'simulate'
+                            ? 'bg-white text-amber-700 shadow-xs'
+                            : 'text-slate-600 hover:text-slate-900'
+                        }`}
+                      >
+                        <Zap className="w-3.5 h-3.5" />
+                        <span>Mô phỏng (BTC)</span>
+                      </button>
+                    )}
+                  </div>
+                );
+              })()}
 
               {/* Error Message Box */}
               {errorMessage && (
@@ -430,7 +438,7 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
               {scanMode === 'simulate' && (
                 <div className="space-y-3">
                   <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-900 text-xs">
-                    <strong>Chế độ Kiểm thử / Mô phỏng:</strong> Bấm chọn 1 trong 6 trạm dưới đây để mô phỏng hành động chạm thẻ NFC tại bàn Quản lý trạm (Hỗ trợ thử nghiệm ngay trên máy tính/điện thoại).
+                    <strong>Chế độ Kiểm thử / Mô phỏng:</strong> Bấm chọn 1 trong 8 trạm dưới đây để mô phỏng hành động chạm thẻ NFC tại bàn Quản lý trạm (Hỗ trợ thử nghiệm ngay trên máy tính/điện thoại).
                   </div>
 
                   <div className="space-y-2">

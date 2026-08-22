@@ -98,7 +98,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
             </div>
             <div>
               <h3 className="font-bold text-base sm:text-lg leading-tight">
-                Cổng Tân Sinh Viên 2026
+                Cổng Tân Sinh Viên SGU’s Day 2025
               </h3>
               <p className="text-xs text-blue-100 mt-0.5">
                 Đăng ký nhận Thẻ e-Pass & Hộ chiếu sự kiện
@@ -187,7 +187,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
               </div>
 
               <div className="space-y-1">
-                <label className="font-bold text-slate-700">Khoa / Viện Đào Tạo</label>
+                <label className="font-bold text-slate-700">Khoa Đào Tạo</label>
                 <select
                   value={faculty}
                   onChange={(e) => setFaculty(e.target.value)}

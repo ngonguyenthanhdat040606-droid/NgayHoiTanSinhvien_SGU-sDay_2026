@@ -11,7 +11,13 @@ import {
   ChevronRight, 
   Layers,
   Award,
-  Bell
+  Bell,
+  CheckCircle2,
+  Users,
+  ShieldCheck,
+  Zap,
+  Flame,
+  ArrowRight
 } from 'lucide-react';
 import { TimelineEvent, Station } from '../types';
 import { TIMELINE_EVENTS } from '../data/mockData';
@@ -29,8 +35,8 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
   onOpenRegisterModal,
   onSelectStation,
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [bookmarkedIds, setBookmarkedIds] = useState<string[]>(['evt-2', 'evt-3', 'evt-6']);
+  const [selectedFilter, setSelectedFilter] = useState<string>('all');
+  const [bookmarkedIds, setBookmarkedIds] = useState<string[]>(['act-1', 'act-2', 'act-3', 'act-18']);
 
   const toggleBookmark = (id: string) => {
     setBookmarkedIds((prev) =>
@@ -38,9 +44,15 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
     );
   };
 
-  const filteredEvents = selectedCategory === 'all'
-    ? TIMELINE_EVENTS
-    : TIMELINE_EVENTS.filter((e) => e.category === selectedCategory);
+  const filteredEvents = TIMELINE_EVENTS.filter((evt) => {
+    if (selectedFilter === 'all') return true;
+    if (selectedFilter === 'checkin_stations') return evt.isCheckinStation;
+    if (selectedFilter === 'highlight') return evt.isHighlight;
+    if (selectedFilter === 'main_stage') return evt.category === 'main_stage' || evt.category === 'ceremony' || evt.category === 'gala';
+    if (selectedFilter === 'talkshow') return evt.title.toLowerCase().includes('tọa đàm') || evt.title.toLowerCase().includes('toạ đàm') || evt.title.toLowerCase().includes('workshop');
+    if (selectedFilter === 'exhibition') return evt.category === 'exhibition' || evt.category === 'market_food';
+    return true;
+  });
 
   return (
     <div className="space-y-8 max-w-5xl mx-auto">
@@ -51,15 +63,15 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
         <div className="relative z-10 max-w-2xl space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 text-white border border-white/30 text-xs font-bold uppercase tracking-wider backdrop-blur-xs">
             <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-            CHÀO ĐÓN TÂN SINH VIÊN KHOÁ 2026
+            HỘI SINH VIÊN TRƯỜNG ĐẠI HỌC SÀI GÒN
           </div>
           
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight">
-            Ngày Hội Tân Sinh Viên 2026: Vươn Ra Biển Lớn
+            Ngày Hội Tân Sinh Viên: “SGU’s Day 2025”
           </h1>
 
           <p className="text-blue-100 text-xs sm:text-base leading-relaxed">
-            Hòa mình vào không khí sôi động với 6 trạm trải nghiệm tương tác, điểm danh một chạm bằng thẻ NFC / mã QR, kết nối bạn bè cùng khóa và mở khóa các phần quà cực xịn từ Ban Tổ chức!
+            Chào mừng tân sinh viên Khóa 2025 với chuỗi <strong>18 hoạt động thực tế</strong> sôi nổi, <strong>8 trạm điểm danh một chạm NFC/QR</strong>, sân chơi rèn luyện Sinh viên 5 tốt và Đại nhạc hội Gala Chung kết bùng nổ!
           </p>
 
           <div className="pt-2 flex flex-wrap items-center gap-3">
@@ -82,24 +94,24 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
         </div>
       </div>
 
-      {/* 6 STATIONS QUICK PREVIEW GRID */}
+      {/* 8 STATIONS QUICK PREVIEW GRID */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
             <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
               <Award className="w-5 h-5 text-blue-600" />
-              <span>6 Hoạt Động & Trạm Điểm Danh NFC</span>
+              <span>8 Trạm Điểm Danh Tương Tác NFC/QR</span>
             </h3>
             <p className="text-xs text-slate-500 mt-0.5">
-              Mỗi trạm có quản lý trang bị thẻ NFC để điểm danh ghi nhận con dấu Hộ chiếu của bạn
+              Tương ứng các hoạt động số 3, 6, 8, 9, 10, 12, 13, 17 trong Kế hoạch số 10/KH-BTK
             </p>
           </div>
-          <span className="text-xs font-bold text-blue-600 hidden sm:block">
-            Tích lũy tối thiểu 4/6 trạm để nhận quà
+          <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200 self-start sm:self-auto">
+            Tích lũy tối thiểu 5/8 trạm để nhận quà BTC
           </span>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {stations.map((st) => (
             <div
               key={st.id}
@@ -107,110 +119,124 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
               className="bg-white p-3.5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between group"
             >
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-700">
-                  Trạm {st.stationNumber}
+                <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-blue-50 text-blue-800 border border-blue-100">
+                  Trạm {st.stationNumber} (HĐ {st.activityNumber})
                 </span>
                 <span className="text-xl group-hover:scale-125 transition-transform">{st.stampBadge}</span>
               </div>
-              <div className="mt-3">
+              <div className="mt-2.5">
                 <h4 className="font-bold text-xs text-slate-900 line-clamp-1">{st.shortName}</h4>
                 <p className="text-[10px] text-slate-500 line-clamp-1 mt-0.5">{st.location}</p>
               </div>
               <div className="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] font-medium text-blue-600">
-                <span>{st.rewardPoints} điểm</span>
-                <span>Chi tiết &rarr;</span>
+                <span className="text-slate-500 truncate pr-1">{st.assignedUnit || 'LCH Khoa'}</span>
+                <span className="shrink-0">Chi tiết &rarr;</span>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* TIMELINE SECTION */}
+      {/* 18 TIMELINE SECTION */}
       <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
           <div>
             <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
               <Calendar className="w-5 h-5 text-blue-600" />
-              <span>Khung Giờ & Lịch Trình Chi Tiết Ngày Hội</span>
+              <span>Toàn Bộ 18 Hoạt Động Kế Hoạch “SGU’s Day 2025”</span>
             </h2>
             <p className="text-xs text-slate-500 mt-0.5">
-              Thời gian diễn ra các chương trình chính từ 07:30 đến 18:00
+              Chủ Nhật, ngày 19/10/2025 • Từ 07g15 đến 21g00 tại Cơ sở chính ĐH Sài Gòn
             </p>
           </div>
 
-          {/* Category Filter Pills */}
-          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar bg-slate-100 p-1 rounded-xl">
+          {/* Filter Pills */}
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar bg-slate-100 p-1 rounded-xl shrink-0">
             <button
-              onClick={() => setSelectedCategory('all')}
+              onClick={() => setSelectedFilter('all')}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                selectedCategory === 'all' ? 'bg-white text-blue-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+                selectedFilter === 'all' ? 'bg-white text-blue-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              Tất cả
+              Tất cả (18 HĐ)
             </button>
             <button
-              onClick={() => setSelectedCategory('main_stage')}
+              onClick={() => setSelectedFilter('checkin_stations')}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                selectedCategory === 'main_stage' ? 'bg-white text-blue-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+                selectedFilter === 'checkin_stations' ? 'bg-white text-blue-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              ⭐ 8 Trạm Điểm Danh
+            </button>
+            <button
+              onClick={() => setSelectedFilter('main_stage')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                selectedFilter === 'main_stage' ? 'bg-white text-blue-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               Sân khấu chính
             </button>
             <button
-              onClick={() => setSelectedCategory('station_activity')}
+              onClick={() => setSelectedFilter('talkshow')}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                selectedCategory === 'station_activity' ? 'bg-white text-blue-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+                selectedFilter === 'talkshow' ? 'bg-white text-blue-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              6 Trạm sự kiện
+              Toạ đàm & Workshop
             </button>
             <button
-              onClick={() => setSelectedCategory('talkshow')}
+              onClick={() => setSelectedFilter('exhibition')}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                selectedCategory === 'talkshow' ? 'bg-white text-blue-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+                selectedFilter === 'exhibition' ? 'bg-white text-blue-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              Talkshow
-            </button>
-            <button
-              onClick={() => setSelectedCategory('gala')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                selectedCategory === 'gala' ? 'bg-white text-blue-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              Gala Nhạc hội
+              Triển lãm & Chợ
             </button>
           </div>
         </div>
 
-        {/* Timeline Events List */}
+        {/* 18 Timeline Events List */}
         <div className="space-y-4">
           {filteredEvents.map((evt) => {
             const isBookmarked = bookmarkedIds.includes(evt.id);
+            const correspondingStation = evt.stationId ? stations.find((s) => s.id === evt.stationId) : null;
 
             return (
               <div
                 key={evt.id}
                 className={`p-4 sm:p-5 rounded-2xl border transition-all flex flex-col sm:flex-row sm:items-start justify-between gap-4 ${
-                  evt.isHighlight
-                    ? 'bg-gradient-to-r from-blue-50/60 to-indigo-50/40 border-blue-200 shadow-xs'
+                  evt.isCheckinStation
+                    ? 'bg-gradient-to-r from-blue-50/70 via-indigo-50/50 to-white border-blue-300 shadow-xs ring-1 ring-blue-400/20'
+                    : evt.isHighlight
+                    ? 'bg-gradient-to-r from-amber-50/40 to-white border-amber-200'
                     : 'bg-white border-slate-200 hover:border-slate-300'
                 }`}
               >
-                <div className="flex items-start gap-4">
+                <div className="flex items-start gap-3 sm:gap-4">
                   {/* Time Badge */}
-                  <div className="bg-slate-900 text-white rounded-2xl p-3 text-center min-w-[80px] shrink-0 shadow-xs">
-                    <span className="block text-xs font-bold text-blue-400 font-mono">{evt.time}</span>
+                  <div className="bg-slate-900 text-white rounded-2xl p-2.5 sm:p-3 text-center min-w-[85px] shrink-0 shadow-xs">
+                    <span className="block text-[10px] font-mono uppercase text-slate-400">
+                      HĐ #{evt.activityNumber}
+                    </span>
+                    <span className="block text-xs font-bold text-blue-400 font-mono mt-0.5">{evt.time}</span>
                     <span className="block text-[10px] text-slate-400 font-mono">đến {evt.endTime}</span>
                   </div>
 
                   {/* Content Details */}
-                  <div className="space-y-1.5">
+                  <div className="space-y-1.5 min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <h4 className="font-bold text-sm sm:text-base text-slate-900">
-                        {evt.title}
-                      </h4>
-                      {evt.isHighlight && (
+                      <span className="font-extrabold text-sm sm:text-base text-slate-900">
+                        {evt.activityNumber}. {evt.title}
+                      </span>
+
+                      {evt.isCheckinStation && (
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-600 text-white shadow-2xs flex items-center gap-1">
+                          <Zap className="w-2.5 h-2.5 text-amber-300 fill-amber-300" />
+                          TRẠM ĐIỂM DANH ({correspondingStation?.stampBadge})
+                        </span>
+                      )}
+
+                      {evt.isHighlight && !evt.isCheckinStation && (
                         <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-300">
                           ⭐ Trọng tâm
                         </span>
@@ -221,19 +247,38 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
                       {evt.description}
                     </p>
 
-                    <div className="flex flex-wrap items-center gap-4 text-xs text-slate-500 pt-1">
-                      <span className="flex items-center gap-1">
-                        <MapPin className="w-3.5 h-3.5 text-blue-600" />
-                        <strong className="text-slate-700 font-semibold">{evt.location}</strong>
-                      </span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-xs text-slate-500">
+                      <div className="flex items-center gap-1.5">
+                        <MapPin className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                        <span className="truncate"><strong>Địa điểm:</strong> {evt.location}</span>
+                      </div>
 
-                      {evt.speakers && (
-                        <span className="flex items-center gap-1">
-                          <Mic2 className="w-3.5 h-3.5 text-purple-600" />
-                          <span>Diễn giả: {evt.speakers.join(', ')}</span>
-                        </span>
+                      {evt.inCharge && (
+                        <div className="flex items-center gap-1.5">
+                          <ShieldCheck className="w-3.5 h-3.5 text-indigo-600 shrink-0" />
+                          <span className="truncate"><strong>Phụ trách:</strong> {evt.inCharge}</span>
+                        </div>
+                      )}
+
+                      {evt.assignedUnit && (
+                        <div className="flex items-center gap-1.5 sm:col-span-2">
+                          <Users className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                          <span className="text-slate-700"><strong>Phân công:</strong> {evt.assignedUnit}</span>
+                        </div>
                       )}
                     </div>
+
+                    {/* Quick action for check-in stations */}
+                    {correspondingStation && (
+                      <div className="pt-2 flex items-center gap-2">
+                        <button
+                          onClick={() => onSelectStation(correspondingStation)}
+                          className="text-[11px] font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1"
+                        >
+                          Xem thông tin trạm #{correspondingStation.stationNumber} &rarr;
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
 

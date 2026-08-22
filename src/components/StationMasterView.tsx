@@ -21,7 +21,8 @@ import {
   Zap,
   Phone,
   MapPin,
-  RefreshCw
+  RefreshCw,
+  Building2
 } from 'lucide-react';
 import { Station, Student } from '../types';
 
@@ -108,7 +109,7 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
   };
 
   const exportCSV = () => {
-    const headers = ['STT', 'MSSV', 'Họ và Tên', 'Khoa/Viện', 'Lớp', 'Email', 'SĐT', 'Thời gian Điểm danh', 'Hình thức'];
+    const headers = ['STT', 'MSSV', 'Họ và Tên', 'Khoa', 'Lớp', 'Email', 'SĐT', 'Thời gian Điểm danh', 'Hình thức'];
     const rows = checkedInStudents.map((s, index) => {
       const history = s.checkinHistory.find((c) => c.stationId === currentStation.id);
       return [
@@ -128,7 +129,7 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement('a');
     link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `DiemDanh_${currentStation.shortName}_${new Date().toISOString().slice(0, 10)}.csv`);
+    link.setAttribute('download', `DiemDanh_Tram${currentStation.stationNumber}_${currentStation.shortName}_${new Date().toISOString().slice(0, 10)}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -144,13 +145,13 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold uppercase tracking-wider">
               <ShieldCheck className="w-4 h-4 text-amber-400" />
-              Bàn Quản Lý Trạm Sự Kiện (Dành cho Ban Tổ Chức)
+              Bàn Quản Lý 8 Trạm Sự Kiện (Ban Tổ Chức SGU’s Day 2025)
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
               Hệ Thống Điểm Danh Trạm & Ghi Nhận Thủ Công
             </h2>
             <p className="text-slate-300 text-xs sm:text-sm max-w-2xl">
-              Quản lý trạm sử dụng bảng điều khiển này để theo dõi thẻ NFC của trạm, điểm danh nhanh cho tân sinh viên qua MSSV khi không quét được thẻ, và xuất danh sách tổng hợp.
+              Quản lý trạm sử dụng bảng điều khiển này để đối chiếu thẻ NFC trạm, điểm danh nhanh cho tân sinh viên qua MSSV khi không quét được thẻ, và xuất danh sách tổng hợp.
             </p>
           </div>
 
@@ -166,12 +167,12 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
         </div>
       </div>
 
-      {/* 6 STATIONS SWITCHER PILLS */}
-      <div className="bg-white p-3 rounded-2xl border border-slate-200 shadow-xs">
-        <div className="text-xs font-bold text-slate-500 uppercase tracking-wider px-2 mb-2">
-          Chọn Trạm bạn đang phụ trách:
+      {/* 8 STATIONS SWITCHER PILLS */}
+      <div className="bg-white p-4 rounded-3xl border border-slate-200 shadow-xs space-y-2">
+        <div className="text-xs font-bold text-slate-500 uppercase tracking-wider px-1">
+          Chọn Trạm bạn đang trực ca (Tương ứng 8 hoạt động có điểm danh):
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
           {stations.map((st) => {
             const isSelected = st.id === currentStation.id;
             const count = students.filter((s) => s.completedStations.includes(st.id)).length;
@@ -184,17 +185,17 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
                   setSelectedStationId(st.id);
                   setActionAlert(null);
                 }}
-                className={`p-3 rounded-xl text-left transition-all border flex flex-col justify-between ${
+                className={`p-3 rounded-2xl text-left transition-all border flex flex-col justify-between ${
                   isSelected
                     ? 'bg-blue-600 text-white border-blue-600 shadow-md shadow-blue-500/20 ring-2 ring-blue-400/50'
                     : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100 hover:border-slate-300'
                 }`}
               >
                 <div className="flex items-center justify-between w-full">
-                  <span className={`text-[11px] font-bold font-mono px-1.5 py-0.5 rounded ${
+                  <span className={`text-[10px] font-bold font-mono px-1.5 py-0.5 rounded ${
                     isSelected ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-700'
                   }`}>
-                    Trạm {st.stationNumber}
+                    Trạm {st.stationNumber} (HĐ {st.activityNumber})
                   </span>
                   <span className="text-lg">{st.stampBadge}</span>
                 </div>
@@ -203,7 +204,7 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
                   <div className={`text-[11px] mt-0.5 font-medium ${
                     isSelected ? 'text-blue-100' : 'text-slate-500'
                   }`}>
-                    {count} sinh viên
+                    {count} SV đã qua trạm
                   </div>
                 </div>
               </button>
@@ -250,17 +251,17 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
 
               <div className="grid grid-cols-2 gap-2 text-[11px] text-slate-300 pt-1">
                 <div>
-                  <span className="text-slate-500 block">Quản lý trạm:</span>
+                  <span className="text-slate-500 block">Phụ trách:</span>
                   <span className="font-medium text-white">{currentStation.managerName}</span>
                 </div>
                 <div>
-                  <span className="text-slate-500 block">Liên hệ:</span>
-                  <span className="font-mono text-white">{currentStation.managerPhone}</span>
+                  <span className="text-slate-500 block">Đơn vị:</span>
+                  <span className="font-medium text-white truncate block">{currentStation.assignedUnit || 'LCH Khoa'}</span>
                 </div>
               </div>
 
               <p className="text-[11px] text-slate-400 italic pt-1 border-t border-slate-700/60">
-                💡 Đặt thẻ này tại mặt bàn trạm. Sinh viên chỉ cần áp điện thoại vào để điểm danh tự động.
+                💡 Đặt thẻ NFC này tại mặt bàn trạm. Sinh viên chỉ cần áp điện thoại vào để nhận dấu tức thì.
               </p>
             </div>
 

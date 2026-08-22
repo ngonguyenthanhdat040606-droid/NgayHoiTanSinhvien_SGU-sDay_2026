@@ -22,6 +22,9 @@ import {
   AdminAnalytics 
 } from './components/AdminAnalytics';
 import { 
+  OrganizerAuthGuard 
+} from './components/OrganizerAuthGuard';
+import { 
   StudentCheckinModal 
 } from './components/StudentCheckinModal';
 import { 
@@ -233,7 +236,7 @@ export default function App() {
           ...stu,
           completedStations: newStations,
           checkinHistory: newHistory,
-          isEligibleForReward: newStations.length >= 4,
+          isEligibleForReward: newStations.length >= 5,
         };
       }
       return stu;
@@ -273,9 +276,9 @@ export default function App() {
       registeredAt: timestamp,
       completedStations: initialCompleted,
       checkinHistory: initialHistory,
-      isEligibleForReward: initialCompleted.length >= 4,
+      isEligibleForReward: initialCompleted.length >= 5,
       rewardClaimed: false,
-      luckyDrawCode: `TSV-${randomSuffix}`,
+      luckyDrawCode: `SGU-${randomSuffix}`,
     };
 
     const updated = [newStudent, ...students];
@@ -378,7 +381,7 @@ export default function App() {
               </div>
               <h3 className="text-xl font-bold text-slate-900">Chưa có Thẻ Tân Sinh Viên</h3>
               <p className="text-xs text-slate-500">
-                Hãy đăng ký thông tin để nhận ngay thẻ e-Pass cá nhân hóa và bắt đầu thu thập 6 con dấu trạm sự kiện!
+                Hãy đăng ký thông tin để nhận ngay thẻ e-Pass cá nhân hóa và bắt đầu thu thập 8 con dấu trạm sự kiện SGU’s Day 2025!
               </p>
               <button
                 onClick={() => setIsRegisterModalOpen(true)}
@@ -400,25 +403,43 @@ export default function App() {
         )}
 
         {activeTab === 'manager' && (
-          <StationMasterView
-            stations={stations}
-            students={students}
-            onCheckinStudent={handleOrganizerCheckin}
-            onUndoCheckin={handleUndoCheckin}
-            onOpenNfcGuide={() => setActiveTab('nfc_guide')}
-          />
+          <OrganizerAuthGuard
+            title="Bàn Quản Lý 8 Trạm Sự Kiện (BTC)"
+            subtitle="Chỉ dành cho Ban Tổ Chức & Trưởng Trạm để điểm danh thủ công, tra cứu sinh viên và xuất dữ liệu."
+            onBackToStudent={() => setActiveTab('student_pass')}
+          >
+            <StationMasterView
+              stations={stations}
+              students={students}
+              onCheckinStudent={handleOrganizerCheckin}
+              onUndoCheckin={handleUndoCheckin}
+              onOpenNfcGuide={() => setActiveTab('nfc_guide')}
+            />
+          </OrganizerAuthGuard>
         )}
 
         {activeTab === 'nfc_guide' && (
-          <NFCSetupGuide stations={stations} />
+          <OrganizerAuthGuard
+            title="Hướng Dẫn & Nạp 8 Thẻ NFC Trạm (BTC)"
+            subtitle="Khu vực cấu hình và ghi dữ liệu thẻ NFC dành cho Ban Kỹ thuật & Tổ chức."
+            onBackToStudent={() => setActiveTab('student_pass')}
+          >
+            <NFCSetupGuide stations={stations} />
+          </OrganizerAuthGuard>
         )}
 
         {activeTab === 'analytics' && (
-          <AdminAnalytics
-            students={students}
-            stations={stations}
-            onClaimReward={handleClaimReward}
-          />
+          <OrganizerAuthGuard
+            title="Trung Tâm Thống Kê & Danh Sách Quà (BTC)"
+            subtitle="Quản lý tiến độ toàn trường, duyệt đổi quà và xuất file danh sách sinh viên."
+            onBackToStudent={() => setActiveTab('student_pass')}
+          >
+            <AdminAnalytics
+              students={students}
+              stations={stations}
+              onClaimReward={handleClaimReward}
+            />
+          </OrganizerAuthGuard>
         )}
       </main>
 
@@ -458,15 +479,15 @@ export default function App() {
       <footer className="mt-auto border-t border-slate-200 bg-white/80 backdrop-blur-xs py-6 text-center text-xs text-slate-500">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-slate-800">Ngày Hội Tân Sinh Viên 2026</span>
+            <span className="font-bold text-slate-800">SGU’s Day 2025</span>
             <span>•</span>
-            <span>Đoàn Thanh niên - Hội Sinh viên Trường</span>
+            <span>Đoàn Thanh niên - Hội Sinh viên Trường Đại học Sài Gòn</span>
           </div>
 
           <div className="flex items-center gap-4 text-[11px] text-slate-400">
             <span>Hỗ trợ thẻ NFC ISO 14443-3A (Mifare Classic 1K)</span>
             <span>•</span>
-            <span>Web NFC & QR Dynamic Check-in</span>
+            <span>Web NFC & QR Dynamic Check-in 8 Trạm</span>
           </div>
         </div>
       </footer>

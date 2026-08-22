@@ -1,6 +1,6 @@
 {
-  "name": "Ngày Hội Tân Sinh Viên",
-  "description": "Cổng thông tin, đăng ký, tra cứu sơ đồ, lịch trình và điểm danh trạm NFC/QR Ngày hội Tân Sinh viên.",
+  "name": "SGU's Day 2025 - Ngày Hội Tân Sinh Viên",
+  "description": "Cổng thông tin, đăng ký e-Pass, sơ đồ 8 trạm điểm danh NFC/QR và 18 hoạt động Ngày hội Tân Sinh viên SGU's Day 2025 - Trường Đại học Sài Gòn.",
   "requestFramePermissions": [
     "camera"
   ],

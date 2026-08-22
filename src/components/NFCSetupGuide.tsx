@@ -36,7 +36,6 @@ export const NFCSetupGuide: React.FC<NFCSetupGuideProps> = ({ stations }) => {
   
   const [selectedOrigin, setSelectedOrigin] = useState<string>(() => {
     if (typeof window !== 'undefined') {
-      // If currently on dev preview, default to pre public domain
       if (window.location.origin.includes('ais-dev-')) {
         return defaultPublicOrigin;
       }
@@ -48,7 +47,7 @@ export const NFCSetupGuide: React.FC<NFCSetupGuideProps> = ({ stations }) => {
   const [customDomainInput, setCustomDomainInput] = useState<string>('');
 
   useEffect(() => {
-    // Generate QR codes for each of the 6 stations
+    // Generate QR codes for each of the 8 stations
     stations.forEach(async (station) => {
       const stationUrl = `${selectedOrigin}/#checkin=${station.id}`;
       try {
@@ -87,13 +86,13 @@ export const NFCSetupGuide: React.FC<NFCSetupGuideProps> = ({ stations }) => {
         <div className="relative z-10 space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 text-xs font-bold uppercase tracking-wider">
             <Radio className="w-4 h-4 text-purple-400" />
-            Cẩm Nang Kỹ Thuật Ban Tổ Chức (BTC)
+            Cẩm Nang Kỹ Thuật Ban Tổ Chức (BTC SGU’s Day 2025)
           </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-            Hướng Dẫn Ghi Thẻ NFC & Khắc Phục Lỗi 404 Safari (iOS)
+            Hướng Dẫn Ghi 8 Thẻ NFC & Khắc Phục Lỗi 404 Safari (iOS)
           </h2>
           <p className="text-purple-100 text-xs sm:text-sm max-w-3xl leading-relaxed">
-            Hỗ trợ đầy đủ thẻ <strong>NXP - Mifare Classic 1K (ISO 14443-3A)</strong> của Ban Tổ chức. Dưới đây là cách khắc phục triệt để lỗi 404 khi quét trên iPhone (Safari) và hướng dẫn ghi 6 thẻ chuẩn xác nhất.
+            Hỗ trợ đầy đủ chuẩn thẻ <strong>NXP - Mifare Classic 1K (ISO 14443-3A)</strong> của Ban Tổ chức. Dưới đây là link chuẩn nạp vào 8 thẻ NFC (tương ứng 8 hoạt động có điểm danh số 3, 6, 8, 9, 10, 12, 13, 17) và cách in Standee dự phòng.
           </p>
         </div>
       </div>
@@ -153,7 +152,7 @@ export const NFCSetupGuide: React.FC<NFCSetupGuideProps> = ({ stations }) => {
           <div className="space-y-1">
             <strong className="block font-bold text-emerald-900">Giải pháp 1 chạm:</strong>
             <p className="text-emerald-900/90 leading-relaxed text-[11px]">
-              Ở bảng 6 trạm bên dưới, hãy bấm nút <strong>"Copy cho NFC Tools (Đã bỏ https://)"</strong>. Sau đó mở NFC Tools, giữ nguyên ô bên trái là <code className="font-bold">https://</code> và chỉ dán nội dung đã copy vào ô bên phải rồi bấm <strong>Ghi (Write)</strong>. Cả iPhone và Android sẽ mở trang và đóng dấu 100% thành công!
+              Ở bảng 8 trạm bên dưới, hãy bấm nút <strong>"Copy cho NFC Tools (Đã bỏ https://)"</strong>. Sau đó mở NFC Tools, giữ nguyên ô bên trái là <code className="font-bold">https://</code> và chỉ dán nội dung đã copy vào ô bên phải rồi bấm <strong>Ghi (Write)</strong>. Cả iPhone và Android sẽ mở trang và đóng dấu 100% thành công!
             </p>
           </div>
         </div>
@@ -185,7 +184,7 @@ export const NFCSetupGuide: React.FC<NFCSetupGuideProps> = ({ stations }) => {
           </h3>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
           <button
             onClick={() => setSelectedOrigin(defaultPublicOrigin)}
             className={`p-3.5 rounded-2xl border text-left transition-all ${
@@ -195,13 +194,13 @@ export const NFCSetupGuide: React.FC<NFCSetupGuideProps> = ({ stations }) => {
             }`}
           >
             <div className="flex items-center justify-between">
-              <span className="font-bold text-slate-900">🌐 Link Công Khai (Khuyên dùng)</span>
+              <span className="font-bold text-slate-900">🌐 Link Công Khai AI Studio</span>
               {selectedOrigin === defaultPublicOrigin && (
                 <span className="px-2 py-0.5 rounded-full bg-blue-600 text-white font-bold text-[10px]">Đang chọn</span>
               )}
             </div>
             <p className="text-[11px] text-slate-500 font-mono mt-1 truncate">{defaultPublicOrigin}</p>
-            <span className="text-[10px] text-emerald-700 font-medium block mt-1">✓ Hoạt động cho tất cả iPhone & Android</span>
+            <span className="text-[10px] text-emerald-700 font-medium block mt-1">✓ Mặc định sự kiện</span>
           </button>
 
           <button
@@ -219,8 +218,42 @@ export const NFCSetupGuide: React.FC<NFCSetupGuideProps> = ({ stations }) => {
               )}
             </div>
             <p className="text-[11px] text-slate-500 font-mono mt-1 truncate">{typeof window !== 'undefined' ? window.location.origin : defaultPublicOrigin}</p>
-            <span className="text-[10px] text-slate-500 block mt-1">Dùng khi chạy tên miền tùy chỉnh / môi trường hiện tại</span>
+            <span className="text-[10px] text-slate-500 block mt-1">Tự động lấy tên miền trang đang mở</span>
           </button>
+
+          <div className={`p-3.5 rounded-2xl border transition-all ${
+            selectedOrigin !== defaultPublicOrigin && selectedOrigin !== (typeof window !== 'undefined' ? window.location.origin : '')
+              ? 'border-indigo-600 bg-indigo-50/60 ring-2 ring-indigo-500/20'
+              : 'border-slate-200 bg-slate-50'
+          }`}>
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="font-bold text-slate-900">🚀 Tên miền Vercel / Netlify</span>
+            </div>
+            <div className="flex gap-1.5">
+              <input
+                type="text"
+                value={customDomainInput}
+                onChange={(e) => setCustomDomainInput(e.target.value)}
+                placeholder="ví dụ: sgu-day-2025.vercel.app"
+                className="flex-1 px-2.5 py-1.5 rounded-xl border border-slate-300 text-xs font-mono bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              />
+              <button
+                onClick={() => {
+                  let domain = customDomainInput.trim();
+                  if (!domain) return;
+                  if (!domain.startsWith('http://') && !domain.startsWith('https://')) {
+                    domain = 'https://' + domain;
+                  }
+                  domain = domain.replace(/\/+$/, '');
+                  setSelectedOrigin(domain);
+                }}
+                className="px-2.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-[11px] shrink-0 shadow-xs"
+              >
+                Áp dụng
+              </button>
+            </div>
+            <span className="text-[10px] text-slate-500 block mt-1">Nhập link để tự động tạo link nạp cho 8 trạm</span>
+          </div>
         </div>
       </div>
 
@@ -257,16 +290,16 @@ export const NFCSetupGuide: React.FC<NFCSetupGuideProps> = ({ stations }) => {
         </div>
       </div>
 
-      {/* 6 STATIONS NFC URL & QR DATA TABLE */}
+      {/* 8 STATIONS NFC URL & QR DATA TABLE */}
       <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
           <div>
             <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
               <Layers className="w-5 h-5 text-blue-600" />
-              <span>Dữ Liệu Ghi 6 Thẻ NFC & Mã QR Standee Tương Ứng</span>
+              <span>Dữ Liệu Ghi 8 Thẻ NFC & Mã QR Standee Tương Ứng</span>
             </h3>
             <p className="text-xs text-slate-500 mt-0.5">
-              Sao chép đúng định dạng để nạp vào 6 thẻ NFC, hoặc in các mã QR này dán lên bàn trạm làm phương án dự phòng.
+              Sao chép đúng định dạng để nạp vào 8 thẻ NFC, hoặc in các mã QR này dán lên bàn trạm làm phương án dự phòng.
             </p>
           </div>
 
@@ -275,11 +308,11 @@ export const NFCSetupGuide: React.FC<NFCSetupGuideProps> = ({ stations }) => {
             className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs transition-all shrink-0"
           >
             <Printer className="w-4 h-4" />
-            <span>In Bộ 6 Standee Để Bàn</span>
+            <span>In Bộ 8 Standee Để Bàn</span>
           </button>
         </div>
 
-        {/* List of 6 Stations with copyable URLs and QR previews */}
+        {/* List of 8 Stations with copyable URLs and QR previews */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {stations.map((st) => {
             const cleanOrigin = selectedOrigin.replace(/^https?:\/\//, '');
@@ -300,7 +333,7 @@ export const NFCSetupGuide: React.FC<NFCSetupGuideProps> = ({ stations }) => {
                     </div>
                     <div>
                       <span className="text-[10px] font-bold font-mono px-2 py-0.5 bg-blue-100 text-blue-800 rounded">
-                        Thẻ Trạm {st.stationNumber}
+                        Thẻ Trạm {st.stationNumber} (HĐ #{st.activityNumber})
                       </span>
                       <h4 className="font-bold text-sm text-slate-900 mt-1">{st.shortName}</h4>
                       <p className="text-[11px] text-slate-500 line-clamp-1">{st.location}</p>

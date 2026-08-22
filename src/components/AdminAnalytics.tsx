@@ -28,9 +28,10 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
 }) => {
   const [filterQuery, setFilterQuery] = useState<string>('');
 
+  const totalStations = stations.length || 8;
   const totalRegistered = students.length;
-  const totalCompleted4Plus = students.filter((s) => s.completedStations.length >= 4).length;
-  const totalCompletedAll6 = students.filter((s) => s.completedStations.length === 6).length;
+  const totalCompleted5Plus = students.filter((s) => s.completedStations.length >= 5).length;
+  const totalCompletedAll = students.filter((s) => s.completedStations.length === totalStations).length;
   const totalCheckinLogs = students.reduce((acc, s) => acc + s.completedStations.length, 0);
 
   // Station counts
@@ -44,9 +45,9 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
     };
   });
 
-  // Eligible students for prize lucky draw
+  // Eligible students for prize (5+ stations)
   const eligibleStudents = students.filter(
-    (s) => s.completedStations.length >= 4
+    (s) => s.completedStations.length >= 5
   );
 
   const filteredEligible = eligibleStudents.filter(
@@ -58,14 +59,14 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
   );
 
   const exportLuckyDrawList = () => {
-    const headers = ['STT', 'Mã Dự Thưởng', 'MSSV', 'Họ và Tên', 'Khoa/Viện', 'Số Trạm Hoàn Thành', 'Trạng Thái Nhận Quà'];
+    const headers = ['STT', 'Mã Cá Nhân', 'MSSV', 'Họ và Tên', 'Khoa', 'Số Trạm Hoàn Thành', 'Trạng Thái Nhận Quà'];
     const rows = eligibleStudents.map((s, index) => [
       index + 1,
-      s.luckyDrawCode || 'TSV-2026',
+      s.luckyDrawCode || 'SGU-2025',
       s.mssv,
       `"${s.fullName}"`,
       `"${s.faculty}"`,
-      `${s.completedStations.length}/6`,
+      `${s.completedStations.length}/${totalStations}`,
       s.rewardClaimed ? 'Đã nhận quà' : 'Chưa nhận',
     ]);
 
@@ -73,7 +74,7 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement('a');
     link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `DanhSachRutTham_NgayHoiTSV_${new Date().toISOString().slice(0, 10)}.csv`);
+    link.setAttribute('download', `DanhSachNhanQua_SGUsDay2025_${new Date().toISOString().slice(0, 10)}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -94,31 +95,31 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
 
         <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs space-y-2">
           <div className="flex items-center justify-between text-slate-500 text-xs font-bold uppercase">
-            <span>Lượt Check-in 6 Trạm</span>
+            <span>Lượt Check-in 8 Trạm</span>
             <TrendingUp className="w-4 h-4 text-emerald-600" />
           </div>
           <div className="text-3xl font-black text-emerald-600">{totalCheckinLogs}</div>
-          <p className="text-[11px] text-slate-500 font-medium">Được ghi nhận qua NFC & QR</p>
+          <p className="text-[11px] text-slate-500 font-medium">Ghi nhận qua thẻ NFC & mã QR</p>
         </div>
 
         <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs space-y-2">
           <div className="flex items-center justify-between text-slate-500 text-xs font-bold uppercase">
-            <span>Đạt Chuẩn Nhận Quà (4+ Trạm)</span>
+            <span>Đạt Chuẩn Quà (5+ Trạm)</span>
             <Gift className="w-4 h-4 text-amber-500" />
           </div>
-          <div className="text-3xl font-black text-amber-600">{totalCompleted4Plus}</div>
+          <div className="text-3xl font-black text-amber-600">{totalCompleted5Plus}</div>
           <p className="text-[11px] text-slate-500 font-medium">
-            {totalRegistered > 0 ? Math.round((totalCompleted4Plus / totalRegistered) * 100) : 0}% tổng số sinh viên
+            {totalRegistered > 0 ? Math.round((totalCompleted5Plus / totalRegistered) * 100) : 0}% tổng số sinh viên
           </p>
         </div>
 
         <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs space-y-2">
           <div className="flex items-center justify-between text-slate-500 text-xs font-bold uppercase">
-            <span>Hoàn Thành Xuất Sắc 6/6</span>
+            <span>Hoàn Thành 8/8 Trạm</span>
             <Award className="w-4 h-4 text-purple-600" />
           </div>
-          <div className="text-3xl font-black text-purple-600">{totalCompletedAll6}</div>
-          <p className="text-[11px] text-slate-500 font-medium">Đủ điều kiện quay thưởng Đặc Biệt</p>
+          <div className="text-3xl font-black text-purple-600">{totalCompletedAll}</div>
+          <p className="text-[11px] text-slate-500 font-medium">Đủ điều kiện nhận Quà Đặc Biệt</p>
         </div>
       </div>
 
@@ -128,7 +129,7 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
           <div>
             <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
               <BarChart3 className="w-5 h-5 text-blue-600" />
-              <span>Tiến Độ Tham Gia Tại 6 Trạm Sự Kiện</span>
+              <span>Tiến Độ Tham Gia Tại 8 Trạm Sự Kiện SGU’s Day 2025</span>
             </h3>
             <p className="text-xs text-slate-500 mt-0.5">
               Thống kê lượng sinh viên đã check-in tại từng trạm theo thời gian thực
@@ -136,22 +137,24 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
           </div>
         </div>
 
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {stationStats.map((st) => (
-            <div key={st.id} className="space-y-1.5">
+            <div key={st.id} className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
               <div className="flex items-center justify-between text-xs">
-                <div className="flex items-center gap-2">
-                  <span className="text-base">{st.stampBadge}</span>
-                  <span className="font-bold text-slate-800">{st.name}</span>
-                  <span className="text-slate-400 font-mono hidden sm:inline">({st.location})</span>
+                <div className="flex items-center gap-2 min-w-0">
+                  <span className="text-base shrink-0">{st.stampBadge}</span>
+                  <div className="truncate">
+                    <span className="font-bold text-slate-800 block truncate">{st.name}</span>
+                    <span className="text-[11px] text-slate-400">{st.location}</span>
+                  </div>
                 </div>
-                <div className="font-mono font-bold text-slate-700">
+                <div className="font-mono font-bold text-slate-700 shrink-0 ml-2">
                   {st.count} SV <span className="text-slate-400 font-normal">({st.percentage}%)</span>
                 </div>
               </div>
 
               {/* Progress visual bar */}
-              <div className="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+              <div className="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
                 <div
                   className="h-full bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full transition-all duration-500"
                   style={{ width: `${Math.max(st.percentage, 5)}%` }}
@@ -162,16 +165,16 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
         </div>
       </div>
 
-      {/* Prize Redemption & Lucky Draw Table */}
+      {/* Prize Redemption & Recognition Table */}
       <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-3 border-b border-slate-100">
           <div>
             <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
               <Gift className="w-5 h-5 text-amber-500" />
-              <span>Danh Sách Tân Sinh Viên Đủ Điều Kiện Nhận Quà & Rút Thăm May Mắn</span>
+              <span>Danh Sách Tân Sinh Viên Đủ Điều Kiện Nhận Quà & Trao Thưởng</span>
             </h3>
             <p className="text-xs text-slate-500 mt-0.5">
-              Tổng cộng: <strong className="text-blue-600 font-bold">{eligibleStudents.length}</strong> bạn sinh viên đủ điều kiện (từ 4 con dấu trở lên)
+              Tổng cộng: <strong className="text-blue-600 font-bold">{eligibleStudents.length}</strong> bạn sinh viên đủ điều kiện (từ 5 con dấu trở lên)
             </p>
           </div>
 
@@ -180,7 +183,7 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
             className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs transition-all shrink-0"
           >
             <Download className="w-4 h-4" />
-            <span>Xuất Danh Sách Bốc Thăm (CSV)</span>
+            <span>Xuất Danh Sách Nhận Quà (CSV)</span>
           </button>
         </div>
 
@@ -192,7 +195,7 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
               type="text"
               value={filterQuery}
               onChange={(e) => setFilterQuery(e.target.value)}
-              placeholder="Tìm theo Mã dự thưởng, Tên hoặc MSSV..."
+              placeholder="Tìm theo Mã cá nhân, Tên hoặc MSSV..."
               className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -204,10 +207,10 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
             <thead>
               <tr className="border-b border-slate-100 text-slate-400 font-semibold uppercase text-[10px]">
                 <th className="py-2.5 px-2">#</th>
-                <th className="py-2.5 px-2">Mã Dự Thưởng</th>
+                <th className="py-2.5 px-2">Mã Cá Nhân</th>
                 <th className="py-2.5 px-2">MSSV</th>
                 <th className="py-2.5 px-2">Họ và Tên</th>
-                <th className="py-2.5 px-2">Khoa / Viện</th>
+                <th className="py-2.5 px-2">Khoa</th>
                 <th className="py-2.5 px-2">Tiến độ Trạm</th>
                 <th className="py-2.5 px-2 text-right">Trạng Thái Đổi Quà</th>
               </tr>
@@ -217,18 +220,18 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
                 <tr key={stu.id} className="hover:bg-slate-50/80 transition-colors">
                   <td className="py-3 px-2 font-mono text-slate-400">{index + 1}</td>
                   <td className="py-3 px-2 font-mono font-bold text-indigo-600 bg-indigo-50/50 px-2 py-1 rounded">
-                    {stu.luckyDrawCode || 'TSV-2026'}
+                    {stu.luckyDrawCode || 'SGU-2025'}
                   </td>
                   <td className="py-3 px-2 font-mono font-bold text-slate-800">{stu.mssv}</td>
                   <td className="py-3 px-2 font-semibold text-slate-900">{stu.fullName}</td>
                   <td className="py-3 px-2 text-slate-600">{stu.faculty}</td>
                   <td className="py-3 px-2">
                     <span className={`px-2 py-0.5 rounded-full font-bold text-[11px] ${
-                      stu.completedStations.length === 6
+                      stu.completedStations.length === totalStations
                         ? 'bg-purple-100 text-purple-800 border border-purple-300'
                         : 'bg-emerald-100 text-emerald-800'
                     }`}>
-                      {stu.completedStations.length}/6 trạm
+                      {stu.completedStations.length}/{totalStations} trạm
                     </span>
                   </td>
                   <td className="py-3 px-2 text-right">

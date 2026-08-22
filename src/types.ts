@@ -1,6 +1,7 @@
 export interface Station {
   id: string;
   stationNumber: number;
+  activityNumber?: number; // Số thứ tự hoạt động trong Kế hoạch (3, 6, 8, 9, 10, 12, 13, 17)
   name: string;
   shortName: string;
   tagline: string;
@@ -11,7 +12,8 @@ export interface Station {
   color: string;
   managerName: string;
   managerPhone: string;
-  nfcTagId: string; // e.g. "B1:8D:92:6D" or custom identifier
+  assignedUnit?: string; // Đơn vị phân công thực hiện (LCH SV khoa, CLB)
+  nfcTagId: string; // e.g. "B1:8D:92:6D"
   stampBadge: string;
   rewardPoints: number;
   estimatedMinutes: number;
@@ -34,7 +36,8 @@ export interface Student {
   checkinHistory: StationCheckin[];
   isEligibleForReward: boolean;
   rewardClaimed: boolean;
-  luckyDrawCode?: string;
+  luckyDrawCode?: string; // Mã cá nhân định danh sinh viên (TSV-XXXXX)
+  personalCode?: string;
 }
 
 export interface StationCheckin {
@@ -47,14 +50,19 @@ export interface StationCheckin {
 
 export interface TimelineEvent {
   id: string;
+  activityNumber?: number; // Số thứ tự hoạt động (1 - 18)
   time: string;
   endTime: string;
   title: string;
   location: string;
-  category: 'main_stage' | 'station_activity' | 'talkshow' | 'gala' | 'gift_exchange';
+  category: 'ceremony' | 'main_stage' | 'station_activity' | 'talkshow' | 'exhibition' | 'market_food' | 'sports_game' | 'gala' | 'gift_exchange';
   description: string;
+  inCharge?: string; // Cán bộ / Đ/c Phụ trách
+  assignedUnit?: string; // Phân công thực hiện (LCH Khoa, CLB Đội Nhóm)
   speakers?: string[];
   isHighlight?: boolean;
+  isCheckinStation?: boolean; // Có tính điểm danh trạm hay không
+  stationId?: string; // ID trạm tương ứng nếu là trạm điểm danh
 }
 
 export interface NFCCardConfig {

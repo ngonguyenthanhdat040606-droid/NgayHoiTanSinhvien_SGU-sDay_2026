@@ -10,9 +10,12 @@ import {
   Sparkles,
   Users,
   ShieldCheck,
-  CreditCard
+  CreditCard,
+  Lock,
+  Unlock
 } from 'lucide-react';
 import { Student } from '../types';
+import { isOrganizerAuthenticated } from '../utils/storage';
 
 interface NavbarProps {
   activeTab: 'timeline' | 'student_pass' | 'map' | 'checkin' | 'manager' | 'nfc_guide' | 'analytics';
@@ -28,6 +31,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenRegisterModal,
 }) => {
   const completedCount = activeStudent?.completedStations.length || 0;
+  const isOrganizer = isOrganizerAuthenticated();
 
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
@@ -36,14 +40,14 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2 font-medium">
             <span className="inline-flex items-center justify-center bg-white/20 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">
-              🎉 2026
+              🎉 SGU’S DAY 2025
             </span>
-            <span className="truncate">Chào mừng Tân Sinh Viên! Tham gia 6 trạm sự kiện để nhận ngay phần quà đặc biệt</span>
+            <span className="truncate">Chào mừng Tân Sinh Viên Khóa 2025! Khám phá 18 hoạt động & tích lũy 8 dấu trạm nhận quà đặc biệt</span>
           </div>
           <div className="hidden sm:flex items-center gap-4 text-white/90">
             <span className="flex items-center gap-1.5">
               <Radio className="w-3.5 h-3.5 animate-pulse text-emerald-300" />
-              <span>Hệ thống Điểm danh NFC & QR Trạm đang hoạt động</span>
+              <span>Hệ thống Điểm danh NFC & QR Trạm đang sẵn sàng</span>
             </span>
           </div>
         </div>
@@ -62,10 +66,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
             <div>
               <div className="font-bold text-slate-900 leading-tight text-base sm:text-lg flex items-center gap-1.5">
-                <span>NGÀY HỘI TÂN SINH VIÊN</span>
+                <span>SGU’S DAY 2025</span>
               </div>
               <p className="text-xs text-slate-500 font-medium hidden sm:block">
-                Cổng thông tin & Điểm danh Hộ chiếu Sự kiện
+                Ngày Hội Tân Sinh Viên • ĐH Sài Gòn
               </p>
             </div>
           </div>
@@ -82,7 +86,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}
             >
               <Calendar className="w-4 h-4" />
-              <span>Lịch trình</span>
+              <span>Lịch trình (18 HĐ)</span>
             </button>
 
             <button
@@ -95,10 +99,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}
             >
               <CreditCard className="w-4 h-4" />
-              <span>Thẻ e-Pass & Dấu Trạm</span>
+              <span>Thẻ e-Pass & 8 Dấu Trạm</span>
               {activeStudent && (
                 <span className="ml-1 px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-600 text-white">
-                  {completedCount}/6
+                  {completedCount}/8
                 </span>
               )}
             </button>
@@ -113,7 +117,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}
             >
               <MapPin className="w-4 h-4" />
-              <span>Sơ đồ 6 Trạm</span>
+              <span>Sơ đồ 8 Trạm</span>
             </button>
 
             <button
@@ -129,17 +133,21 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span>Quét NFC / Điểm danh</span>
             </button>
 
+            <div className="h-5 w-px bg-slate-200 mx-1" />
+
+            {/* Organizer Tools Section */}
             <button
               id="nav-manager-btn"
               onClick={() => setActiveTab('manager')}
               className={`px-3 py-2 rounded-lg text-sm font-semibold transition-all flex items-center gap-1.5 ${
                 activeTab === 'manager'
                   ? 'bg-amber-100 text-amber-900 font-bold'
-                  : 'text-amber-800 bg-amber-50 hover:bg-amber-100'
+                  : 'text-amber-800 bg-amber-50/70 hover:bg-amber-100'
               }`}
+              title="Dành riêng cho Ban Tổ Chức & Trưởng Trạm"
             >
-              <ShieldCheck className="w-4 h-4" />
-              <span>Quản lý Trạm (BTC)</span>
+              {isOrganizer ? <ShieldCheck className="w-4 h-4 text-emerald-600" /> : <Lock className="w-3.5 h-3.5 text-amber-700" />}
+              <span>Quản lý Trạm</span>
             </button>
 
             <button
@@ -148,11 +156,12 @@ export const Navbar: React.FC<NavbarProps> = ({
               className={`px-3 py-2 rounded-lg text-sm font-semibold transition-all flex items-center gap-1.5 ${
                 activeTab === 'nfc_guide'
                   ? 'bg-purple-100 text-purple-900 font-bold'
-                  : 'text-purple-800 bg-purple-50 hover:bg-purple-100'
+                  : 'text-purple-800 bg-purple-50/70 hover:bg-purple-100'
               }`}
+              title="Dành cho BTC nạp link thẻ NFC"
             >
-              <BookOpen className="w-4 h-4" />
-              <span>HD Ghi thẻ NFC</span>
+              {isOrganizer ? <BookOpen className="w-4 h-4 text-purple-600" /> : <Lock className="w-3.5 h-3.5 text-purple-700" />}
+              <span>HD Ghi thẻ</span>
             </button>
 
             <button
@@ -163,8 +172,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                   ? 'bg-blue-50 text-blue-700 shadow-xs'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
               }`}
+              title="Dành cho BTC xuất danh sách và thống kê"
             >
-              <BarChart3 className="w-4 h-4" />
+              {isOrganizer ? <BarChart3 className="w-4 h-4 text-blue-600" /> : <Lock className="w-3.5 h-3.5 text-slate-500" />}
               <span>Thống kê</span>
             </button>
           </nav>
@@ -186,7 +196,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     {activeStudent.fullName}
                   </div>
                   <div className="text-[10px] text-slate-500 font-mono mt-0.5">
-                    {activeStudent.mssv} • {completedCount}/6 Trạm
+                    {activeStudent.mssv} • {completedCount}/8 Trạm
                   </div>
                 </div>
               </div>
@@ -212,7 +222,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             }`}
           >
             <Calendar className="w-3.5 h-3.5" />
-            <span>Lịch trình</span>
+            <span>18 Lịch trình</span>
           </button>
 
           <button
@@ -222,7 +232,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             }`}
           >
             <CreditCard className="w-3.5 h-3.5" />
-            <span>Thẻ Tân SV ({completedCount}/6)</span>
+            <span>Hộ chiếu ({completedCount}/8)</span>
           </button>
 
           <button
@@ -232,7 +242,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             }`}
           >
             <Radio className="w-3.5 h-3.5" />
-            <span>Điểm danh NFC/QR</span>
+            <span>Điểm danh</span>
           </button>
 
           <button
@@ -242,36 +252,36 @@ export const Navbar: React.FC<NavbarProps> = ({
             }`}
           >
             <MapPin className="w-3.5 h-3.5" />
-            <span>Sơ đồ 6 Trạm</span>
+            <span>Sơ đồ 8 Trạm</span>
           </button>
 
           <button
             onClick={() => setActiveTab('manager')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold shrink-0 flex items-center gap-1 ${
-              activeTab === 'manager' ? 'bg-amber-600 text-white' : 'bg-amber-100 text-amber-800'
+            className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold shrink-0 flex items-center gap-1 ${
+              activeTab === 'manager' ? 'bg-amber-600 text-white' : 'bg-amber-100 text-amber-900'
             }`}
           >
-            <ShieldCheck className="w-3.5 h-3.5" />
-            <span>Quản lý Trạm</span>
+            {isOrganizer ? <ShieldCheck className="w-3.5 h-3.5" /> : <Lock className="w-3 h-3 text-amber-700" />}
+            <span>QL Trạm (BTC)</span>
           </button>
 
           <button
             onClick={() => setActiveTab('nfc_guide')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold shrink-0 flex items-center gap-1 ${
-              activeTab === 'nfc_guide' ? 'bg-purple-600 text-white' : 'bg-purple-100 text-purple-800'
+            className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold shrink-0 flex items-center gap-1 ${
+              activeTab === 'nfc_guide' ? 'bg-purple-600 text-white' : 'bg-purple-100 text-purple-900'
             }`}
           >
-            <BookOpen className="w-3.5 h-3.5" />
-            <span>HD Ghi thẻ</span>
+            {isOrganizer ? <BookOpen className="w-3.5 h-3.5" /> : <Lock className="w-3 h-3 text-purple-700" />}
+            <span>HD Thẻ</span>
           </button>
 
           <button
             onClick={() => setActiveTab('analytics')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold shrink-0 flex items-center gap-1 ${
+            className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold shrink-0 flex items-center gap-1 ${
               activeTab === 'analytics' ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-700'
             }`}
           >
-            <BarChart3 className="w-3.5 h-3.5" />
+            {isOrganizer ? <BarChart3 className="w-3.5 h-3.5" /> : <Lock className="w-3 h-3 text-slate-500" />}
             <span>Thống kê</span>
           </button>
         </div>
