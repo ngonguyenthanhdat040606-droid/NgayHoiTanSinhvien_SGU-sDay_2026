@@ -3,6 +3,7 @@ import confetti from 'canvas-confetti';
 import { 
   Navbar 
 } from './components/Navbar';
+import sguLogo from '@/CỤM LOGO SGU.png';
 import { 
   StudentCard 
 } from './components/StudentCard';
@@ -589,6 +590,7 @@ export default function App() {
       <footer className="mt-auto border-t border-slate-200 bg-white/80 backdrop-blur-xs py-6 text-center text-xs text-slate-500">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2">
+            <img src={sguLogo} alt="Logo SGU" className="h-6 w-auto object-contain" />
             <span className="font-bold text-slate-800">SGU’s Day 2025</span>
             <span>•</span>
             <span>Đoàn Thanh niên - Hội Sinh viên Trường Đại học Sài Gòn</span>

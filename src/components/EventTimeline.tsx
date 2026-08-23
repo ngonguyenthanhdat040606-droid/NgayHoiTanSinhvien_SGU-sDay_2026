@@ -77,9 +77,13 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
 
           {/* Marquee Badges Row */}
           <div className="relative z-10 flex flex-wrap items-center justify-between gap-2.5 pb-4 border-b border-white/20">
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-blue-600/90 text-white font-extrabold text-[11px] uppercase tracking-wider shadow-md border border-blue-400/50 backdrop-blur-xs">
-              <Sparkles className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
-              <span>HỘI SINH VIÊN TRƯỜNG ĐẠI HỌC SÀI GÒN</span>
+            <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-white/95 text-slate-900 font-extrabold text-[11px] uppercase tracking-wider shadow-md border border-white/40 backdrop-blur-xs">
+              <img 
+                src={sguLogo} 
+                alt="Cụm Logo SGU" 
+                className="h-6 w-auto object-contain"
+              />
+              <span className="text-blue-950 font-black">HỘI SINH VIÊN TRƯỜNG ĐẠI HỌC SÀI GÒN</span>
             </div>
 
             <div className="flex items-center gap-2">
@@ -94,17 +98,46 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
 
           {/* Main Hero Title & Visual Arcade Centerpiece */}
           <div className="relative z-10 my-6 sm:my-8 text-center space-y-4">
-            <div className="inline-block">
-              <div className="flex items-center justify-center gap-2 text-amber-300 text-xs sm:text-sm font-extrabold tracking-widest uppercase mb-1">
-                <Star className="w-4 h-4 fill-amber-300" />
-                <span>CHÀO ĐÓN TÂN SINH VIÊN KHÓA 2025</span>
-                <Star className="w-4 h-4 fill-amber-300" />
+            <div className="inline-block animate-arcade-glow">
+              {/* Logo Cluster with Arcade Frame */}
+              <div className="flex items-center justify-center mb-3">
+                <div className="p-2.5 bg-white/95 rounded-3xl shadow-[0_8px_0_#ea580c,0_15px_30px_rgba(0,0,0,0.4)] border-2 border-amber-300 inline-flex items-center justify-center backdrop-blur-md hover:scale-105 transition-transform duration-200">
+                  <img 
+                    src={sguLogo} 
+                    alt="Cụm Logo Trường Đại Học Sài Gòn & Hội Sinh Viên" 
+                    className="h-14 sm:h-20 w-auto object-contain"
+                  />
+                </div>
               </div>
-              <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white tracking-tight leading-none drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]">
-                SGU’S <span className="text-amber-300">DAY</span> 2025
-              </h1>
-              <div className="mt-2 inline-block bg-white text-orange-600 px-4 py-1 rounded-full font-black text-xs sm:text-sm tracking-wide shadow-md uppercase">
-                🎮 HỘ CHIẾU ĐIỆN TỬ & CHINH PHỤC 8 TRẠM NGÀY HỘI
+
+              {/* Arcade Sub-badge */}
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <span className="inline-flex items-center gap-2 bg-black/40 border border-amber-300/60 backdrop-blur-md px-4 py-1 rounded-full text-amber-300 text-xs sm:text-sm font-arcade tracking-widest uppercase shadow-md">
+                  <Star className="w-3.5 h-3.5 fill-amber-300 text-amber-300 animate-spin" style={{ animationDuration: '6s' }} />
+                  <span>CHÀO ĐÓN TÂN SINH VIÊN KHÓA 2025</span>
+                  <Star className="w-3.5 h-3.5 fill-amber-300 text-amber-300 animate-spin" style={{ animationDuration: '6s' }} />
+                </span>
+              </div>
+
+              {/* 3D Impressive Arcade Hero Title */}
+              <div className="py-2">
+                <h1 className="font-arcade-title text-5xl sm:text-7xl md:text-8xl tracking-wider leading-none select-none flex items-center justify-center flex-wrap gap-x-3 sm:gap-x-4 gap-y-2">
+                  <span className="text-white drop-shadow-[0_4px_0_#0284c7] sm:drop-shadow-[0_8px_0_#0369a1] filter">
+                    SGU’S
+                  </span>
+                  <span className="text-transparent bg-clip-text bg-gradient-to-b from-amber-200 via-amber-400 to-orange-500 arcade-text-3d-orange">
+                    DAY
+                  </span>
+                  <span className="inline-flex items-center px-3.5 py-1 sm:px-5 sm:py-1.5 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-blue-600 via-indigo-600 to-blue-900 text-amber-300 font-arcade text-3xl sm:text-5xl md:text-6xl border-2 sm:border-4 border-amber-300 shadow-[0_6px_0_#1e3a8a,0_12px_24px_rgba(0,0,0,0.6)] transform -rotate-3 hover:rotate-0 transition-transform duration-200">
+                    2025
+                  </span>
+                </h1>
+              </div>
+
+              {/* Arcade Action Ribbon */}
+              <div className="mt-3 inline-flex items-center gap-2 bg-gradient-to-r from-orange-600 via-amber-500 to-orange-600 text-white px-5 sm:px-6 py-1.5 sm:py-2 rounded-full font-arcade text-xs sm:text-sm tracking-wider uppercase shadow-[0_4px_0_#c2410c,0_8px_20px_rgba(234,88,12,0.4)] border-2 border-white/90">
+                <Gamepad2 className="w-4 h-4 text-white animate-bounce" />
+                <span>HỘ CHIẾU ĐIỆN TỬ & CHINH PHỤC 8 TRẠM NGÀY HỘI</span>
               </div>
             </div>
 

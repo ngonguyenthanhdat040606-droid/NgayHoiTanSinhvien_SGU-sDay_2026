@@ -134,7 +134,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
                   Thẻ Tân Sinh Viên
                 </span>
               </div>
-              <span className="text-[11px] font-mono font-black bg-orange-600 text-white px-2 py-0.5 rounded-md shadow-xs">
+              <span className="text-[11px] font-arcade bg-gradient-to-r from-orange-500 to-amber-500 text-white px-2.5 py-0.5 rounded-lg shadow-[0_2px_0_#9a3412] border border-white/30">
                 SGU’S DAY 2025
               </span>
             </div>

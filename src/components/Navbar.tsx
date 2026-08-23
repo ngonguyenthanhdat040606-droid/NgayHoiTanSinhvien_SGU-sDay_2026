@@ -13,6 +13,7 @@ import {
   Gamepad2,
   Trophy
 } from 'lucide-react';
+import sguLogo from '@/CỤM LOGO SGU.png';
 import { Student } from '../types';
 import { isOrganizerAuthenticated } from '../utils/storage';
 
@@ -58,33 +59,31 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* Main Navigation Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16 sm:h-20 gap-3">
-          {/* Logo & Branding - SGU Moodboard Identity */}
+          {/* Logo & Branding - SGU Official Identity */}
           <div 
             className="flex items-center gap-3 cursor-pointer select-none shrink-0 group"
             onClick={() => setActiveTab('timeline')}
           >
-            {/* SGU Arcade Emblem */}
-            <div className="relative">
-              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-800 flex flex-col items-center justify-center text-white shadow-md border-2 border-amber-300 transform group-hover:scale-105 transition-transform">
-                <span className="text-[10px] font-black tracking-widest text-amber-300 leading-none">SGU</span>
-                <span className="text-[9px] font-black text-white leading-none mt-0.5 font-mono">2025</span>
-              </div>
-              <div className="absolute -top-1 -right-1 w-4 h-4 bg-orange-500 rounded-full border-2 border-white flex items-center justify-center text-[8px] text-white font-black animate-bounce">
-                ★
-              </div>
+            {/* SGU Official Logo Cluster */}
+            <div className="relative flex items-center justify-center p-1 bg-white rounded-2xl shadow-sm border border-slate-200/80 group-hover:border-orange-400 group-hover:shadow-md transition-all">
+              <img 
+                src={sguLogo} 
+                alt="Cụm Logo SGU - Hội Sinh Viên Trường Đại Học Sài Gòn" 
+                className="h-10 sm:h-12 w-auto object-contain transform group-hover:scale-105 transition-transform"
+              />
             </div>
 
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="font-display font-black text-slate-950 text-lg sm:text-xl tracking-tight uppercase drop-shadow-2xs">
+                <span className="font-arcade-title font-black text-slate-950 text-xl sm:text-2xl tracking-wide uppercase drop-shadow-2xs">
                   SGU’S <span className="text-orange-600">DAY</span>
                 </span>
-                <span className="bg-blue-600 text-white font-extrabold text-[10px] px-1.5 py-0.5 rounded-md shadow-xs">
+                <span className="bg-gradient-to-b from-blue-600 to-indigo-700 text-amber-300 font-arcade text-[10px] sm:text-[11px] px-2 py-0.5 rounded-lg shadow-[0_2px_0_#1e3a8a] border border-blue-400/40">
                   2025
                 </span>
               </div>
               <p className="text-[11px] text-slate-600 font-bold hidden sm:block">
-                Hội Sinh Viên ĐH Sài Gòn • Đại hội IX
+                Hội Sinh Viên Trường Đại Học Sài Gòn
               </p>
             </div>
           </div>
