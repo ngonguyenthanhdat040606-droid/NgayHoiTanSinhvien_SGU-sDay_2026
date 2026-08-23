@@ -163,11 +163,18 @@ export default function App() {
     setStudents(loadedStudents);
     setStations(loadedStations);
     
-    // Pick active student or first available
-    const initStudent = (currentActiveId ? loadedStudents.find((s) => s.id === currentActiveId) : null) || loadedStudents[0] || null;
-    if (initStudent) {
-      setStudentIdState(initStudent.id);
-      setActiveStudentId(initStudent.id);
+    // Pick active student ONLY if previously set by user (NO auto-fallback to students[0])
+    if (currentActiveId) {
+      const found = loadedStudents.find((s) => s.id === currentActiveId);
+      if (found) {
+        setStudentIdState(found.id);
+        setActiveStudentId(found.id);
+      } else {
+        setStudentIdState(null);
+        setActiveStudentId(null);
+      }
+    } else {
+      setStudentIdState(null);
     }
 
     // Seed initial Firestore collection if empty
@@ -205,7 +212,7 @@ export default function App() {
       if (matched) {
         const freshStudents = getStoredStudents();
         const activeId = getActiveStudentId();
-        const currentStudent = (activeId ? freshStudents.find((s) => s.id === activeId) : null) || freshStudents[0];
+        const currentStudent = activeId ? freshStudents.find((s) => s.id === activeId) || null : null;
         
         if (currentStudent) {
           const res = checkinStudentToStation(currentStudent.id, matched.id, 'nfc_tap', 'Thẻ NFC Trạm');
@@ -238,7 +245,7 @@ export default function App() {
           // If no student exists yet on this phone (fresh iOS Safari)
           setPendingNfcStation(matched);
           setIsRegisterModalOpen(true);
-          showToast(`📱 Đã nhận diện NFC ${matched.name}. Mời bạn đăng ký nhận Thẻ e-Pass!`, 'info');
+          showToast(`📱 Đã nhận diện NFC ${matched.name}. Mời bạn đăng ký hoặc đăng nhập nhận Thẻ e-Pass!`, 'info');
         }
 
         // Clean up hash/params so it doesn't repeatedly trigger on refresh
@@ -260,7 +267,7 @@ export default function App() {
     };
   }, []);
 
-  const activeStudent = (activeStudentId ? students.find((s) => s.id === activeStudentId) : null) || students[0] || null;
+  const activeStudent = activeStudentId ? students.find((s) => s.id === activeStudentId) || null : null;
 
   // Handler: Checkin from student scanner
   const handleStudentCheckin = async (stationId: string, method: 'nfc_tap' | 'qr_scan' | 'manual_mssv') => {
@@ -358,8 +365,10 @@ export default function App() {
     studentClass: string;
     email: string;
     phone: string;
+    pinCode?: string;
   }): Student => {
-    const registered = registerOrUpdateStudent(data, pendingNfcStation?.id);
+    const res = registerOrUpdateStudent(data, pendingNfcStation?.id);
+    const registered = res.student;
     const updatedList = getStoredStudents();
     setStudents(updatedList);
     setStudentIdState(registered.id);
@@ -379,7 +388,7 @@ export default function App() {
       showToast(`🎉 Chào mừng ${registered.fullName}! Đã lưu tài khoản & đóng dấu ${pendingNfcStation.name}!`, 'success');
       setPendingNfcStation(null);
     } else {
-      showToast(`Chào mừng tân sinh viên ${registered.fullName}! Đã lưu và kích hoạt Thẻ e-Pass.`, 'success');
+      showToast(res.message, 'success');
     }
 
     // Clean URL
@@ -560,6 +569,10 @@ export default function App() {
         pendingStation={pendingNfcStation}
         onSelectStudent={handleSelectStudent}
         onRegisterStudent={handleRegisterStudent}
+        onLogoutStudent={() => {
+          setStudentIdState(null);
+          showToast('Đã đăng xuất Thẻ sinh viên trên thiết bị này.', 'info');
+        }}
       />
 
       <StationDetailModal

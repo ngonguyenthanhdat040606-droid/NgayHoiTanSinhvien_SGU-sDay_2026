@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import QRCode from 'qrcode';
-import { 
-  Sparkles, 
-  CheckCircle2, 
-  Award, 
-  Clock, 
-  QrCode, 
-  UserCheck, 
+import {
+  Sparkles,
+  CheckCircle2,
+  Award,
+  Clock,
+  QrCode,
+  UserCheck,
   ShieldCheck,
   Zap,
   Flame,
@@ -71,38 +71,35 @@ export const StudentCard: React.FC<StudentCardProps> = ({
   return (
     <div className="space-y-6 max-w-5xl mx-auto">
       {/* Top Banner Alert / SGU Station Completion Progress */}
-      <div className={`p-4 sm:p-5 rounded-3xl border-2 transition-all shadow-lg ${
-        isFullComplete 
+      <div className={`p-4 sm:p-5 rounded-3xl border-2 transition-all shadow-lg ${isFullComplete
           ? 'bg-gradient-to-r from-orange-600 via-amber-500 to-yellow-500 text-white border-amber-300 shadow-orange-500/20'
           : completedStationsCount > 0
-          ? 'bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-800 text-white border-blue-400 shadow-blue-500/20'
-          : 'bg-gradient-to-r from-amber-50 to-orange-50 border-orange-300 text-slate-900'
-      }`}>
+            ? 'bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-800 text-white border-blue-400 shadow-blue-500/20'
+            : 'bg-gradient-to-r from-amber-50 to-orange-50 border-orange-300 text-slate-900'
+        }`}>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
-            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shrink-0 shadow-md ${
-              isFullComplete || completedStationsCount > 0 ? 'bg-white/20 text-white' : 'bg-orange-500 text-white'
-            }`}>
+            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shrink-0 shadow-md ${isFullComplete || completedStationsCount > 0 ? 'bg-white/20 text-white' : 'bg-orange-500 text-white'
+              }`}>
               {isFullComplete ? '👑' : completedStationsCount > 0 ? '⭐' : '🎮'}
             </div>
             <div>
               <div className="font-display font-black text-base sm:text-lg flex items-center gap-2">
                 <span>
-                  {isFullComplete 
-                    ? `CHÚC MỪNG! Bạn đã hoàn thành trọn vẹn 8/8 Trạm SGU’s Day 2025!` 
+                  {isFullComplete
+                    ? `CHÚC MỪNG! Bạn đã hoàn thành trọn vẹn 8/8 Trạm SGU’s Day 2025!`
                     : completedStationsCount > 0
-                    ? `Tiến độ Hộ Chiếu Tân Sinh Viên: Đã điểm danh ${completedStationsCount}/8 trạm!`
-                    : `Hành trình Hộ Chiếu Tân Sinh Viên SGU (0/8 trạm)`}
+                      ? `Tiến độ Hộ Chiếu Tân Sinh Viên: Đã điểm danh ${completedStationsCount}/8 trạm!`
+                      : `Hành trình Hộ Chiếu Tân Sinh Viên SGU (0/8 trạm)`}
                 </span>
               </div>
-              <p className={`text-xs sm:text-sm mt-0.5 font-medium ${
-                isFullComplete || completedStationsCount > 0 ? 'text-white/90' : 'text-slate-700'
-              }`}>
+              <p className={`text-xs sm:text-sm mt-0.5 font-medium ${isFullComplete || completedStationsCount > 0 ? 'text-white/90' : 'text-slate-700'
+                }`}>
                 {isFullComplete
                   ? 'Bạn đã hoàn tất toàn bộ các trạm trải nghiệm! Hãy tiếp tục tham gia các hoạt động sân khấu, toạ đàm và Gala Âm nhạc.'
                   : completedStationsCount > 0
-                  ? `Hãy tiếp tục di chuyển và điểm danh ${totalStations - completedStationsCount} trạm còn lại để hoàn thành hành trình ngày hội.`
-                  : 'Hãy mang thẻ e-Pass đến các trạm hoạt động để chạm NFC hoặc quét QR điểm danh lưu lại con dấu.'}
+                    ? `Hãy tiếp tục di chuyển và điểm danh ${totalStations - completedStationsCount} trạm còn lại để hoàn thành hành trình ngày hội.`
+                    : 'Hãy mang thẻ e-Pass đến các trạm hoạt động để chạm NFC hoặc quét QR điểm danh lưu lại con dấu.'}
               </p>
             </div>
           </div>
@@ -111,11 +108,10 @@ export const StudentCard: React.FC<StudentCardProps> = ({
             <button
               id="quick-checkin-passport-btn"
               onClick={onOpenCheckin}
-              className={`px-5 py-2.5 rounded-2xl font-black text-xs sm:text-sm shadow-md transition-all flex items-center gap-2 cursor-pointer uppercase ${
-                isFullComplete || completedStationsCount > 0
+              className={`px-5 py-2.5 rounded-2xl font-black text-xs sm:text-sm shadow-md transition-all flex items-center gap-2 cursor-pointer uppercase ${isFullComplete || completedStationsCount > 0
                   ? 'bg-white text-slate-950 hover:bg-amber-100'
                   : 'arcade-btn-orange text-white'
-              }`}
+                }`}
             >
               <Zap className="w-4 h-4 text-amber-300 fill-amber-300" />
               <span>Chạm NFC / Quét Trạm</span>
@@ -126,7 +122,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
 
       {/* Grid: Left = Electronic Pass Card, Right = Stamp Passport Rally */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        
+
         {/* LEFT: Digital Freshman Pass (e-Pass) */}
         <div className="lg:col-span-5 bg-white rounded-3xl border-2 border-orange-300 shadow-xl overflow-hidden relative">
           {/* Card Top Header - SGU Moodboard Blue/Orange Arcade */}
@@ -158,7 +154,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
                   <span className="bg-white/20 px-2 py-0.5 rounded-md text-[11px] font-mono font-bold text-white border border-white/20">
                     MSSV: <strong className="text-amber-300">{student.mssv}</strong>
                   </span>
-                  <button 
+                  <button
                     onClick={handleCopyMSSV}
                     className="text-[11px] text-amber-300 hover:text-white underline underline-offset-2 font-bold cursor-pointer"
                   >
@@ -196,12 +192,12 @@ export const StudentCard: React.FC<StudentCardProps> = ({
                 <QrCode className="w-3.5 h-3.5 text-orange-600" />
                 Mã QR e-Pass (Quản lý trạm quét điểm danh)
               </span>
-              
+
               {qrDataUrl ? (
                 <div className="p-2 bg-white rounded-2xl shadow-md border-2 border-orange-400">
-                  <img 
-                    src={qrDataUrl} 
-                    alt="Mã QR Thẻ Tân Sinh Viên" 
+                  <img
+                    src={qrDataUrl}
+                    alt="Mã QR Thẻ Tân Sinh Viên"
                     className="w-44 h-44 object-contain rounded-lg"
                   />
                 </div>
@@ -222,7 +218,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
                 className="flex-1 py-2.5 px-3 rounded-2xl border-2 border-slate-200 text-slate-700 hover:bg-orange-50 hover:text-orange-600 hover:border-orange-300 text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <UserCheck className="w-4 h-4 text-orange-500" />
-                <span>Đổi thông tin / Chọn sinh viên khác</span>
+                <span>Đổi / Quản lý Thẻ e-Pass</span>
               </button>
             </div>
           </div>
@@ -253,7 +249,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
 
             {/* Progress Level Bar */}
             <div className="w-full bg-slate-100 h-4 rounded-full overflow-hidden p-0.5 border-2 border-orange-200">
-              <div 
+              <div
                 className="bg-gradient-to-r from-orange-500 via-amber-500 to-emerald-500 h-full rounded-full transition-all duration-500 shadow-xs"
                 style={{ width: `${(completedStationsCount / totalStations) * 100}%` }}
               />
@@ -270,17 +266,15 @@ export const StudentCard: React.FC<StudentCardProps> = ({
                     key={station.id}
                     id={`stamp-card-${station.id}`}
                     onClick={() => onSelectStation(station)}
-                    className={`relative p-3.5 rounded-2xl border-2 transition-all cursor-pointer text-left flex flex-col justify-between min-h-[145px] group hover:shadow-lg ${
-                      isCompleted
+                    className={`relative p-3.5 rounded-2xl border-2 transition-all cursor-pointer text-left flex flex-col justify-between min-h-[145px] group hover:shadow-lg ${isCompleted
                         ? 'bg-gradient-to-br from-emerald-50 via-teal-50 to-white border-emerald-400 shadow-sm ring-2 ring-emerald-400/30'
                         : 'bg-slate-50 border-slate-200 hover:border-orange-400 hover:bg-orange-50/40'
-                    }`}
+                      }`}
                   >
                     {/* Badge Stamp Header */}
                     <div className="flex items-center justify-between">
-                      <span className={`text-[9px] font-black font-mono px-1.5 py-0.5 rounded-md ${
-                        isCompleted ? 'bg-emerald-600 text-white' : 'bg-white border border-slate-300 text-slate-700'
-                      }`}>
+                      <span className={`text-[9px] font-black font-mono px-1.5 py-0.5 rounded-md ${isCompleted ? 'bg-emerald-600 text-white' : 'bg-white border border-slate-300 text-slate-700'
+                        }`}>
                         TRẠM {station.stationNumber}
                       </span>
                       {isCompleted && (
@@ -290,20 +284,18 @@ export const StudentCard: React.FC<StudentCardProps> = ({
 
                     {/* Central Icon / Stamp Badge */}
                     <div className="my-1.5 flex items-center justify-center">
-                      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl transition-transform group-hover:scale-110 shadow-md ${
-                        isCompleted
+                      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl transition-transform group-hover:scale-110 shadow-md ${isCompleted
                           ? 'bg-gradient-to-tr from-emerald-500 to-teal-400 text-white ring-4 ring-emerald-200'
                           : 'bg-slate-200 text-slate-400 grayscale opacity-60'
-                      }`}>
+                        }`}>
                         {station.stampBadge}
                       </div>
                     </div>
 
                     {/* Station Name & Timestamp */}
                     <div>
-                      <h4 className={`text-xs font-bold line-clamp-1 ${
-                        isCompleted ? 'text-slate-950 font-black' : 'text-slate-700'
-                      }`}>
+                      <h4 className={`text-xs font-bold line-clamp-1 ${isCompleted ? 'text-slate-950 font-black' : 'text-slate-700'
+                        }`}>
                         {station.shortName}
                       </h4>
                       {isCompleted && checkinInfo ? (
@@ -362,8 +354,8 @@ export const StudentCard: React.FC<StudentCardProps> = ({
                         <div className="text-[11px] text-slate-500 font-medium">
                           Hình thức: {
                             log.method === 'nfc_tap' ? '⚡ Quét thẻ NFC' :
-                            log.method === 'qr_scan' ? '📷 Quét mã QR trạm' :
-                            log.method === 'manual_mssv' ? '✍️ Quản lý nhập MSSV' : '🔍 Quản lý quét mã'
+                              log.method === 'qr_scan' ? '📷 Quét mã QR trạm' :
+                                log.method === 'manual_mssv' ? '✍️ Quản lý nhập MSSV' : '🔍 Quản lý quét mã'
                           }
                         </div>
                       </div>

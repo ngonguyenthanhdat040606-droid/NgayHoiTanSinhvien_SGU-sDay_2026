@@ -1,27 +1,65 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Helper function
+    
+    // Helper function: check if caller has signed in (anonymous or authenticated)
     function isSignedIn() {
       return request.auth != null;
     }
 
-    // Students collection: allow read for anyone with app access / anonymous auth, and write
+    // Helper function: check if caller is an admin / organizer
+    function isOrganizer() {
+      return isSignedIn() && (
+        (request.auth.token.email != null && request.auth.token.email.matches('.*@(sgu|student[.]sgu)[.]edu[.]vn$')) ||
+        request.auth.token.admin == true
+      );
+    }
+
+    // Students collection: Secure registration and check-in updates
     match /students/{studentId} {
-      allow read: if true;
-      allow write: if true;
+      // 1. Allow reading for connected users
+      allow read: if isSignedIn();
+
+      // 2. Allow creating a student record with schema validation
+      allow create: if isSignedIn()
+        && request.resource.data.mssv is string
+        && request.resource.data.mssv.size() >= 6
+        && request.resource.data.fullName is string
+        && request.resource.data.completedStations is list;
+
+      // 3. Allow updating completed stations and profile without changing the core MSSV
+      allow update: if isSignedIn()
+        && (!('mssv' in resource.data) || request.resource.data.mssv == resource.data.mssv)
+        && request.resource.data.completedStations is list
+        && request.resource.data.completedStations.size() <= 8;
+
+      // 4. Disallow client-side deletion to prevent malicious data wipe
+      allow delete: if isOrganizer();
     }
 
-    // Station checkin logs
+    // Station checkin ledger: Append-Only (Immutable Logs)
     match /station_checkins/{checkinId} {
-      allow read: if true;
-      allow write: if true;
+      // Allow read for event reporting
+      allow read: if isSignedIn();
+
+      // Allow appending new checkin records with valid stationId
+      allow create: if isSignedIn()
+        && request.resource.data.stationId in [
+          'station-1', 'station-2', 'station-3', 'station-4',
+          'station-5', 'station-6', 'station-7', 'station-8'
+        ]
+        && request.resource.data.timestamp is string;
+
+      // Immutable: Never allow editing or deleting historical check-in logs
+      allow update, delete: if false;
     }
 
-    // System logs
+    // System logs: Append-Only
     match /system_logs/{logId} {
-      allow read: if true;
-      allow write: if true;
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update, delete: if false;
     }
   }
 }
+

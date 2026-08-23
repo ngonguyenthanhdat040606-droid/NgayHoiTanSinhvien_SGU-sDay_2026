@@ -1,26 +1,33 @@
 import React, { useState } from 'react';
-import { 
-  ShieldCheck, 
-  Lock, 
-  KeyRound, 
-  Unlock, 
-  LogOut, 
-  AlertCircle, 
-  CheckCircle2, 
-  Eye, 
-  EyeOff, 
-  Settings, 
+import {
+  ShieldCheck,
+  Lock,
+  KeyRound,
+  Unlock,
+  LogOut,
+  AlertCircle,
+  CheckCircle2,
+  Eye,
+  EyeOff,
+  Settings,
   X,
   Sparkles,
   ArrowLeft,
-  Gamepad2
+  Gamepad2,
+  Building2,
+  Users,
+  Award
 } from 'lucide-react';
-import { 
-  getOrganizerPin, 
-  setOrganizerPin, 
-  isOrganizerAuthenticated, 
-  setOrganizerAuthenticated 
+import {
+  getOrganizerPin,
+  setOrganizerPin,
+  isOrganizerAuthenticated,
+  getOrganizerSession,
+  setOrganizerSession,
+  verifyOrganizerCredentials,
+  clearOrganizerSession
 } from '../utils/storage';
+import { OrganizerSession } from '../types';
 
 interface OrganizerAuthGuardProps {
   children: React.ReactNode;
@@ -32,10 +39,10 @@ interface OrganizerAuthGuardProps {
 export const OrganizerAuthGuard: React.FC<OrganizerAuthGuardProps> = ({
   children,
   title = 'Khu Vực Ban Tổ Chức & Trưởng Trạm',
-  subtitle = 'Nhập mã PIN bảo vệ để truy cập hệ thống quản lý trạm, ghi nhận thủ công và xuất báo cáo.',
+  subtitle = 'Nhập mã khóa xác thực để truy cập hệ thống quản lý trạm, ghi nhận thủ công và xuất báo cáo.',
   onBackToStudent,
 }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => isOrganizerAuthenticated());
+  const [session, setSession] = useState<OrganizerSession | null>(() => getOrganizerSession());
   const [pinInput, setPinInput] = useState<string>('');
   const [errorMsg, setErrorMsg] = useState<string>('');
   const [showChangePinModal, setShowChangePinModal] = useState<boolean>(false);
@@ -50,26 +57,24 @@ export const OrganizerAuthGuard: React.FC<OrganizerAuthGuardProps> = ({
 
   const handleVerifyPin = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    const correctPin = getOrganizerPin();
-
     if (!pinInput.trim()) {
-      setErrorMsg('Vui lòng nhập mã PIN Ban Tổ Chức.');
+      setErrorMsg('Vui lòng nhập Mã PIN hoặc Khóa bảo mật!');
       return;
     }
 
-    if (pinInput.trim() === correctPin) {
-      setOrganizerAuthenticated(true, true);
-      setIsAuthenticated(true);
+    const res = verifyOrganizerCredentials(pinInput.trim());
+    if (res.success && res.session) {
+      setSession(res.session);
       setErrorMsg('');
       setPinInput('');
     } else {
-      setErrorMsg('Mã PIN không chính xác. Vui lòng thử lại!');
+      setErrorMsg(res.message);
     }
   };
 
   const handleLogout = () => {
-    setOrganizerAuthenticated(false);
-    setIsAuthenticated(false);
+    clearOrganizerSession();
+    setSession(null);
     setPinInput('');
     setErrorMsg('');
   };
@@ -105,37 +110,42 @@ export const OrganizerAuthGuard: React.FC<OrganizerAuthGuardProps> = ({
     }, 1500);
   };
 
-  // If already authenticated, render Organizer Tool Header + Children
-  if (isAuthenticated) {
+  // If already authenticated with valid session
+  if (session && session.authenticated) {
+    const isAdmin = session.role === 'admin';
     return (
       <div className="space-y-4">
         {/* Organizer Active Session Bar */}
         <div className="bg-gradient-to-r from-amber-500/15 via-orange-500/10 to-transparent border-2 border-orange-300 rounded-3xl p-3.5 sm:px-5 sm:py-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs shadow-md">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-orange-600 text-white flex items-center justify-center font-black shrink-0 shadow-md">
-              <ShieldCheck className="w-5 h-5" />
+            <div className={`w-10 h-10 rounded-2xl ${isAdmin ? 'bg-orange-600' : 'bg-blue-600'} text-white flex items-center justify-center font-black shrink-0 shadow-md`}>
+              {isAdmin ? <ShieldCheck className="w-5 h-5" /> : <Building2 className="w-5 h-5" />}
             </div>
             <div>
               <div className="font-display font-black text-slate-950 flex items-center gap-2">
-                <span>ĐANG ĐĂNG NHẬP BAN TỔ CHỨC / TRƯỞNG TRẠM SGU</span>
-                <span className="bg-emerald-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase">
-                  Đã xác thực
+                <span>{session.managerName || (isAdmin ? 'BAN CHỈ ĐẠO & TỔ CHỨC SGU' : 'TRƯỞNG TRẠM SGU')}</span>
+                <span className={`text-[10px] font-black px-2 py-0.5 rounded-full uppercase text-white ${isAdmin ? 'bg-orange-600' : 'bg-blue-600'}`}>
+                  {isAdmin ? 'Toàn quyền BTC' : `Trạm ${session.stationId?.replace('station-', '') || ''}`}
                 </span>
               </div>
               <p className="text-[11px] text-slate-600 font-medium mt-0.5">
-                Toàn bộ tính năng điểm danh thủ công, xóa dấu và xuất file CSV đã được mở khóa.
+                {isAdmin
+                  ? 'Đã mở khóa toàn bộ quyền điểm danh, quản lý 8 trạm, cấu hình NFC và thống kê xuất file.'
+                  : `Đang quản lý điểm danh và tra cứu sinh viên tại ${session.managerName || 'Trạm sự kiện'}.`}
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-2 self-end sm:self-center shrink-0">
-            <button
-              onClick={() => setShowChangePinModal(true)}
-              className="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 border-2 border-orange-300 text-orange-950 font-bold transition-all flex items-center gap-1.5 shadow-xs text-xs cursor-pointer"
-            >
-              <Settings className="w-3.5 h-3.5 text-orange-600" />
-              <span>Đổi PIN</span>
-            </button>
+            {isAdmin && (
+              <button
+                onClick={() => setShowChangePinModal(true)}
+                className="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 border-2 border-orange-300 text-orange-950 font-bold transition-all flex items-center gap-1.5 shadow-xs text-xs cursor-pointer"
+              >
+                <Settings className="w-3.5 h-3.5 text-orange-600" />
+                <span>Đổi PIN BTC</span>
+              </button>
+            )}
             <button
               onClick={handleLogout}
               className="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-black transition-all flex items-center gap-1.5 shadow-md text-xs cursor-pointer"
@@ -187,7 +197,7 @@ export const OrganizerAuthGuard: React.FC<OrganizerAuthGuardProps> = ({
                     type="password"
                     value={oldPin}
                     onChange={(e) => setOldPin(e.target.value)}
-                    placeholder="Mặc định: 2026"
+                    placeholder="Mặc định: 2025"
                     className="w-full px-3 py-2.5 rounded-xl border-2 border-slate-200 font-mono font-bold focus:border-orange-500 focus:outline-none"
                     required
                   />
@@ -240,7 +250,7 @@ export const OrganizerAuthGuard: React.FC<OrganizerAuthGuardProps> = ({
     );
   }
 
-  // If locked, render Secure PIN Prompt Screen with SGU Arcade design
+  // If locked, render Secure PIN Prompt Screen
   return (
     <div className="max-w-md mx-auto my-6 sm:my-10 bg-white rounded-3xl border-2 border-orange-500 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95">
       <div className="bg-gradient-to-br from-orange-600 via-amber-500 to-orange-700 p-6 sm:p-8 text-white text-center relative">
@@ -266,7 +276,7 @@ export const OrganizerAuthGuard: React.FC<OrganizerAuthGuardProps> = ({
             <div className="flex items-center justify-between mb-1.5">
               <label className="text-xs font-black text-slate-800 flex items-center gap-1.5">
                 <KeyRound className="w-3.5 h-3.5 text-orange-600" />
-                <span>Mã PIN Ban Tổ Chức</span>
+                <span>Khóa Bảo Mật / Mã PIN BTC</span>
               </label>
               <button
                 type="button"
@@ -286,25 +296,41 @@ export const OrganizerAuthGuard: React.FC<OrganizerAuthGuardProps> = ({
                   setPinInput(e.target.value);
                   if (errorMsg) setErrorMsg('');
                 }}
-                placeholder="Nhập mã PIN..."
+                placeholder="Nhập mã PIN hoặc Khóa trạm..."
                 autoFocus
-                className="w-full text-center text-xl font-mono tracking-widest px-4 py-3.5 rounded-2xl border-2 border-slate-200 focus:border-orange-500 focus:outline-none transition-all font-black text-slate-900 bg-slate-50 focus:bg-white"
+                className="w-full text-center text-lg font-mono tracking-widest px-4 py-3.5 rounded-2xl border-2 border-slate-200 focus:border-orange-500 focus:outline-none transition-all font-black text-slate-900 bg-slate-50 focus:bg-white uppercase"
               />
             </div>
-            
-            <div className="mt-3 p-3 bg-amber-500/10 rounded-2xl border border-orange-200 flex items-start gap-2.5 text-[11px] text-orange-950 font-medium">
-              <Sparkles className="w-4 h-4 text-orange-600 shrink-0 mt-0.5" />
-              <div>
-                <span className="font-black">Mã PIN mặc định cho BTC: </span>
-                <button
-                  type="button"
-                  onClick={() => setPinInput('2026')}
-                  className="font-mono font-black text-orange-700 bg-white px-2 py-0.5 rounded-md border border-orange-300 hover:bg-orange-50 transition-colors ml-1 cursor-pointer"
-                  title="Bấm để tự điền mã 2026"
-                >
-                  2026
-                </button>
-                <span className="text-slate-500 block text-[10px] mt-0.5">(Sau khi vào, bạn có thể đổi PIN bảo mật theo ý muốn)</span>
+
+            <div className="mt-3 p-3.5 bg-amber-500/10 rounded-2xl border border-orange-200 space-y-2 text-[11px] text-orange-950 font-medium">
+              <div className="flex items-start gap-2">
+                <Sparkles className="w-4 h-4 text-orange-600 shrink-0 mt-0.5" />
+                <div>
+                  <span className="font-black text-slate-900 block">Mã truy cập nhanh phân quyền:</span>
+                  <div className="flex flex-wrap gap-1.5 mt-1.5">
+                    <button
+                      type="button"
+                      onClick={() => setPinInput('2025')}
+                      className="font-mono font-black text-xs text-orange-700 bg-white px-2 py-1 rounded-lg border border-orange-300 hover:bg-orange-50 transition-colors cursor-pointer"
+                    >
+                      👑 BTC: 2025
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setPinInput('TRAM1')}
+                      className="font-mono font-black text-xs text-blue-700 bg-white px-2 py-1 rounded-lg border border-blue-300 hover:bg-blue-50 transition-colors cursor-pointer"
+                    >
+                      📍 Trạm 1: TRAM1
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setPinInput('TRAM3')}
+                      className="font-mono font-black text-xs text-blue-700 bg-white px-2 py-1 rounded-lg border border-blue-300 hover:bg-blue-50 transition-colors cursor-pointer"
+                    >
+                      📍 Trạm 3: TRAM3
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -314,7 +340,7 @@ export const OrganizerAuthGuard: React.FC<OrganizerAuthGuardProps> = ({
             className="arcade-btn-orange w-full py-3.5 rounded-2xl text-white font-black text-sm tracking-wide uppercase shadow-lg flex items-center justify-center gap-2 transition-all cursor-pointer"
           >
             <Unlock className="w-4 h-4" />
-            <span>Mở Khóa Quyền Ban Tổ Chức</span>
+            <span>Mở Khóa Ban Tổ Chức</span>
           </button>
         </form>
 
@@ -333,3 +359,4 @@ export const OrganizerAuthGuard: React.FC<OrganizerAuthGuardProps> = ({
     </div>
   );
 };
+

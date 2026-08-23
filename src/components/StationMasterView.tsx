@@ -27,6 +27,7 @@ import {
   Trophy
 } from 'lucide-react';
 import { Station, Student } from '../types';
+import { getOrganizerSession } from '../utils/storage';
 
 interface StationMasterViewProps {
   stations: Station[];
@@ -48,7 +49,10 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
   onUndoCheckin,
   onOpenNfcGuide,
 }) => {
-  const [selectedStationId, setSelectedStationId] = useState<string>(stations[0]?.id || 'station-1');
+  const session = getOrganizerSession();
+  const [selectedStationId, setSelectedStationId] = useState<string>(
+    session?.stationId || stations[0]?.id || 'station-1'
+  );
   const [inputMssv, setInputMssv] = useState<string>('');
   const [searchFilter, setSearchFilter] = useState<string>('');
   const [actionAlert, setActionAlert] = useState<{ type: 'success' | 'error'; message: string } | null>(null);

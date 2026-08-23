@@ -29,9 +29,20 @@ export interface Student {
   email: string;
   phone: string;
   avatarSeed?: string;
+  pinCode?: string; // Mã PIN 4 số bảo vệ thẻ e-Pass
   registeredAt: string;
   completedStations: string[]; // array of station IDs
   checkinHistory: StationCheckin[];
+}
+
+export type OrganizerRole = 'admin' | 'station_manager';
+
+export interface OrganizerSession {
+  authenticated: boolean;
+  role: OrganizerRole;
+  stationId?: string;
+  managerName?: string;
+  expiresAt?: number;
 }
 
 export interface StationCheckin {

@@ -287,15 +287,15 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
               {/* Active Student Info Header inside Checkin Modal */}
               <div className="flex items-center justify-between p-3.5 bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-orange-200 rounded-2xl">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-orange-600 text-white font-black text-xs flex items-center justify-center shadow-xs">
+                  <div className={`w-9 h-9 rounded-xl ${student ? 'bg-orange-600' : 'bg-slate-400'} text-white font-black text-xs flex items-center justify-center shadow-xs`}>
                     {student ? student.fullName.charAt(0) : '?'}
                   </div>
                   <div>
                     <div className="font-black text-xs text-slate-900 flex items-center gap-1.5">
-                      <span>{student ? student.fullName : 'Chưa có thông tin sinh viên'}</span>
-                      <span className="text-[10px] bg-emerald-600 text-white px-1.5 py-0.2 rounded font-bold flex items-center gap-0.5">
+                      <span>{student ? student.fullName : 'Chưa kích hoạt Thẻ e-Pass'}</span>
+                      <span className={`text-[10px] ${student ? 'bg-emerald-600' : 'bg-amber-600'} text-white px-1.5 py-0.2 rounded font-bold flex items-center gap-0.5`}>
                         <CheckCircle2 className="w-2.5 h-2.5" />
-                        Đang kích hoạt
+                        {student ? 'Đã kích hoạt' : 'Cần đăng ký/nhập'}
                       </span>
                     </div>
                     <div className="text-[11px] text-slate-600 font-mono font-bold">
@@ -313,7 +313,7 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
                     }}
                     className="text-[11px] text-orange-700 hover:text-orange-900 font-black bg-white px-2.5 py-1.5 rounded-xl border border-orange-300 shadow-2xs hover:bg-orange-50 transition-colors cursor-pointer"
                   >
-                    Đổi / Đăng ký
+                    {student ? 'Đổi thẻ' : 'Đăng ký/Đăng nhập'}
                   </button>
                 )}
               </div>

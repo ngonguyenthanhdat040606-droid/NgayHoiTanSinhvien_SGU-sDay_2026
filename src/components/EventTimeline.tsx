@@ -20,6 +20,8 @@ import {
 } from 'lucide-react';
 import { TimelineEvent, Station } from '../types';
 import { TIMELINE_EVENTS } from '../data/mockData';
+import campusImg from '@/ẢNH TRƯỜNG.webp';
+import sguLogo from '@/CỤM LOGO SGU.png';
 
 interface EventTimelineProps {
   stations: Station[];
@@ -55,18 +57,27 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
 
   return (
     <div className="space-y-8 max-w-5xl mx-auto">
-      {/* SGU'S DAY 2025 - ARCADE RETRO HERO MARQUEE (Moodboard Design) */}
-      <div className="relative rounded-3xl overflow-hidden arcade-border-orange bg-gradient-to-b from-orange-500 via-orange-600 to-amber-600 p-1 sm:p-2 text-white shadow-2xl">
+      {/* SGU'S DAY 2025 - HERO BANNER WITH SGU CAMPUS PHOTO BACKGROUND */}
+      <div className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-orange-400/80 p-1 sm:p-2 text-white">
+        {/* Campus Photo Background */}
+        <img 
+          src={campusImg} 
+          alt="Khuôn viên Trường Đại học Sài Gòn" 
+          className="absolute inset-0 w-full h-full object-cover object-center scale-105"
+        />
+        {/* Cinematic Dark Gradient & Vignette Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-900/75 to-slate-950/90 pointer-events-none" />
+        
         {/* Decorative Top Arcade Header Strip */}
-        <div className="bg-slate-950/80 backdrop-blur-md rounded-2xl p-4 sm:p-8 relative overflow-hidden">
+        <div className="relative z-10 backdrop-blur-[1px] rounded-2xl p-4 sm:p-8 overflow-hidden">
           {/* Halftone & Glow Overlays */}
-          <div className="absolute inset-0 bg-halftone opacity-20 pointer-events-none" />
+          <div className="absolute inset-0 bg-halftone opacity-10 pointer-events-none" />
           <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-amber-400/20 to-orange-500/0 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
 
           {/* Marquee Badges Row */}
-          <div className="relative z-10 flex flex-wrap items-center justify-between gap-2.5 pb-4 border-b border-white/15">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-600 text-white font-extrabold text-[11px] uppercase tracking-wider shadow-sm border border-blue-400">
+          <div className="relative z-10 flex flex-wrap items-center justify-between gap-2.5 pb-4 border-b border-white/20">
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-blue-600/90 text-white font-extrabold text-[11px] uppercase tracking-wider shadow-md border border-blue-400/50 backdrop-blur-xs">
               <Sparkles className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
               <span>HỘI SINH VIÊN TRƯỜNG ĐẠI HỌC SÀI GÒN</span>
             </div>

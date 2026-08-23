@@ -75,6 +75,7 @@ export const subscribeToStudents = (
             studentClass: data.studentClass || '',
             email: data.email || '',
             phone: data.phone || '',
+            pinCode: data.pinCode || '',
             registeredAt: data.registeredAt || '',
             completedStations: Array.isArray(data.completedStations) ? data.completedStations : [],
             checkinHistory: Array.isArray(data.checkinHistory) ? data.checkinHistory : []
@@ -91,6 +92,68 @@ export const subscribeToStudents = (
     console.error('Failed to setup Firestore subscription:', err);
     if (onError) onError(err);
     return () => {};
+  }
+};
+
+/**
+ * Fetch a student by MSSV directly from Firestore
+ */
+export const getStudentByMssvFromFirestore = async (mssv: string): Promise<Student | null> => {
+  try {
+    await ensureFirebaseAuth();
+    const cleanMssv = mssv.trim().toUpperCase();
+    const docId = `stu-${cleanMssv.toLowerCase()}`;
+    const docRef = doc(db, STUDENTS_COLLECTION, docId);
+    const docSnap = await getDocs(collection(db, STUDENTS_COLLECTION));
+    let found: Student | null = null;
+    docSnap.forEach((d) => {
+      const data = d.data();
+      if ((data.mssv || '').trim().toUpperCase() === cleanMssv) {
+        found = {
+          id: d.id,
+          mssv: data.mssv || '',
+          fullName: data.fullName || '',
+          faculty: data.faculty || '',
+          major: data.major || '',
+          studentClass: data.studentClass || '',
+          email: data.email || '',
+          phone: data.phone || '',
+          pinCode: data.pinCode || '',
+          registeredAt: data.registeredAt || '',
+          completedStations: Array.isArray(data.completedStations) ? data.completedStations : [],
+          checkinHistory: Array.isArray(data.checkinHistory) ? data.checkinHistory : []
+        };
+      }
+    });
+    return found;
+  } catch (err) {
+    console.error('Error fetching student by MSSV from Firestore:', err);
+    return null;
+  }
+};
+
+/**
+ * Verify student PIN with Firestore directly
+ */
+export const verifyStudentPinWithFirestore = async (
+  mssv: string,
+  pin: string
+): Promise<{ success: boolean; student?: Student; message: string }> => {
+  try {
+    const student = await getStudentByMssvFromFirestore(mssv);
+    if (!student) {
+      return { success: false, message: `Không tìm thấy thẻ sinh viên với MSSV ${mssv.toUpperCase()}` };
+    }
+    const cleanPin = pin.trim();
+    if (student.pinCode && student.pinCode !== cleanPin) {
+      const last4 = student.phone ? student.phone.replace(/\D/g, '').slice(-4) : '';
+      if (cleanPin !== last4) {
+        return { success: false, message: 'Mã PIN bảo mật không chính xác!' };
+      }
+    }
+    return { success: true, student, message: 'Xác thực thành công!' };
+  } catch (err: any) {
+    return { success: false, message: err.message || 'Lỗi kết nối máy chủ' };
   }
 };
 
