@@ -99,20 +99,9 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
           {/* Main Hero Title & Visual Arcade Centerpiece */}
           <div className="relative z-10 my-6 sm:my-8 text-center space-y-4">
             <div className="inline-block animate-arcade-glow">
-              {/* Logo Cluster with Arcade Frame */}
-              <div className="flex items-center justify-center mb-3">
-                <div className="p-2.5 bg-white/95 rounded-3xl shadow-[0_8px_0_#ea580c,0_15px_30px_rgba(0,0,0,0.4)] border-2 border-amber-300 inline-flex items-center justify-center backdrop-blur-md hover:scale-105 transition-transform duration-200">
-                  <img 
-                    src={sguLogo} 
-                    alt="Cụm Logo Trường Đại Học Sài Gòn & Hội Sinh Viên" 
-                    className="h-14 sm:h-20 w-auto object-contain"
-                  />
-                </div>
-              </div>
-
               {/* Arcade Sub-badge */}
               <div className="flex items-center justify-center gap-2 mb-2">
-                <span className="inline-flex items-center gap-2 bg-black/40 border border-amber-300/60 backdrop-blur-md px-4 py-1 rounded-full text-amber-300 text-xs sm:text-sm font-arcade tracking-widest uppercase shadow-md">
+                <span className="inline-flex items-center gap-2 bg-black/40 border border-amber-300/60 backdrop-blur-md px-4 py-1.5 rounded-full text-amber-300 text-xs sm:text-sm font-vietnam-arcade tracking-wider uppercase shadow-md">
                   <Star className="w-3.5 h-3.5 fill-amber-300 text-amber-300 animate-spin" style={{ animationDuration: '6s' }} />
                   <span>CHÀO ĐÓN TÂN SINH VIÊN KHÓA 2025</span>
                   <Star className="w-3.5 h-3.5 fill-amber-300 text-amber-300 animate-spin" style={{ animationDuration: '6s' }} />
@@ -135,7 +124,7 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
               </div>
 
               {/* Arcade Action Ribbon */}
-              <div className="mt-3 inline-flex items-center gap-2 bg-gradient-to-r from-orange-600 via-amber-500 to-orange-600 text-white px-5 sm:px-6 py-1.5 sm:py-2 rounded-full font-arcade text-xs sm:text-sm tracking-wider uppercase shadow-[0_4px_0_#c2410c,0_8px_20px_rgba(234,88,12,0.4)] border-2 border-white/90">
+              <div className="mt-3 inline-flex items-center gap-2 bg-gradient-to-r from-orange-600 via-amber-500 to-orange-600 text-white px-5 sm:px-6 py-2 rounded-full font-vietnam-arcade text-xs sm:text-sm tracking-wide uppercase shadow-[0_4px_0_#c2410c,0_8px_20px_rgba(234,88,12,0.4)] border-2 border-white/90">
                 <Gamepad2 className="w-4 h-4 text-white animate-bounce" />
                 <span>HỘ CHIẾU ĐIỆN TỬ & CHINH PHỤC 8 TRẠM NGÀY HỘI</span>
               </div>
