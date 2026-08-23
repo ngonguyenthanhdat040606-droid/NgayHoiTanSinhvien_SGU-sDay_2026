@@ -15,7 +15,9 @@ import {
   ArrowRight,
   Info,
   ShieldCheck,
-  Settings
+  Gamepad2,
+  Trophy,
+  PartyPopper
 } from 'lucide-react';
 import { Student, Station } from '../types';
 import { isWebNFCSupported, startNFCScan } from '../utils/nfcHelper';
@@ -28,6 +30,7 @@ interface StudentCheckinModalProps {
   student: Student | null;
   stations: Station[];
   onCheckinSuccess: (stationId: string, method: 'nfc_tap' | 'qr_scan' | 'manual_mssv') => void;
+  onOpenRegisterModal?: () => void;
 }
 
 export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
@@ -36,6 +39,7 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
   student,
   stations,
   onCheckinSuccess,
+  onOpenRegisterModal,
 }) => {
   const [scanMode, setScanMode] = useState<'nfc' | 'qr' | 'simulate'>('nfc');
   const [nfcScanning, setNfcScanning] = useState<boolean>(false);
@@ -71,7 +75,7 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
         particleCount: 80,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899'],
+        colors: ['#ff6b00', '#2563eb', '#10b981', '#f59e0b', '#ec4899'],
       });
     } catch (e) {
       console.warn('Confetti error', e);
@@ -192,19 +196,19 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-lg w-full overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="bg-white rounded-3xl border-2 border-orange-500 shadow-2xl max-w-lg w-full overflow-hidden flex flex-col max-h-[90vh]">
         {/* Modal Header */}
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-5 text-white flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center backdrop-blur-xs">
+        <div className="bg-gradient-to-r from-orange-600 via-amber-500 to-orange-500 p-5 text-white flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-2xl bg-white/20 flex items-center justify-center backdrop-blur-xs border border-white/30">
               <Radio className="w-5 h-5 text-white animate-pulse" />
             </div>
             <div>
-              <h3 className="font-bold text-base sm:text-lg leading-tight">
-                Điểm Danh Trạm Sự Kiện
+              <h3 className="font-display font-black text-base sm:text-lg leading-tight text-white drop-shadow-xs">
+                Điểm Danh Trạm SGU’s Day 2025
               </h3>
-              <p className="text-xs text-blue-100 mt-0.5">
+              <p className="text-xs text-orange-100 mt-0.5 font-semibold">
                 Chạm thẻ NFC của Quản lý trạm hoặc quét mã QR
               </p>
             </div>
@@ -212,7 +216,7 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
 
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center transition-colors"
+            className="w-8 h-8 rounded-full bg-black/20 hover:bg-black/40 text-white flex items-center justify-center transition-colors cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -224,36 +228,36 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
           {/* SUCCESS RESULT SCREEN */}
           {successResult ? (
             <div className="text-center py-6 space-y-4 animate-in zoom-in-95 duration-200">
-              <div className="w-20 h-20 rounded-3xl bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center text-4xl shadow-inner ring-8 ring-emerald-50">
+              <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-emerald-400 to-teal-600 text-white mx-auto flex items-center justify-center text-4xl shadow-xl ring-8 ring-emerald-100">
                 {successResult.station.stampBadge}
               </div>
 
               <div>
-                <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  {successResult.isNew ? 'Đóng dấu thành công!' : 'Đã đóng dấu trước đó'}
+                <span className="inline-flex items-center gap-1 text-xs font-black text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full border border-emerald-300">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                  {successResult.isNew ? '🎉 ĐÓNG DẤU THÀNH CÔNG!' : 'ĐÃ ĐÓNG DẤU TRƯỚC ĐÓ'}
                 </span>
-                <h4 className="text-xl font-extrabold text-slate-900 mt-2">
+                <h4 className="font-display text-xl font-black text-slate-950 mt-2">
                   {successResult.station.name}
                 </h4>
-                <p className="text-xs text-slate-600 mt-1 max-w-sm mx-auto">
+                <p className="text-xs text-slate-600 mt-1 max-w-sm mx-auto font-medium">
                   {successResult.station.tagline}
                 </p>
               </div>
 
-              {/* Reward & Location info */}
-              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs text-left space-y-2">
+              {/* Station & Location info */}
+              <div className="bg-amber-500/10 border-2 border-orange-200 rounded-2xl p-4 text-xs text-left space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-500 font-medium">Địa điểm:</span>
-                  <span className="font-semibold text-slate-800">{successResult.station.location}</span>
+                  <span className="text-slate-600 font-bold">Địa điểm:</span>
+                  <span className="font-black text-slate-900">{successResult.station.location}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-500 font-medium">Quà tặng trạm:</span>
-                  <span className="font-bold text-amber-600">{successResult.station.highlightGift}</span>
+                  <span className="text-slate-600 font-bold">Khu vực:</span>
+                  <span className="font-black text-orange-600">Khu {successResult.station.zone} • Trạm số {successResult.station.stationNumber}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-500 font-medium">Điểm tích lũy:</span>
-                  <span className="font-bold text-blue-600">+{successResult.station.rewardPoints} điểm</span>
+                  <span className="text-slate-600 font-bold">Trạng thái:</span>
+                  <span className="font-black text-emerald-700">Đã cập nhật vào Hộ chiếu</span>
                 </div>
               </div>
 
@@ -263,34 +267,68 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
                     setSuccessResult(null);
                     setScanMode('nfc');
                   }}
-                  className="flex-1 py-2.5 px-4 rounded-xl border border-slate-200 text-slate-700 font-semibold text-xs hover:bg-slate-50 transition-all flex items-center justify-center gap-1.5"
+                  className="flex-1 py-3 px-4 rounded-2xl border-2 border-slate-200 text-slate-700 font-black text-xs hover:bg-slate-50 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                 >
-                  <RefreshCw className="w-3.5 h-3.5" />
+                  <RefreshCw className="w-4 h-4 text-orange-500" />
                   <span>Quét trạm khác</span>
                 </button>
 
                 <button
                   onClick={onClose}
-                  className="flex-1 py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-1.5"
+                  className="arcade-btn-orange flex-1 py-3 px-4 rounded-2xl text-white font-black text-xs shadow-md transition-all flex items-center justify-center gap-1.5 cursor-pointer uppercase"
                 >
-                  <span>Xem Hộ chiếu 8 Dấu</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <span>Xem Hộ Chiếu 8 Dấu</span>
+                  <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
             </div>
           ) : (
             <>
+              {/* Active Student Info Header inside Checkin Modal */}
+              <div className="flex items-center justify-between p-3.5 bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-orange-200 rounded-2xl">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-xl bg-orange-600 text-white font-black text-xs flex items-center justify-center shadow-xs">
+                    {student ? student.fullName.charAt(0) : '?'}
+                  </div>
+                  <div>
+                    <div className="font-black text-xs text-slate-900 flex items-center gap-1.5">
+                      <span>{student ? student.fullName : 'Chưa có thông tin sinh viên'}</span>
+                      <span className="text-[10px] bg-emerald-600 text-white px-1.5 py-0.2 rounded font-bold flex items-center gap-0.5">
+                        <CheckCircle2 className="w-2.5 h-2.5" />
+                        Đang kích hoạt
+                      </span>
+                    </div>
+                    <div className="text-[11px] text-slate-600 font-mono font-bold">
+                      MSSV: <strong className="text-orange-700">{student?.mssv || '---'}</strong> • Đã thu thập: <strong className="text-emerald-700">{student?.completedStations.length || 0}/8</strong> Trạm
+                    </div>
+                  </div>
+                </div>
+
+                {onOpenRegisterModal && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onClose();
+                      onOpenRegisterModal();
+                    }}
+                    className="text-[11px] text-orange-700 hover:text-orange-900 font-black bg-white px-2.5 py-1.5 rounded-xl border border-orange-300 shadow-2xs hover:bg-orange-50 transition-colors cursor-pointer"
+                  >
+                    Đổi / Đăng ký
+                  </button>
+                )}
+              </div>
+
               {/* Scan Mode Toggle Tabs */}
               {(() => {
                 const isOrg = isOrganizerAuthenticated();
                 return (
-                  <div className={`grid ${isOrg ? 'grid-cols-3' : 'grid-cols-2'} gap-1.5 bg-slate-100 p-1 rounded-xl`}>
+                  <div className={`grid ${isOrg ? 'grid-cols-3' : 'grid-cols-2'} gap-1.5 bg-amber-500/10 p-1.5 rounded-2xl border border-orange-200`}>
                     <button
                       onClick={() => setScanMode('nfc')}
-                      className={`py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+                      className={`py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                         scanMode === 'nfc'
-                          ? 'bg-white text-blue-700 shadow-xs'
-                          : 'text-slate-600 hover:text-slate-900'
+                          ? 'bg-orange-500 text-white shadow-xs'
+                          : 'text-slate-700 hover:text-orange-600'
                       }`}
                     >
                       <Smartphone className="w-3.5 h-3.5" />
@@ -299,10 +337,10 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
 
                     <button
                       onClick={() => setScanMode('qr')}
-                      className={`py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+                      className={`py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                         scanMode === 'qr'
-                          ? 'bg-white text-blue-700 shadow-xs'
-                          : 'text-slate-600 hover:text-slate-900'
+                          ? 'bg-blue-600 text-white shadow-xs'
+                          : 'text-slate-700 hover:text-blue-600'
                       }`}
                     >
                       <QrCode className="w-3.5 h-3.5" />
@@ -312,10 +350,10 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
                     {isOrg && (
                       <button
                         onClick={() => setScanMode('simulate')}
-                        className={`py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+                        className={`py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                           scanMode === 'simulate'
-                            ? 'bg-white text-amber-700 shadow-xs'
-                            : 'text-slate-600 hover:text-slate-900'
+                            ? 'bg-slate-900 text-amber-300 shadow-xs'
+                            : 'text-slate-700 hover:text-slate-900'
                         }`}
                       >
                         <Zap className="w-3.5 h-3.5" />
@@ -328,10 +366,10 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
 
               {/* Error Message Box */}
               {errorMessage && (
-                <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-800 text-xs flex items-start gap-2">
+                <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-900 text-xs flex items-start gap-2 font-bold">
                   <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
                   <div>
-                    <strong className="font-semibold block">Thông báo:</strong>
+                    <strong className="block">Thông báo:</strong>
                     <span>{errorMessage}</span>
                   </div>
                 </div>
@@ -350,40 +388,40 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
 
                   <div className="text-center py-3 space-y-3">
                     <div className="relative w-24 h-24 mx-auto flex items-center justify-center">
-                      <div className="absolute inset-0 rounded-full bg-blue-500/10 animate-ping" />
-                      <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center shadow-lg shadow-blue-500/30">
+                      <div className="absolute inset-0 rounded-full bg-orange-500/15 animate-ping" />
+                      <div className="w-20 h-20 rounded-3xl bg-gradient-to-tr from-orange-500 via-amber-500 to-yellow-500 text-white flex items-center justify-center shadow-lg shadow-orange-500/30">
                         <Radio className="w-9 h-9 animate-pulse" />
                       </div>
                     </div>
 
                     <div>
-                      <h4 className="text-sm sm:text-base font-bold text-slate-900">
+                      <h4 className="text-sm sm:text-base font-display font-black text-slate-950">
                         Chạm lưng điện thoại vào thẻ NFC tại bàn Trạm
                       </h4>
-                      <p className="text-xs text-slate-500 mt-1 max-w-xs mx-auto">
+                      <p className="text-xs text-slate-600 mt-1 max-w-xs mx-auto font-medium">
                         {nfcStatusText}
                       </p>
                     </div>
 
-                    <div className="bg-blue-50/80 border border-blue-100 rounded-2xl p-3.5 text-xs text-blue-900 text-left space-y-1.5">
-                      <div className="font-bold flex items-center gap-1.5 text-blue-950">
-                        <Info className="w-4 h-4 text-blue-600" />
+                    <div className="bg-amber-500/10 border border-orange-200 rounded-2xl p-3.5 text-xs text-slate-800 text-left space-y-1.5">
+                      <div className="font-black flex items-center gap-1.5 text-orange-950">
+                        <Info className="w-4 h-4 text-orange-600" />
                         Mẹo chạm thẻ NFC thành công:
                       </div>
-                      <p className="text-blue-800 text-[11px]">
+                      <p className="text-slate-700 text-[11px] font-medium">
                         • Áp sát phần cụm camera / lưng điện thoại vào thẻ NFC tại bàn trạm trong 1-2 giây.
                       </p>
-                      <p className="text-blue-800 text-[11px]">
-                        • Nếu máy không hỗ trợ NFC, bạn có thể chuyển ngay sang tab <strong>"Quét QR Trạm"</strong> bên trên hoặc đưa mã QR của bạn cho Quản lý trạm quét.
+                      <p className="text-slate-700 text-[11px] font-medium">
+                        • Nếu máy không hỗ trợ NFC, bạn có thể chuyển sang tab <strong>"Quét QR Trạm"</strong> bên trên hoặc xuất trình mã QR của bạn cho Quản lý trạm quét.
                       </p>
                     </div>
 
                     <div className="pt-1 flex items-center justify-center gap-2">
                       <button
                         onClick={initNFC}
-                        className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-all inline-flex items-center gap-1.5"
+                        className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-orange-100 text-slate-700 hover:text-orange-700 text-xs font-bold transition-all inline-flex items-center gap-1.5 cursor-pointer"
                       >
-                        <RefreshCw className="w-3.5 h-3.5" />
+                        <RefreshCw className="w-3.5 h-3.5 text-orange-600" />
                         <span>Kích hoạt lại đầu đọc NFC</span>
                       </button>
                     </div>
@@ -394,15 +432,15 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
               {/* TAB 2: QR CAMERA SCANNER */}
               {scanMode === 'qr' && (
                 <div className="space-y-4 text-center">
-                  <div className="relative bg-slate-900 rounded-2xl overflow-hidden aspect-square max-w-xs mx-auto flex items-center justify-center border-2 border-dashed border-blue-400">
+                  <div className="relative bg-slate-950 rounded-2xl overflow-hidden aspect-square max-w-xs mx-auto flex items-center justify-center border-2 border-dashed border-orange-400">
                     <video
                       ref={videoRef}
                       autoPlay
                       playsInline
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 border-2 border-blue-400/40 pointer-events-none flex items-center justify-center">
-                      <div className="w-48 h-48 border-2 border-blue-500 rounded-2xl animate-pulse" />
+                    <div className="absolute inset-0 border-2 border-orange-400/40 pointer-events-none flex items-center justify-center">
+                      <div className="w-48 h-48 border-2 border-orange-500 rounded-2xl animate-pulse" />
                     </div>
                     {!isCameraActive && (
                       <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900/80 text-white p-4 text-xs">
@@ -412,20 +450,20 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
                     )}
                   </div>
 
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-600 font-medium">
                     Hướng camera vào mã QR được in tại bàn của Trạm sự kiện
                   </p>
 
-                  <div className="text-left bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs">
-                    <span className="font-bold text-slate-800 block mb-1">Hoặc chọn trạm nhanh để quét mã QR:</span>
-                    <div className="grid grid-cols-2 gap-1.5">
+                  <div className="text-left bg-slate-50 p-3.5 rounded-2xl border border-slate-200 text-xs">
+                    <span className="font-bold text-slate-900 block mb-2">Hoặc chọn trạm nhanh để quét mã QR:</span>
+                    <div className="grid grid-cols-2 gap-2">
                       {stations.map((st) => (
                         <button
                           key={st.id}
                           onClick={() => handleStationCheckin(st.id, 'qr_scan')}
-                          className="p-2 rounded-lg bg-white hover:bg-blue-50 border border-slate-200 text-left text-slate-700 hover:text-blue-700 font-medium text-xs transition-colors flex items-center gap-1.5 truncate"
+                          className="p-2.5 rounded-xl bg-white hover:bg-orange-50 border border-slate-200 text-left text-slate-800 hover:text-orange-700 font-bold text-xs transition-colors flex items-center gap-2 truncate cursor-pointer shadow-2xs"
                         >
-                          <span>{st.stampBadge}</span>
+                          <span className="text-base">{st.stampBadge}</span>
                           <span className="truncate">{st.shortName}</span>
                         </button>
                       ))}
@@ -437,7 +475,7 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
               {/* TAB 3: SIMULATE NFC TAP (FOR QUICK TESTING & DESKTOP) */}
               {scanMode === 'simulate' && (
                 <div className="space-y-3">
-                  <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-900 text-xs">
+                  <div className="p-3 bg-amber-50 border border-amber-300 rounded-2xl text-amber-950 text-xs font-bold">
                     <strong>Chế độ Kiểm thử / Mô phỏng:</strong> Bấm chọn 1 trong 8 trạm dưới đây để mô phỏng hành động chạm thẻ NFC tại bàn Quản lý trạm (Hỗ trợ thử nghiệm ngay trên máy tính/điện thoại).
                   </div>
 
@@ -448,14 +486,14 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
                         <div
                           key={st.id}
                           onClick={() => handleStationCheckin(st.id, 'nfc_tap')}
-                          className={`p-3 rounded-2xl border transition-all cursor-pointer flex items-center justify-between hover:shadow-md ${
+                          className={`p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between hover:shadow-md ${
                             isCompleted
-                              ? 'bg-emerald-50/70 border-emerald-300'
-                              : 'bg-white border-slate-200 hover:border-blue-400'
+                              ? 'bg-emerald-50/70 border-emerald-400'
+                              : 'bg-white border-slate-200 hover:border-orange-400'
                           }`}
                         >
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center text-xl shrink-0">
+                            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-orange-500 to-amber-500 text-white flex items-center justify-center text-xl shrink-0 shadow-xs">
                               {st.stampBadge}
                             </div>
                             <div>
@@ -468,12 +506,12 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
                                 )}
                               </div>
                               <div className="text-[11px] text-slate-500 mt-0.5">
-                                Thẻ NFC UID: <span className="font-mono text-blue-600">{st.nfcTagId}</span> • {st.location}
+                                Thẻ NFC UID: <span className="font-mono text-orange-600 font-bold">{st.nfcTagId}</span> • {st.location}
                               </div>
                             </div>
                           </div>
 
-                          <button className="px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white text-xs font-bold transition-all shrink-0">
+                          <button className="px-3.5 py-1.5 rounded-xl bg-orange-100 text-orange-700 hover:bg-orange-500 hover:text-white text-xs font-bold transition-all shrink-0 cursor-pointer">
                             Chạm thẻ
                           </button>
                         </div>
@@ -488,11 +526,11 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
         </div>
 
         {/* Modal Footer */}
-        <div className="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
-          <span>Sinh viên: <strong>{student?.fullName || 'Chưa đăng ký'}</strong> ({student?.mssv})</span>
+        <div className="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600 font-medium">
+          <span>Sinh viên: <strong className="text-slate-900">{student?.fullName || 'Chưa đăng ký'}</strong> ({student?.mssv})</span>
           <button
             onClick={onClose}
-            className="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 font-semibold"
+            className="px-3.5 py-1.5 rounded-xl text-slate-700 hover:bg-slate-200 font-bold transition-colors cursor-pointer"
           >
             Đóng
           </button>

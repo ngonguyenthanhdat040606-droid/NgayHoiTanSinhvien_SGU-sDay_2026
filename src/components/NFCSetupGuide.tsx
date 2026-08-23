@@ -113,7 +113,7 @@ export const NFCSetupGuide: React.FC<NFCSetupGuideProps> = ({ stations }) => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs pt-1">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs pt-1">
           {/* Cause 1 */}
           <div className="bg-white p-4 rounded-2xl border border-rose-200 space-y-2">
             <div className="flex items-center gap-2 text-rose-900 font-bold">
@@ -127,7 +127,7 @@ export const NFCSetupGuide: React.FC<NFCSetupGuideProps> = ({ stations }) => {
               ❌ https://https://ais-pre-...run.app/#checkin=station-1
             </div>
             <p className="text-slate-600 text-[11px]">
-              👉 <strong>Android</strong> có thể tự sửa hoặc bỏ qua, nhưng <strong>iOS Safari</strong> sẽ hiểu tên miền là <code className="font-mono text-rose-700 font-bold">https</code> và lập tức báo lỗi 404 / Không tìm thấy máy chủ!
+              👉 <strong>Android</strong> có thể tự sửa, nhưng <strong>iOS Safari</strong> sẽ hiểu tên miền là <code className="font-mono text-rose-700 font-bold">https</code> và lập tức báo lỗi 404 / Không tìm thấy máy chủ!
             </p>
           </div>
 
@@ -135,13 +135,27 @@ export const NFCSetupGuide: React.FC<NFCSetupGuideProps> = ({ stations }) => {
           <div className="bg-white p-4 rounded-2xl border border-rose-200 space-y-2">
             <div className="flex items-center gap-2 text-rose-900 font-bold">
               <span className="w-5 h-5 rounded-full bg-rose-100 text-rose-700 flex items-center justify-center text-[11px]">2</span>
-              <span>Dùng nhầm link nội bộ (-dev-) thay vì link Công khai (-pre-)</span>
+              <span>Dùng nhầm link nội bộ (-dev-)</span>
             </div>
             <p className="text-slate-600 leading-relaxed text-[11px]">
-              Link <code className="bg-slate-100 px-1 py-0.5 rounded text-slate-700 font-bold font-mono">ais-dev-...</code> chỉ chạy trong màn hình soạn thảo có đăng nhập. Khi iPhone của sinh viên chạm vào thẻ, máy sinh viên không có quyền truy cập nên hệ thống Google Cloud Run trả về <strong>404 Not Found</strong>.
+              Link <code className="bg-slate-100 px-1 py-0.5 rounded text-slate-700 font-bold font-mono">ais-dev-...</code> chỉ chạy trong màn hình soạn thảo có đăng nhập tài khoản của bạn.
             </p>
             <p className="text-slate-600 text-[11px]">
-              👉 <strong>Cách xử lý:</strong> Phải ghi đường link Công khai <code className="bg-emerald-50 px-1.5 py-0.5 rounded text-emerald-800 font-bold font-mono">ais-pre-...</code> (đã được hệ thống chọn sẵn ở bảng bên dưới).
+              Khi điện thoại của người khác quét thẻ, do không có phiên đăng nhập của bạn, Google Cloud Run sẽ trả về thông báo <strong>"Error: Page not found - The requested URL was not found on this server"</strong>.
+            </p>
+          </div>
+
+          {/* Cause 3 */}
+          <div className="bg-white p-4 rounded-2xl border border-rose-200 space-y-2">
+            <div className="flex items-center gap-2 text-rose-900 font-bold">
+              <span className="w-5 h-5 rounded-full bg-rose-100 text-rose-700 flex items-center justify-center text-[11px]">3</span>
+              <span>Chưa bấm "Publish / Share" trên AI Studio</span>
+            </div>
+            <p className="text-slate-600 leading-relaxed text-[11px]">
+              Link công khai <code className="bg-emerald-50 px-1 py-0.5 rounded text-emerald-800 font-bold font-mono">ais-pre-...</code> chỉ hoạt động khi bạn đã bấm nút <strong>"Share" / "Publish"</strong> ở góc trên bên phải màn hình AI Studio.
+            </p>
+            <p className="text-slate-600 text-[11px]">
+              Nếu chưa Publish hoặc thao tác Publish chưa hoàn tất, máy chủ Google Cloud Run chưa tạo container công khai nên sẽ báo <strong>"The requested URL was not found on this server"</strong>.
             </p>
           </div>
         </div>

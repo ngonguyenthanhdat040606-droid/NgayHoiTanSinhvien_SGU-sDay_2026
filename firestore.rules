@@ -1,0 +1,27 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper function
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // Students collection: allow read for anyone with app access / anonymous auth, and write
+    match /students/{studentId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Station checkin logs
+    match /station_checkins/{checkinId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // System logs
+    match /system_logs/{logId} {
+      allow read: if true;
+      allow write: if true;
+    }
+  }
+}

@@ -22,7 +22,9 @@ import {
   Phone,
   MapPin,
   RefreshCw,
-  Building2
+  Building2,
+  Gamepad2,
+  Trophy
 } from 'lucide-react';
 import { Station, Student } from '../types';
 
@@ -138,19 +140,19 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
   return (
     <div className="space-y-6 max-w-6xl mx-auto">
       {/* Top Banner Notice for Station Master Mode */}
-      <div className="bg-slate-900 text-white rounded-3xl p-6 shadow-xl border border-slate-800 relative overflow-hidden">
-        <div className="absolute right-0 top-0 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="bg-slate-950 text-white rounded-3xl p-6 shadow-2xl border-2 border-orange-500 relative overflow-hidden">
+        <div className="absolute inset-0 bg-halftone opacity-10 pointer-events-none" />
         
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold uppercase tracking-wider">
-              <ShieldCheck className="w-4 h-4 text-amber-400" />
-              Bàn Quản Lý 8 Trạm Sự Kiện (Ban Tổ Chức SGU’s Day 2025)
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/20 text-amber-300 border border-orange-500/40 text-xs font-black uppercase tracking-wider">
+              <ShieldCheck className="w-4 h-4 text-orange-400" />
+              BÀN QUẢN LÝ 8 TRẠM SỰ KIỆN • SGU’S DAY 2025
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-              Hệ Thống Điểm Danh Trạm & Ghi Nhận Thủ Công
+            <h2 className="font-display text-2xl sm:text-3xl font-black tracking-tight text-white">
+              Hệ Thống Trực Trạm & Ghi Nhận Điểm Danh
             </h2>
-            <p className="text-slate-300 text-xs sm:text-sm max-w-2xl">
+            <p className="text-slate-300 text-xs sm:text-sm max-w-2xl font-medium">
               Quản lý trạm sử dụng bảng điều khiển này để đối chiếu thẻ NFC trạm, điểm danh nhanh cho tân sinh viên qua MSSV khi không quét được thẻ, và xuất danh sách tổng hợp.
             </p>
           </div>
@@ -158,18 +160,18 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
           <div className="flex flex-wrap items-center gap-3">
             <button
               onClick={onOpenNfcGuide}
-              className="px-4 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs sm:text-sm shadow-md transition-all flex items-center gap-2"
+              className="arcade-btn-orange px-4 py-2.5 rounded-2xl text-white font-black text-xs sm:text-sm shadow-md transition-all flex items-center gap-2 cursor-pointer uppercase"
             >
               <Radio className="w-4 h-4" />
-              <span>Hướng dẫn Ghi thẻ NFC (NFC Tools)</span>
+              <span>Ghi Thẻ NFC (NFC Tools)</span>
             </button>
           </div>
         </div>
       </div>
 
       {/* 8 STATIONS SWITCHER PILLS */}
-      <div className="bg-white p-4 rounded-3xl border border-slate-200 shadow-xs space-y-2">
-        <div className="text-xs font-bold text-slate-500 uppercase tracking-wider px-1">
+      <div className="bg-white p-4 rounded-3xl border-2 border-orange-200 shadow-xs space-y-2">
+        <div className="text-xs font-black text-slate-700 uppercase tracking-wider px-1">
           Chọn Trạm bạn đang trực ca (Tương ứng 8 hoạt động có điểm danh):
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
@@ -185,24 +187,24 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
                   setSelectedStationId(st.id);
                   setActionAlert(null);
                 }}
-                className={`p-3 rounded-2xl text-left transition-all border flex flex-col justify-between ${
+                className={`p-3 rounded-2xl text-left transition-all border-2 flex flex-col justify-between cursor-pointer ${
                   isSelected
-                    ? 'bg-blue-600 text-white border-blue-600 shadow-md shadow-blue-500/20 ring-2 ring-blue-400/50'
-                    : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100 hover:border-slate-300'
+                    ? 'bg-orange-500 text-white border-orange-600 shadow-md ring-2 ring-orange-400/50'
+                    : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-orange-50 hover:border-orange-300'
                 }`}
               >
                 <div className="flex items-center justify-between w-full">
-                  <span className={`text-[10px] font-bold font-mono px-1.5 py-0.5 rounded ${
-                    isSelected ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-700'
+                  <span className={`text-[10px] font-black font-mono px-2 py-0.5 rounded-md ${
+                    isSelected ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-800'
                   }`}>
-                    Trạm {st.stationNumber} (HĐ {st.activityNumber})
+                    Trạm {st.stationNumber}
                   </span>
                   <span className="text-lg">{st.stampBadge}</span>
                 </div>
                 <div className="mt-2">
                   <div className="font-bold text-xs line-clamp-1">{st.shortName}</div>
-                  <div className={`text-[11px] mt-0.5 font-medium ${
-                    isSelected ? 'text-blue-100' : 'text-slate-500'
+                  <div className={`text-[11px] mt-0.5 font-bold ${
+                    isSelected ? 'text-orange-100' : 'text-slate-500'
                   }`}>
                     {count} SV đã qua trạm
                   </div>
@@ -219,18 +221,18 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
         {/* Left 5 Cols: Station NFC Info & Fast Check-in Input */}
         <div className="lg:col-span-5 space-y-6">
           {/* Station NFC Hardware Card */}
-          <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 space-y-4">
+          <div className="bg-white rounded-3xl border-2 border-orange-200 shadow-xs p-6 space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center text-2xl shadow-md">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-orange-500 to-amber-500 text-white flex items-center justify-center text-2xl shadow-md shrink-0">
                   {currentStation.stampBadge}
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-base text-slate-900">
+                  <h3 className="font-display font-black text-base text-slate-900">
                     {currentStation.name}
                   </h3>
-                  <p className="text-xs text-slate-500 flex items-center gap-1 mt-0.5">
-                    <MapPin className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                  <p className="text-xs text-slate-600 flex items-center gap-1 mt-0.5 font-medium">
+                    <MapPin className="w-3.5 h-3.5 text-orange-600 shrink-0" />
                     <span>{currentStation.location}</span>
                   </p>
                 </div>
@@ -238,39 +240,39 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
             </div>
 
             {/* NFC Card Spec Box */}
-            <div className="bg-gradient-to-br from-slate-900 to-slate-800 text-white p-4 rounded-2xl space-y-2.5 shadow-inner">
-              <div className="flex items-center justify-between text-xs border-b border-slate-700 pb-2">
-                <span className="text-slate-400 font-medium flex items-center gap-1.5">
-                  <Radio className="w-3.5 h-3.5 text-emerald-400" />
+            <div className="bg-slate-950 text-white p-4 rounded-2xl space-y-2.5 shadow-inner border border-slate-800">
+              <div className="flex items-center justify-between text-xs border-b border-slate-800 pb-2">
+                <span className="text-amber-400 font-bold flex items-center gap-1.5">
+                  <Radio className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
                   Thẻ NFC Trạm (Mifare Classic 1K)
                 </span>
-                <span className="font-mono text-emerald-400 font-bold bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-500/30">
+                <span className="font-mono text-emerald-400 font-black bg-emerald-950 px-2 py-0.5 rounded border border-emerald-500/40">
                   {currentStation.nfcTagId}
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 gap-2 text-[11px] text-slate-300 pt-1">
+              <div className="grid grid-cols-2 gap-2 text-[11px] text-slate-300 pt-1 font-medium">
                 <div>
-                  <span className="text-slate-500 block">Phụ trách:</span>
-                  <span className="font-medium text-white">{currentStation.managerName}</span>
+                  <span className="text-slate-400 block font-bold">Phụ trách:</span>
+                  <span className="font-bold text-white">{currentStation.managerName}</span>
                 </div>
                 <div>
-                  <span className="text-slate-500 block">Đơn vị:</span>
-                  <span className="font-medium text-white truncate block">{currentStation.assignedUnit || 'LCH Khoa'}</span>
+                  <span className="text-slate-400 block font-bold">Đơn vị:</span>
+                  <span className="font-bold text-white truncate block">{currentStation.assignedUnit || 'LCH Khoa'}</span>
                 </div>
               </div>
 
-              <p className="text-[11px] text-slate-400 italic pt-1 border-t border-slate-700/60">
+              <p className="text-[11px] text-orange-200 italic pt-1 border-t border-slate-800 font-medium">
                 💡 Đặt thẻ NFC này tại mặt bàn trạm. Sinh viên chỉ cần áp điện thoại vào để nhận dấu tức thì.
               </p>
             </div>
 
             {/* ACTION ALERT */}
             {actionAlert && (
-              <div className={`p-3.5 rounded-2xl text-xs font-medium flex items-start gap-2 animate-in fade-in duration-200 ${
+              <div className={`p-3.5 rounded-2xl text-xs font-bold flex items-start gap-2 animate-in fade-in duration-200 ${
                 actionAlert.type === 'success'
-                  ? 'bg-emerald-50 text-emerald-900 border border-emerald-200'
-                  : 'bg-rose-50 text-rose-900 border border-rose-200'
+                  ? 'bg-emerald-50 text-emerald-900 border border-emerald-300'
+                  : 'bg-rose-50 text-rose-900 border border-rose-300'
               }`}>
                 {actionAlert.type === 'success' ? (
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
@@ -284,8 +286,8 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
             {/* MANUAL MSSV INPUT FORM (CORE REQUIREMENT) */}
             <div className="pt-2">
               <div className="flex items-center justify-between mb-2">
-                <label className="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-                  <UserPlus className="w-4 h-4 text-blue-600" />
+                <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+                  <UserPlus className="w-4 h-4 text-orange-600" />
                   <span>Nhập thủ công Mã Số Sinh Viên (MSSV)</span>
                 </label>
               </div>
@@ -298,12 +300,12 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
                     value={inputMssv}
                     onChange={(e) => setInputMssv(e.target.value)}
                     placeholder="VD: 24100123 hoặc họ tên..."
-                    className="w-full pl-3.5 pr-24 py-3 rounded-xl border border-slate-300 text-sm font-semibold text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 uppercase"
+                    className="w-full pl-3.5 pr-28 py-3 rounded-2xl border-2 border-slate-200 text-sm font-bold text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-orange-500 uppercase"
                   />
                   <button
                     type="submit"
                     id="submit-manual-mssv-btn"
-                    className="absolute right-1.5 top-1.5 bottom-1.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-lg transition-all shadow-xs flex items-center gap-1"
+                    className="arcade-btn-orange absolute right-1.5 top-1.5 bottom-1.5 px-4 text-white font-black text-xs rounded-xl transition-all shadow-xs flex items-center gap-1 cursor-pointer uppercase"
                   >
                     <span>Ghi nhận</span>
                   </button>
@@ -311,8 +313,8 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
 
                 {/* Auto Suggestions when typing */}
                 {suggestedStudents.length > 0 && (
-                  <div className="bg-slate-50 border border-slate-200 rounded-xl p-2 space-y-1">
-                    <div className="text-[10px] font-bold text-slate-400 uppercase px-2 py-0.5">
+                  <div className="bg-slate-50 border-2 border-slate-200 rounded-2xl p-2 space-y-1">
+                    <div className="text-[10px] font-black text-slate-500 uppercase px-2 py-0.5">
                       Gợi ý sinh viên nhanh:
                     </div>
                     {suggestedStudents.map((s) => {
@@ -321,19 +323,19 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
                         <div
                           key={s.id}
                           onClick={() => handleQuickCheckin(s.mssv)}
-                          className="p-2 rounded-lg bg-white hover:bg-blue-50 border border-slate-100 cursor-pointer flex items-center justify-between text-xs transition-colors"
+                          className="p-2.5 rounded-xl bg-white hover:bg-orange-50 border border-slate-200 cursor-pointer flex items-center justify-between text-xs transition-colors"
                         >
                           <div>
                             <span className="font-bold text-slate-900">{s.fullName}</span>
-                            <span className="text-slate-500 font-mono ml-2">({s.mssv})</span>
-                            <span className="text-slate-400 text-[10px] block">{s.faculty}</span>
+                            <span className="text-slate-600 font-mono font-bold ml-2">({s.mssv})</span>
+                            <span className="text-slate-500 text-[10px] block font-medium">{s.faculty}</span>
                           </div>
-                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${
+                          <span className={`text-[10px] font-black px-2 py-0.5 rounded-md ${
                             isAlreadyIn
                               ? 'bg-slate-100 text-slate-500'
                               : 'bg-emerald-100 text-emerald-800'
                           }`}>
-                            {isAlreadyIn ? 'Đã điểm danh' : 'Bấm để Điểm danh'}
+                            {isAlreadyIn ? 'Đã điểm danh' : 'Điểm danh ngay'}
                           </span>
                         </div>
                       );
@@ -347,16 +349,16 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
 
         {/* Right 7 Cols: Real-time Check-in Table & Export */}
         <div className="lg:col-span-7 space-y-4">
-          <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 flex flex-col h-full min-h-[480px]">
+          <div className="bg-white rounded-3xl border-2 border-orange-200 shadow-xs p-6 flex flex-col h-full min-h-[480px]">
             {/* Table Header Controls */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
               <div>
-                <h3 className="font-bold text-base text-slate-900 flex items-center gap-2">
-                  <Users className="w-5 h-5 text-blue-600" />
+                <h3 className="font-display font-black text-base text-slate-900 flex items-center gap-2">
+                  <Users className="w-5 h-5 text-orange-600" />
                   <span>Danh sách Điểm Danh tại {currentStation.shortName}</span>
                 </h3>
-                <p className="text-xs text-slate-500 mt-0.5">
-                  Tổng cộng: <strong className="text-blue-600 font-bold">{checkedInStudents.length}</strong> sinh viên đã hoàn thành trạm này
+                <p className="text-xs text-slate-500 mt-0.5 font-medium">
+                  Tổng cộng: <strong className="text-orange-600 font-black">{checkedInStudents.length}</strong> sinh viên đã hoàn thành trạm này
                 </p>
               </div>
 
@@ -365,10 +367,10 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
                   id="export-csv-station-btn"
                   onClick={exportCSV}
                   disabled={checkedInStudents.length === 0}
-                  className="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 disabled:opacity-50 text-slate-700 text-xs font-bold transition-all flex items-center gap-1.5 shadow-2xs"
+                  className="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-orange-100 disabled:opacity-50 text-slate-700 hover:text-orange-800 text-xs font-black transition-all flex items-center gap-1.5 shadow-2xs cursor-pointer border border-slate-200"
                   title="Xuất file danh sách sinh viên đã điểm danh"
                 >
-                  <Download className="w-3.5 h-3.5 text-slate-600" />
+                  <Download className="w-3.5 h-3.5 text-orange-600" />
                   <span>Xuất file Excel/CSV</span>
                 </button>
               </div>
@@ -377,13 +379,13 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
             {/* Search Filter */}
             <div className="pt-3">
               <div className="relative">
-                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+                <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
                 <input
                   type="text"
                   value={searchFilter}
                   onChange={(e) => setSearchFilter(e.target.value)}
                   placeholder="Tìm theo Tên, MSSV hoặc Lớp..."
-                  className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border-2 border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-orange-500 font-medium"
                 />
               </div>
             </div>
@@ -393,14 +395,14 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
               {filteredCheckedInList.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-16 text-center text-slate-400 space-y-2">
                   <Users className="w-10 h-10 text-slate-300 stroke-1" />
-                  <p className="text-xs">
+                  <p className="text-xs font-medium">
                     {searchFilter ? 'Không tìm thấy sinh viên phù hợp với từ khóa.' : 'Chưa có sinh viên nào điểm danh tại trạm này.'}
                   </p>
                 </div>
               ) : (
                 <table className="w-full text-left text-xs">
                   <thead>
-                    <tr className="border-b border-slate-100 text-slate-400 font-semibold uppercase text-[10px]">
+                    <tr className="border-b border-slate-100 text-slate-400 font-bold uppercase text-[10px]">
                       <th className="py-2.5 px-2">#</th>
                       <th className="py-2.5 px-2">MSSV</th>
                       <th className="py-2.5 px-2">Họ và Tên</th>
@@ -413,15 +415,15 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
                     {filteredCheckedInList.map((stu, index) => {
                       const checkinLog = stu.checkinHistory.find((c) => c.stationId === currentStation.id);
                       return (
-                        <tr key={stu.id} className="hover:bg-slate-50/80 transition-colors">
+                        <tr key={stu.id} className="hover:bg-orange-50/50 transition-colors">
                           <td className="py-3 px-2 font-mono text-slate-400">{index + 1}</td>
-                          <td className="py-3 px-2 font-mono font-bold text-slate-800">{stu.mssv}</td>
-                          <td className="py-3 px-2 font-semibold text-slate-900">{stu.fullName}</td>
+                          <td className="py-3 px-2 font-mono font-black text-slate-900">{stu.mssv}</td>
+                          <td className="py-3 px-2 font-bold text-slate-900">{stu.fullName}</td>
                           <td className="py-3 px-2 text-slate-500">
-                            <span className="block font-medium text-slate-700 truncate max-w-[140px]">{stu.faculty}</span>
-                            <span className="text-[10px] text-slate-400">{stu.studentClass}</span>
+                            <span className="block font-bold text-slate-800 truncate max-w-[140px]">{stu.faculty}</span>
+                            <span className="text-[10px] text-slate-500 font-semibold">{stu.studentClass}</span>
                           </td>
-                          <td className="py-3 px-2 text-slate-500 font-mono text-[11px]">
+                          <td className="py-3 px-2 text-slate-600 font-mono text-[11px] font-bold">
                             {checkinLog?.timestamp ? checkinLog.timestamp.split(' ')[0] : 'Vừa xong'}
                           </td>
                           <td className="py-3 px-2 text-right">
@@ -431,7 +433,7 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
                                   onUndoCheckin(stu.id, currentStation.id);
                                 }
                               }}
-                              className="text-rose-500 hover:text-rose-700 hover:bg-rose-50 p-1.5 rounded-lg transition-colors"
+                              className="text-rose-500 hover:text-rose-700 hover:bg-rose-50 p-1.5 rounded-lg transition-colors cursor-pointer"
                               title="Hủy điểm danh nếu nhập nhầm"
                             >
                               <Trash2 className="w-3.5 h-3.5" />

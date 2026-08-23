@@ -4,20 +4,19 @@ import {
   Clock, 
   MapPin, 
   Sparkles, 
-  Mic2, 
-  Gift, 
-  Music, 
   Bookmark, 
-  ChevronRight, 
-  Layers,
-  Award,
-  Bell,
-  CheckCircle2,
-  Users,
-  ShieldCheck,
-  Zap,
+  Award, 
+  Users, 
+  ShieldCheck, 
+  Zap, 
+  Gamepad2,
   Flame,
-  ArrowRight
+  ArrowRight,
+  Trophy,
+  Compass,
+  Star,
+  CheckCircle2,
+  PartyPopper
 } from 'lucide-react';
 import { TimelineEvent, Station } from '../types';
 import { TIMELINE_EVENTS } from '../data/mockData';
@@ -56,141 +55,207 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
 
   return (
     <div className="space-y-8 max-w-5xl mx-auto">
-      {/* Hero Welcome Banner */}
-      <div className="bg-gradient-to-tr from-blue-700 via-indigo-700 to-purple-800 text-white rounded-3xl p-6 sm:p-10 shadow-xl border border-blue-600/30 relative overflow-hidden">
-        <div className="absolute right-0 top-0 w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none" />
-        
-        <div className="relative z-10 max-w-2xl space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 text-white border border-white/30 text-xs font-bold uppercase tracking-wider backdrop-blur-xs">
-            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-            HỘI SINH VIÊN TRƯỜNG ĐẠI HỌC SÀI GÒN
+      {/* SGU'S DAY 2025 - ARCADE RETRO HERO MARQUEE (Moodboard Design) */}
+      <div className="relative rounded-3xl overflow-hidden arcade-border-orange bg-gradient-to-b from-orange-500 via-orange-600 to-amber-600 p-1 sm:p-2 text-white shadow-2xl">
+        {/* Decorative Top Arcade Header Strip */}
+        <div className="bg-slate-950/80 backdrop-blur-md rounded-2xl p-4 sm:p-8 relative overflow-hidden">
+          {/* Halftone & Glow Overlays */}
+          <div className="absolute inset-0 bg-halftone opacity-20 pointer-events-none" />
+          <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-amber-400/20 to-orange-500/0 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
+
+          {/* Marquee Badges Row */}
+          <div className="relative z-10 flex flex-wrap items-center justify-between gap-2.5 pb-4 border-b border-white/15">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-600 text-white font-extrabold text-[11px] uppercase tracking-wider shadow-sm border border-blue-400">
+              <Sparkles className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
+              <span>HỘI SINH VIÊN TRƯỜNG ĐẠI HỌC SÀI GÒN</span>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="bg-amber-400 text-slate-950 text-[10px] font-black font-mono px-2.5 py-0.5 rounded-md uppercase tracking-wider shadow-xs">
+                ĐẠI HỘI IX (2025 - 2028)
+              </span>
+              <span className="bg-emerald-500 text-white text-[10px] font-black px-2 py-0.5 rounded-md uppercase">
+                LEVEL UP 2025
+              </span>
+            </div>
           </div>
-          
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight">
-            Ngày Hội Tân Sinh Viên: “SGU’s Day 2025”
-          </h1>
 
-          <p className="text-blue-100 text-xs sm:text-base leading-relaxed">
-            Chào mừng tân sinh viên Khóa 2025 với chuỗi <strong>18 hoạt động thực tế</strong> sôi nổi, <strong>8 trạm điểm danh một chạm NFC/QR</strong>, sân chơi rèn luyện Sinh viên 5 tốt và Đại nhạc hội Gala Chung kết bùng nổ!
-          </p>
+          {/* Main Hero Title & Visual Arcade Centerpiece */}
+          <div className="relative z-10 my-6 sm:my-8 text-center space-y-4">
+            <div className="inline-block">
+              <div className="flex items-center justify-center gap-2 text-amber-300 text-xs sm:text-sm font-extrabold tracking-widest uppercase mb-1">
+                <Star className="w-4 h-4 fill-amber-300" />
+                <span>CHÀO ĐÓN TÂN SINH VIÊN KHÓA 2025</span>
+                <Star className="w-4 h-4 fill-amber-300" />
+              </div>
+              <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white tracking-tight leading-none drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]">
+                SGU’S <span className="text-amber-300">DAY</span> 2025
+              </h1>
+              <div className="mt-2 inline-block bg-white text-orange-600 px-4 py-1 rounded-full font-black text-xs sm:text-sm tracking-wide shadow-md uppercase">
+                🎮 HỘ CHIẾU ĐIỆN TỬ & CHINH PHỤC 8 TRẠM NGÀY HỘI
+              </div>
+            </div>
 
-          <div className="pt-2 flex flex-wrap items-center gap-3">
-            <button
-              id="hero-register-btn"
-              onClick={onOpenRegisterModal}
-              className="px-5 py-3 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-amber-400/30 transition-all transform hover:-translate-y-0.5"
-            >
-              🎉 Đăng ký & Nhận Thẻ Tân Sinh Viên
-            </button>
+            <p className="max-w-2xl mx-auto text-orange-100 text-xs sm:text-sm leading-relaxed font-medium">
+              Chủ Nhật, ngày <strong>19/10/2025</strong> tại Cơ sở chính ĐH Sài Gòn (273 An Dương Vương). Khám phá chuỗi <strong>18 hoạt động</strong> bùng nổ, điểm danh <strong>8 trạm NFC một chạm</strong> để hoàn thành Hộ chiếu điện tử và tham gia Gala Chung kết!
+            </p>
 
-            <button
-              id="hero-checkin-btn"
-              onClick={onOpenCheckin}
-              className="px-5 py-3 rounded-2xl bg-white/15 hover:bg-white/25 text-white font-bold text-xs sm:text-sm border border-white/30 backdrop-blur-xs transition-all"
-            >
-              ⚡ Quét Thẻ NFC / QR Trạm
-            </button>
+            {/* Action Buttons */}
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
+              <button
+                id="hero-register-pass-btn"
+                onClick={onOpenRegisterModal}
+                className="arcade-btn-orange px-6 py-3 rounded-2xl text-white font-black text-xs sm:text-sm tracking-wide uppercase cursor-pointer flex items-center gap-2"
+              >
+                <PartyPopper className="w-4 h-4 text-amber-300" />
+                <span>Nhận Thẻ e-Pass Tân Sinh Viên</span>
+              </button>
+
+              <button
+                id="hero-scan-nfc-btn"
+                onClick={onOpenCheckin}
+                className="arcade-btn-blue px-6 py-3 rounded-2xl text-white font-black text-xs sm:text-sm tracking-wide uppercase cursor-pointer flex items-center gap-2"
+              >
+                <Zap className="w-4 h-4 text-amber-300 fill-amber-300" />
+                <span>Chạm NFC / Quét QR Trạm</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Arcade Stats Counter Footer */}
+          <div className="relative z-10 grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-4 border-t border-white/15 text-center">
+            <div className="bg-white/10 rounded-xl p-2.5 backdrop-blur-xs">
+              <span className="block text-2xl font-black text-amber-300 font-display">18</span>
+              <span className="text-[10px] text-orange-100 font-bold uppercase">Hoạt động thực tế</span>
+            </div>
+            <div className="bg-white/10 rounded-xl p-2.5 backdrop-blur-xs">
+              <span className="block text-2xl font-black text-emerald-300 font-display">8 TRẠM</span>
+              <span className="text-[10px] text-orange-100 font-bold uppercase">Điểm danh NFC/QR</span>
+            </div>
+            <div className="bg-white/10 rounded-xl p-2.5 backdrop-blur-xs">
+              <span className="block text-2xl font-black text-blue-300 font-display">5/8+</span>
+              <span className="text-[10px] text-orange-100 font-bold uppercase">Mốc hoàn thành tốt</span>
+            </div>
+            <div className="bg-white/10 rounded-xl p-2.5 backdrop-blur-xs">
+              <span className="block text-2xl font-black text-pink-300 font-display">100%</span>
+              <span className="text-[10px] text-orange-100 font-bold uppercase">Sinh Viên 5 Tốt SGU</span>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* 8 STATIONS QUICK PREVIEW GRID */}
+      {/* 8 CHECK-IN STATIONS ARCADE GRID (Moodboard Style Level Badges) */}
       <div className="space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
-            <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-              <Award className="w-5 h-5 text-blue-600" />
-              <span>8 Trạm Điểm Danh Tương Tác NFC/QR</span>
-            </h3>
-            <p className="text-xs text-slate-500 mt-0.5">
-              Tương ứng các hoạt động số 3, 6, 8, 9, 10, 12, 13, 17 trong Kế hoạch số 10/KH-BTK
+            <h2 className="text-xl font-display font-black text-slate-900 flex items-center gap-2">
+              <Trophy className="w-5 h-5 text-orange-600" />
+              <span>8 Trạm Điểm Danh Một Chạm (NFC / QR)</span>
+            </h2>
+            <p className="text-xs text-slate-600 font-medium mt-0.5">
+              8 trạm điểm danh cốt lõi ngày hội theo Kế hoạch 10/KH-BTK.
             </p>
           </div>
-          <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200 self-start sm:self-auto">
-            Tích lũy tối thiểu 5/8 trạm để nhận quà BTC
-          </span>
+          <div className="bg-amber-100 border border-amber-300 text-amber-900 px-3 py-1 rounded-xl text-xs font-black self-start sm:self-auto flex items-center gap-1.5">
+            <Sparkles className="w-4 h-4 text-orange-600" />
+            <span>Chinh phục 8 trạm ngày hội để ghi dấu ấn vào Hộ Chiếu Điện Tử</span>
+          </div>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
           {stations.map((st) => (
             <div
               key={st.id}
               onClick={() => onSelectStation(st)}
-              className="bg-white p-3.5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between group"
+              className="bg-white p-4 rounded-2xl border-2 border-orange-200 hover:border-orange-500 hover:shadow-lg transition-all cursor-pointer flex flex-col justify-between group transform hover:-translate-y-1 relative overflow-hidden"
             >
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-blue-50 text-blue-800 border border-blue-100">
-                  Trạm {st.stationNumber} (HĐ {st.activityNumber})
+              <div className="absolute top-0 right-0 w-16 h-16 bg-orange-100/50 rounded-bl-full pointer-events-none" />
+
+              <div className="flex items-center justify-between relative z-10">
+                <span className="text-[10px] font-mono font-black px-2 py-0.5 rounded-lg bg-orange-600 text-white shadow-2xs">
+                  TRẠM {st.stationNumber}
                 </span>
-                <span className="text-xl group-hover:scale-125 transition-transform">{st.stampBadge}</span>
+                <span className="text-2xl group-hover:scale-125 transition-transform">{st.stampBadge}</span>
               </div>
-              <div className="mt-2.5">
-                <h4 className="font-bold text-xs text-slate-900 line-clamp-1">{st.shortName}</h4>
-                <p className="text-[10px] text-slate-500 line-clamp-1 mt-0.5">{st.location}</p>
+
+              <div className="mt-3 relative z-10">
+                <span className="text-[10px] text-blue-600 font-bold uppercase font-mono block">
+                  Khu {st.zone}
+                </span>
+                <h3 className="font-bold text-xs sm:text-sm text-slate-900 line-clamp-1 mt-0.5">
+                  {st.shortName}
+                </h3>
+                <p className="text-[11px] text-slate-500 line-clamp-1 mt-0.5">
+                  {st.location}
+                </p>
               </div>
-              <div className="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] font-medium text-blue-600">
-                <span className="text-slate-500 truncate pr-1">{st.assignedUnit || 'LCH Khoa'}</span>
-                <span className="shrink-0">Chi tiết &rarr;</span>
+
+              <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px] font-bold text-orange-600 relative z-10">
+                <span className="text-slate-600 truncate pr-1 text-[10px]">{st.assignedUnit || 'LCH Khoa'}</span>
+                <span className="shrink-0 flex items-center gap-0.5">
+                  Khám phá &rarr;
+                </span>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* 18 TIMELINE SECTION */}
-      <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
+      {/* 18 ACTIVITIES TIMELINE SECTION */}
+      <div className="bg-white rounded-3xl border-2 border-orange-200 shadow-md p-5 sm:p-8 space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
           <div>
-            <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+            <h2 className="text-xl font-display font-black text-slate-900 flex items-center gap-2">
               <Calendar className="w-5 h-5 text-blue-600" />
-              <span>Toàn Bộ 18 Hoạt Động Kế Hoạch “SGU’s Day 2025”</span>
+              <span>Lịch Trình Hoạt Động “SGU’s Day 2025”</span>
             </h2>
-            <p className="text-xs text-slate-500 mt-0.5">
-              Chủ Nhật, ngày 19/10/2025 • Từ 07g15 đến 21g00 tại Cơ sở chính ĐH Sài Gòn
+            <p className="text-xs text-slate-500 mt-0.5 font-medium">
+              Từ 07g15 đến 21g00 • Đầy đủ thời gian, địa điểm và đơn vị thực hiện
             </p>
           </div>
 
           {/* Filter Pills */}
-          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar bg-slate-100 p-1 rounded-xl shrink-0">
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar bg-slate-100 p-1.5 rounded-2xl shrink-0">
             <button
               onClick={() => setSelectedFilter('all')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                selectedFilter === 'all' ? 'bg-white text-blue-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all ${
+                selectedFilter === 'all' ? 'bg-orange-500 text-white shadow-xs' : 'text-slate-700 hover:text-orange-600'
               }`}
             >
-              Tất cả (18 HĐ)
+              Tất cả hoạt động
             </button>
             <button
               onClick={() => setSelectedFilter('checkin_stations')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                selectedFilter === 'checkin_stations' ? 'bg-white text-blue-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all ${
+                selectedFilter === 'checkin_stations' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-700 hover:text-blue-600'
               }`}
             >
               ⭐ 8 Trạm Điểm Danh
             </button>
             <button
               onClick={() => setSelectedFilter('main_stage')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                selectedFilter === 'main_stage' ? 'bg-white text-blue-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all ${
+                selectedFilter === 'main_stage' ? 'bg-orange-500 text-white shadow-xs' : 'text-slate-700 hover:text-orange-600'
               }`}
             >
               Sân khấu chính
             </button>
             <button
               onClick={() => setSelectedFilter('talkshow')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                selectedFilter === 'talkshow' ? 'bg-white text-blue-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all ${
+                selectedFilter === 'talkshow' ? 'bg-orange-500 text-white shadow-xs' : 'text-slate-700 hover:text-orange-600'
               }`}
             >
               Toạ đàm & Workshop
             </button>
             <button
               onClick={() => setSelectedFilter('exhibition')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                selectedFilter === 'exhibition' ? 'bg-white text-blue-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all ${
+                selectedFilter === 'exhibition' ? 'bg-orange-500 text-white shadow-xs' : 'text-slate-700 hover:text-orange-600'
               }`}
             >
-              Triển lãm & Chợ
+              Triển lãm & Ẩm thực
             </button>
           </div>
         </div>
@@ -204,34 +269,34 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
             return (
               <div
                 key={evt.id}
-                className={`p-4 sm:p-5 rounded-2xl border transition-all flex flex-col sm:flex-row sm:items-start justify-between gap-4 ${
+                className={`p-4 sm:p-5 rounded-2xl border-2 transition-all flex flex-col sm:flex-row sm:items-start justify-between gap-4 ${
                   evt.isCheckinStation
-                    ? 'bg-gradient-to-r from-blue-50/70 via-indigo-50/50 to-white border-blue-300 shadow-xs ring-1 ring-blue-400/20'
+                    ? 'bg-gradient-to-r from-orange-50/70 via-amber-50/40 to-white border-orange-300 shadow-xs ring-2 ring-orange-400/20'
                     : evt.isHighlight
-                    ? 'bg-gradient-to-r from-amber-50/40 to-white border-amber-200'
-                    : 'bg-white border-slate-200 hover:border-slate-300'
+                    ? 'bg-gradient-to-r from-blue-50/50 to-white border-blue-200'
+                    : 'bg-white border-slate-200 hover:border-orange-200'
                 }`}
               >
                 <div className="flex items-start gap-3 sm:gap-4">
-                  {/* Time Badge */}
-                  <div className="bg-slate-900 text-white rounded-2xl p-2.5 sm:p-3 text-center min-w-[85px] shrink-0 shadow-xs">
-                    <span className="block text-[10px] font-mono uppercase text-slate-400">
-                      HĐ #{evt.activityNumber}
-                    </span>
-                    <span className="block text-xs font-bold text-blue-400 font-mono mt-0.5">{evt.time}</span>
-                    <span className="block text-[10px] text-slate-400 font-mono">đến {evt.endTime}</span>
+                  {/* Time Badge - Clean Time Only */}
+                  <div className={`rounded-2xl p-2.5 sm:p-3 text-center min-w-[90px] sm:min-w-[105px] shrink-0 shadow-xs flex flex-col items-center justify-center ${
+                    evt.isCheckinStation ? 'bg-orange-600 text-white' : 'bg-slate-900 text-white'
+                  }`}>
+                    <Clock className="w-3.5 h-3.5 text-amber-300 mb-1" />
+                    <span className="block text-xs sm:text-sm font-extrabold text-white font-mono leading-tight">{evt.time}</span>
+                    <span className="block text-[10px] text-slate-300 font-mono mt-0.5">đến {evt.endTime}</span>
                   </div>
 
                   {/* Content Details */}
                   <div className="space-y-1.5 min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="font-extrabold text-sm sm:text-base text-slate-900">
-                        {evt.activityNumber}. {evt.title}
+                      <span className="font-display font-black text-sm sm:text-base text-slate-950">
+                        {evt.title}
                       </span>
 
                       {evt.isCheckinStation && (
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-600 text-white shadow-2xs flex items-center gap-1">
-                          <Zap className="w-2.5 h-2.5 text-amber-300 fill-amber-300" />
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-blue-600 text-white shadow-xs flex items-center gap-1">
+                          <Zap className="w-3 h-3 text-amber-300 fill-amber-300" />
                           TRẠM ĐIỂM DANH ({correspondingStation?.stampBadge})
                         </span>
                       )}
@@ -243,19 +308,19 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
                       )}
                     </div>
 
-                    <p className="text-xs text-slate-600 leading-relaxed">
+                    <p className="text-xs text-slate-600 leading-relaxed font-medium">
                       {evt.description}
                     </p>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-xs text-slate-500">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-xs text-slate-600">
                       <div className="flex items-center gap-1.5">
-                        <MapPin className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                        <MapPin className="w-3.5 h-3.5 text-orange-600 shrink-0" />
                         <span className="truncate"><strong>Địa điểm:</strong> {evt.location}</span>
                       </div>
 
                       {evt.inCharge && (
                         <div className="flex items-center gap-1.5">
-                          <ShieldCheck className="w-3.5 h-3.5 text-indigo-600 shrink-0" />
+                          <ShieldCheck className="w-3.5 h-3.5 text-blue-600 shrink-0" />
                           <span className="truncate"><strong>Phụ trách:</strong> {evt.inCharge}</span>
                         </div>
                       )}
@@ -273,7 +338,7 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
                       <div className="pt-2 flex items-center gap-2">
                         <button
                           onClick={() => onSelectStation(correspondingStation)}
-                          className="text-[11px] font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1"
+                          className="text-xs font-black text-orange-600 hover:text-orange-800 flex items-center gap-1"
                         >
                           Xem thông tin trạm #{correspondingStation.stationNumber} &rarr;
                         </button>
@@ -286,10 +351,10 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
                 <div className="sm:self-center shrink-0 flex items-center justify-end">
                   <button
                     onClick={() => toggleBookmark(evt.id)}
-                    className={`p-2.5 rounded-xl border transition-all ${
+                    className={`p-2.5 rounded-xl border-2 transition-all ${
                       isBookmarked
-                        ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
-                        : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100'
+                        ? 'bg-orange-500 text-white border-orange-500 shadow-xs'
+                        : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-orange-50 hover:text-orange-600'
                     }`}
                     title={isBookmarked ? 'Đã lưu vào lịch nhắc' : 'Lưu vào lịch nhắc'}
                   >

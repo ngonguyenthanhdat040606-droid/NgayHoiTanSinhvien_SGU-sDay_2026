@@ -15,10 +15,8 @@ export interface Station {
   assignedUnit?: string; // Đơn vị phân công thực hiện (LCH SV khoa, CLB)
   nfcTagId: string; // e.g. "B1:8D:92:6D"
   stampBadge: string;
-  rewardPoints: number;
   estimatedMinutes: number;
   requirements: string;
-  highlightGift: string;
 }
 
 export interface Student {
@@ -34,10 +32,6 @@ export interface Student {
   registeredAt: string;
   completedStations: string[]; // array of station IDs
   checkinHistory: StationCheckin[];
-  isEligibleForReward: boolean;
-  rewardClaimed: boolean;
-  luckyDrawCode?: string; // Mã cá nhân định danh sinh viên (TSV-XXXXX)
-  personalCode?: string;
 }
 
 export interface StationCheckin {
@@ -55,7 +49,7 @@ export interface TimelineEvent {
   endTime: string;
   title: string;
   location: string;
-  category: 'ceremony' | 'main_stage' | 'station_activity' | 'talkshow' | 'exhibition' | 'market_food' | 'sports_game' | 'gala' | 'gift_exchange';
+  category: 'ceremony' | 'main_stage' | 'station_activity' | 'talkshow' | 'exhibition' | 'market_food' | 'sports_game' | 'gala';
   description: string;
   inCharge?: string; // Cán bộ / Đ/c Phụ trách
   assignedUnit?: string; // Phân công thực hiện (LCH Khoa, CLB Đội Nhóm)

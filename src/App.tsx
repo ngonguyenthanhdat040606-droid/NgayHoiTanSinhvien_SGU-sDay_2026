@@ -43,9 +43,17 @@ import {
   getStoredStations, 
   saveStations, 
   getActiveStudentId, 
-  setActiveStudentId, 
+  setActiveStudentId,
+  getActiveStudent,
+  registerOrUpdateStudent,
   checkinStudentToStation 
 } from './utils/storage';
+import {
+  subscribeToStudents,
+  saveStudentToFirestore,
+  recordStationCheckinInFirestore,
+  seedInitialFirestoreStudents
+} from './services/firebase';
 import { 
   Radio, 
   CheckCircle2, 
@@ -61,6 +69,7 @@ export default function App() {
   const [stations, setStations] = useState<Station[]>([]);
   const [activeStudentId, setStudentIdState] = useState<string | null>(null);
   const [pendingNfcStation, setPendingNfcStation] = useState<Station | null>(null);
+  const [isFirestoreSyncing, setIsFirestoreSyncing] = useState<boolean>(false);
 
   // Modals state
   const [isCheckinModalOpen, setIsCheckinModalOpen] = useState<boolean>(false);
@@ -145,7 +154,7 @@ export default function App() {
     return null;
   };
 
-  // Initial Load from Storage and URL handling
+  // Initial Load from Storage, Firestore Realtime Sync, and URL handling
   useEffect(() => {
     const loadedStudents = getStoredStudents();
     const loadedStations = getStoredStations();
@@ -153,18 +162,70 @@ export default function App() {
 
     setStudents(loadedStudents);
     setStations(loadedStations);
-    setStudentIdState(currentActiveId || (loadedStudents[0]?.id ?? null));
+    
+    // Pick active student or first available
+    const initStudent = (currentActiveId ? loadedStudents.find((s) => s.id === currentActiveId) : null) || loadedStudents[0] || null;
+    if (initStudent) {
+      setStudentIdState(initStudent.id);
+      setActiveStudentId(initStudent.id);
+    }
+
+    // Seed initial Firestore collection if empty
+    seedInitialFirestoreStudents(loadedStudents).catch((err) => {
+      console.warn('Firestore seed warning:', err);
+    });
+
+    // Realtime subscription to Firebase Firestore
+    const unsubscribeFirestore = subscribeToStudents(
+      (remoteStudents) => {
+        if (remoteStudents && remoteStudents.length > 0) {
+          // Merge remote students with local cache
+          setStudents(remoteStudents);
+          saveStudents(remoteStudents);
+
+          // Update active student if present
+          const activeId = getActiveStudentId();
+          if (activeId) {
+            const found = remoteStudents.find((s) => s.id === activeId);
+            if (found) {
+              setStudentIdState(found.id);
+            }
+          }
+        }
+      },
+      (error) => {
+        console.warn('Using local storage fallback due to Firestore connection:', error);
+      }
+    );
 
     // Handle deep-link tag tapping for both iOS Safari and Android
     const handleUrlCheckin = () => {
-      const matched = parseStationFromUrl(loadedStations);
+      const freshStations = getStoredStations();
+      const matched = parseStationFromUrl(freshStations);
       if (matched) {
-        const currentStudent = loadedStudents.find((s) => s.id === currentActiveId) || loadedStudents[0];
+        const freshStudents = getStoredStudents();
+        const activeId = getActiveStudentId();
+        const currentStudent = (activeId ? freshStudents.find((s) => s.id === activeId) : null) || freshStudents[0];
+        
         if (currentStudent) {
           const res = checkinStudentToStation(currentStudent.id, matched.id, 'nfc_tap', 'Thẻ NFC Trạm');
-          setStudents(getStoredStudents());
-          if (res.success) {
-            showToast(`🎉 Đã nhận diện thẻ NFC trạm: ${matched.name}!`, 'success');
+          const latestStudents = getStoredStudents();
+          setStudents(latestStudents);
+          setStudentIdState(currentStudent.id);
+          setActiveStudentId(currentStudent.id);
+
+          if (res.success && res.student) {
+            // Background sync to Firestore
+            saveStudentToFirestore(res.student);
+            recordStationCheckinInFirestore(res.student, matched.id, {
+              stationId: matched.id,
+              stationName: matched.name,
+              timestamp: new Date().toLocaleTimeString('vi-VN') + ' ' + new Date().toLocaleDateString('vi-VN'),
+              method: 'nfc_tap',
+              recordedBy: 'Thẻ NFC Trạm'
+            });
+
+            showToast(`🎉 Đã nhận diện NFC: Đóng dấu thành công trạm "${matched.name}" cho ${currentStudent.fullName}!`, 'success');
             setActiveTab('student_pass');
             try {
               confetti({ particleCount: 70, spread: 60, origin: { y: 0.6 } });
@@ -179,6 +240,13 @@ export default function App() {
           setIsRegisterModalOpen(true);
           showToast(`📱 Đã nhận diện NFC ${matched.name}. Mời bạn đăng ký nhận Thẻ e-Pass!`, 'info');
         }
+
+        // Clean up hash/params so it doesn't repeatedly trigger on refresh
+        try {
+          if (window.location.hash || window.location.search) {
+            window.history.replaceState(null, '', window.location.pathname);
+          }
+        } catch (e) {}
       }
     };
 
@@ -186,120 +254,148 @@ export default function App() {
     window.addEventListener('hashchange', handleUrlCheckin);
     window.addEventListener('popstate', handleUrlCheckin);
     return () => {
+      unsubscribeFirestore();
       window.removeEventListener('hashchange', handleUrlCheckin);
       window.removeEventListener('popstate', handleUrlCheckin);
     };
   }, []);
 
-  const activeStudent = students.find((s) => s.id === activeStudentId) || students[0] || null;
+  const activeStudent = (activeStudentId ? students.find((s) => s.id === activeStudentId) : null) || students[0] || null;
 
   // Handler: Checkin from student scanner
-  const handleStudentCheckin = (stationId: string, method: 'nfc_tap' | 'qr_scan' | 'manual_mssv') => {
-    if (!activeStudent) {
+  const handleStudentCheckin = async (stationId: string, method: 'nfc_tap' | 'qr_scan' | 'manual_mssv') => {
+    // If no active student in state, try reading from storage
+    const targetStudent = activeStudent || getActiveStudent();
+    if (!targetStudent) {
       setIsRegisterModalOpen(true);
       return;
     }
 
-    const res = checkinStudentToStation(activeStudent.id, stationId, method);
+    const res = checkinStudentToStation(targetStudent.id, stationId, method);
     const updatedList = getStoredStudents();
     setStudents(updatedList);
+    setStudentIdState(targetStudent.id);
+    setActiveStudentId(targetStudent.id);
 
-    if (res.success) {
+    if (res.success && res.student) {
       showToast(res.message, 'success');
+      // Sync to Firestore cloud
+      setIsFirestoreSyncing(true);
+      const st = stations.find((s) => s.id === stationId);
+      await saveStudentToFirestore(res.student);
+      await recordStationCheckinInFirestore(res.student, stationId, {
+        stationId,
+        stationName: st?.name || 'Trạm sự kiện',
+        timestamp: new Date().toLocaleTimeString('vi-VN') + ' ' + new Date().toLocaleDateString('vi-VN'),
+        method,
+        recordedBy: method === 'nfc_tap' ? 'Thẻ NFC Trạm' : 'Quét QR Sinh Viên'
+      });
+      setIsFirestoreSyncing(false);
     } else {
       showToast(res.message, 'warning');
     }
   };
 
   // Handler: Organizer Checkin
-  const handleOrganizerCheckin = (
+  const handleOrganizerCheckin = async (
     studentMssvOrId: string, 
     stationId: string, 
     method: 'manual_mssv' | 'manager_scan' | 'nfc_tap',
     managerName?: string
   ) => {
     const res = checkinStudentToStation(studentMssvOrId, stationId, method, managerName);
-    if (res.success) {
+    if (res.success && res.student) {
       const updatedList = getStoredStudents();
       setStudents(updatedList);
+
+      // Push to Firestore cloud
+      setIsFirestoreSyncing(true);
+      const st = stations.find((s) => s.id === stationId);
+      await saveStudentToFirestore(res.student);
+      await recordStationCheckinInFirestore(res.student, stationId, {
+        stationId,
+        stationName: st?.name || 'Trạm sự kiện',
+        timestamp: new Date().toLocaleTimeString('vi-VN') + ' ' + new Date().toLocaleDateString('vi-VN'),
+        method,
+        recordedBy: managerName || 'Bàn Quản Lý Trạm'
+      });
+      setIsFirestoreSyncing(false);
     }
     return res;
   };
 
   // Handler: Undo Checkin
-  const handleUndoCheckin = (studentId: string, stationId: string) => {
+  const handleUndoCheckin = async (studentId: string, stationId: string) => {
+    let modifiedStudent: Student | null = null;
     const updated = students.map((stu) => {
       if (stu.id === studentId) {
         const newStations = stu.completedStations.filter((id) => id !== stationId);
         const newHistory = stu.checkinHistory.filter((c) => c.stationId !== stationId);
-        return {
+        modifiedStudent = {
           ...stu,
           completedStations: newStations,
           checkinHistory: newHistory,
-          isEligibleForReward: newStations.length >= 5,
         };
+        return modifiedStudent;
       }
       return stu;
     });
 
     setStudents(updated);
     saveStudents(updated);
+    if (modifiedStudent) {
+      saveStudentToFirestore(modifiedStudent);
+    }
     showToast('Đã hủy ghi nhận điểm danh thành công.', 'info');
   };
 
   // Handler: Register New Student
-  const handleRegisterStudent = (data: Omit<Student, 'id' | 'registeredAt' | 'completedStations' | 'checkinHistory' | 'isEligibleForReward' | 'rewardClaimed' | 'luckyDrawCode'>): Student => {
-    const randomSuffix = Math.floor(10000 + Math.random() * 90000);
-    const now = new Date();
-    const timestamp = now.toLocaleDateString('vi-VN') + ' ' + now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+  const handleRegisterStudent = (data: {
+    mssv: string;
+    fullName: string;
+    faculty: string;
+    major: string;
+    studentClass: string;
+    email: string;
+    phone: string;
+  }): Student => {
+    const registered = registerOrUpdateStudent(data, pendingNfcStation?.id);
+    const updatedList = getStoredStudents();
+    setStudents(updatedList);
+    setStudentIdState(registered.id);
+    setActiveStudentId(registered.id);
 
-    let initialCompleted: string[] = [];
-    let initialHistory: any[] = [];
-
-    // If student arrived by tapping an NFC tag before registering
-    if (pendingNfcStation) {
-      initialCompleted = [pendingNfcStation.id];
-      initialHistory = [
-        {
-          stationId: pendingNfcStation.id,
-          stationName: pendingNfcStation.name,
-          timestamp,
-          method: 'nfc_tap',
-          verifiedBy: 'Thẻ NFC Trạm',
-        },
-      ];
-    }
-
-    const newStudent: Student = {
-      ...data,
-      id: `stu-${Date.now()}`,
-      registeredAt: timestamp,
-      completedStations: initialCompleted,
-      checkinHistory: initialHistory,
-      isEligibleForReward: initialCompleted.length >= 5,
-      rewardClaimed: false,
-      luckyDrawCode: `SGU-${randomSuffix}`,
-    };
-
-    const updated = [newStudent, ...students];
-    setStudents(updated);
-    saveStudents(updated);
-    setActiveStudentId(newStudent.id);
-    setStudentIdState(newStudent.id);
+    // Save to Firestore
+    saveStudentToFirestore(registered);
 
     if (pendingNfcStation) {
-      showToast(`🎉 Chào mừng ${newStudent.fullName}! Đã cấp Thẻ e-Pass & đóng dấu ${pendingNfcStation.name}!`, 'success');
+      recordStationCheckinInFirestore(registered, pendingNfcStation.id, {
+        stationId: pendingNfcStation.id,
+        stationName: pendingNfcStation.name,
+        timestamp: new Date().toLocaleTimeString('vi-VN') + ' ' + new Date().toLocaleDateString('vi-VN'),
+        method: 'nfc_tap',
+        recordedBy: 'Thẻ NFC Trạm'
+      });
+      showToast(`🎉 Chào mừng ${registered.fullName}! Đã lưu tài khoản & đóng dấu ${pendingNfcStation.name}!`, 'success');
       setPendingNfcStation(null);
     } else {
-      showToast(`Chào mừng tân sinh viên ${newStudent.fullName}! Đã cấp Thẻ e-Pass.`, 'success');
+      showToast(`Chào mừng tân sinh viên ${registered.fullName}! Đã lưu và kích hoạt Thẻ e-Pass.`, 'success');
     }
 
+    // Clean URL
+    try {
+      if (window.location.hash || window.location.search) {
+        window.history.replaceState(null, '', window.location.pathname);
+      }
+    } catch {}
+
+    setIsRegisterModalOpen(false);
     setActiveTab('student_pass');
     try {
       confetti({ particleCount: 70, spread: 60, origin: { y: 0.6 } });
     } catch (e) {}
 
-    return newStudent;
+    return registered;
   };
 
   // Handler: Select Student
@@ -430,14 +526,14 @@ export default function App() {
 
         {activeTab === 'analytics' && (
           <OrganizerAuthGuard
-            title="Trung Tâm Thống Kê & Danh Sách Quà (BTC)"
-            subtitle="Quản lý tiến độ toàn trường, duyệt đổi quà và xuất file danh sách sinh viên."
+            title="Trung Tâm Thống Kê & Báo Cáo Sự Kiện (BTC)"
+            subtitle="Quản lý tiến độ toàn trường, giám sát lượt check-in Firestore và xuất file danh sách sinh viên."
             onBackToStudent={() => setActiveTab('student_pass')}
           >
             <AdminAnalytics
               students={students}
               stations={stations}
-              onClaimReward={handleClaimReward}
+              isFirestoreSyncing={isFirestoreSyncing}
             />
           </OrganizerAuthGuard>
         )}
@@ -450,6 +546,7 @@ export default function App() {
         student={activeStudent}
         stations={stations}
         onCheckinSuccess={handleStudentCheckin}
+        onOpenRegisterModal={() => setIsRegisterModalOpen(true)}
       />
 
       <RegistrationModal

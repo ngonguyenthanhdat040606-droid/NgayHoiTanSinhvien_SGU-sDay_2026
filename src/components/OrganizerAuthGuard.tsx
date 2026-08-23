@@ -12,7 +12,8 @@ import {
   Settings, 
   X,
   Sparkles,
-  ArrowLeft
+  ArrowLeft,
+  Gamepad2
 } from 'lucide-react';
 import { 
   getOrganizerPin, 
@@ -109,20 +110,20 @@ export const OrganizerAuthGuard: React.FC<OrganizerAuthGuardProps> = ({
     return (
       <div className="space-y-4">
         {/* Organizer Active Session Bar */}
-        <div className="bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border border-amber-300/80 rounded-2xl p-3 sm:px-4 sm:py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs shadow-xs">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center font-bold shrink-0 shadow-xs">
-              <ShieldCheck className="w-4 h-4" />
+        <div className="bg-gradient-to-r from-amber-500/15 via-orange-500/10 to-transparent border-2 border-orange-300 rounded-3xl p-3.5 sm:px-5 sm:py-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs shadow-md">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-orange-600 text-white flex items-center justify-center font-black shrink-0 shadow-md">
+              <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
-              <div className="font-bold text-amber-950 flex items-center gap-1.5">
-                <span>Đang đăng nhập Quyền Ban Tổ Chức / Quản Lý Trạm</span>
-                <span className="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">
+              <div className="font-display font-black text-slate-950 flex items-center gap-2">
+                <span>ĐANG ĐĂNG NHẬP BAN TỔ CHỨC / TRƯỞNG TRẠM SGU</span>
+                <span className="bg-emerald-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase">
                   Đã xác thực
                 </span>
               </div>
-              <p className="text-[11px] text-amber-800/80">
-                Toàn bộ thao tác điểm danh thủ công, xóa dấu và xuất file CSV đã được mở khóa.
+              <p className="text-[11px] text-slate-600 font-medium mt-0.5">
+                Toàn bộ tính năng điểm danh thủ công, xóa dấu và xuất file CSV đã được mở khóa.
               </p>
             </div>
           </div>
@@ -130,17 +131,17 @@ export const OrganizerAuthGuard: React.FC<OrganizerAuthGuardProps> = ({
           <div className="flex items-center gap-2 self-end sm:self-center shrink-0">
             <button
               onClick={() => setShowChangePinModal(true)}
-              className="px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-amber-300 text-amber-900 font-semibold transition-all flex items-center gap-1.5 shadow-xs text-xs"
+              className="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 border-2 border-orange-300 text-orange-950 font-bold transition-all flex items-center gap-1.5 shadow-xs text-xs cursor-pointer"
             >
-              <Settings className="w-3.5 h-3.5 text-amber-700" />
+              <Settings className="w-3.5 h-3.5 text-orange-600" />
               <span>Đổi PIN</span>
             </button>
             <button
               onClick={handleLogout}
-              className="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-semibold transition-all flex items-center gap-1.5 shadow-xs text-xs"
+              className="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-black transition-all flex items-center gap-1.5 shadow-md text-xs cursor-pointer"
             >
               <Lock className="w-3.5 h-3.5" />
-              <span>Khóa lại (Thoát BTC)</span>
+              <span>Khóa lại (Thoát)</span>
             </button>
           </div>
         </div>
@@ -150,30 +151,30 @@ export const OrganizerAuthGuard: React.FC<OrganizerAuthGuardProps> = ({
 
         {/* Change PIN Modal */}
         {showChangePinModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in">
-            <div className="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-xs animate-in fade-in">
+            <div className="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border-2 border-orange-500 space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <KeyRound className="w-5 h-5 text-amber-600" />
-                  <h3 className="font-bold text-slate-900 text-base">Đổi Mã PIN Ban Tổ Chức</h3>
+                  <KeyRound className="w-5 h-5 text-orange-600" />
+                  <h3 className="font-display font-black text-slate-950 text-base">Đổi Mã PIN Ban Tổ Chức</h3>
                 </div>
                 <button
                   onClick={() => setShowChangePinModal(false)}
-                  className="p-1 rounded-lg text-slate-400 hover:text-slate-600"
+                  className="p-1 rounded-xl text-slate-400 hover:text-slate-600 cursor-pointer"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
               {changePinError && (
-                <div className="p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
+                <div className="p-3 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-2 font-bold">
                   <AlertCircle className="w-4 h-4 shrink-0" />
                   <span>{changePinError}</span>
                 </div>
               )}
 
               {changePinSuccess && (
-                <div className="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs flex items-center gap-2">
+                <div className="p-3 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2 font-bold">
                   <CheckCircle2 className="w-4 h-4 shrink-0" />
                   <span>{changePinSuccess}</span>
                 </div>
@@ -187,7 +188,7 @@ export const OrganizerAuthGuard: React.FC<OrganizerAuthGuardProps> = ({
                     value={oldPin}
                     onChange={(e) => setOldPin(e.target.value)}
                     placeholder="Mặc định: 2026"
-                    className="w-full px-3 py-2 rounded-xl border border-slate-300 font-mono focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-3 py-2.5 rounded-xl border-2 border-slate-200 font-mono font-bold focus:border-orange-500 focus:outline-none"
                     required
                   />
                 </div>
@@ -199,7 +200,7 @@ export const OrganizerAuthGuard: React.FC<OrganizerAuthGuardProps> = ({
                     value={newPin}
                     onChange={(e) => setNewPin(e.target.value)}
                     placeholder="Nhập PIN mới..."
-                    className="w-full px-3 py-2 rounded-xl border border-slate-300 font-mono focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-3 py-2.5 rounded-xl border-2 border-slate-200 font-mono font-bold focus:border-orange-500 focus:outline-none"
                     required
                   />
                 </div>
@@ -211,7 +212,7 @@ export const OrganizerAuthGuard: React.FC<OrganizerAuthGuardProps> = ({
                     value={confirmNewPin}
                     onChange={(e) => setConfirmNewPin(e.target.value)}
                     placeholder="Xác nhận PIN mới..."
-                    className="w-full px-3 py-2 rounded-xl border border-slate-300 font-mono focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-3 py-2.5 rounded-xl border-2 border-slate-200 font-mono font-bold focus:border-orange-500 focus:outline-none"
                     required
                   />
                 </div>
@@ -220,13 +221,13 @@ export const OrganizerAuthGuard: React.FC<OrganizerAuthGuardProps> = ({
                   <button
                     type="button"
                     onClick={() => setShowChangePinModal(false)}
-                    className="flex-1 py-2.5 rounded-xl border border-slate-200 text-slate-700 font-semibold"
+                    className="flex-1 py-2.5 rounded-xl border-2 border-slate-200 text-slate-700 font-bold cursor-pointer hover:bg-slate-50"
                   >
                     Hủy
                   </button>
                   <button
                     type="submit"
-                    className="flex-1 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold"
+                    className="arcade-btn-orange flex-1 py-2.5 rounded-xl text-white font-black uppercase cursor-pointer"
                   >
                     Lưu PIN mới
                   </button>
@@ -239,38 +240,38 @@ export const OrganizerAuthGuard: React.FC<OrganizerAuthGuardProps> = ({
     );
   }
 
-  // If locked, render Secure PIN Prompt Screen
+  // If locked, render Secure PIN Prompt Screen with SGU Arcade design
   return (
-    <div className="max-w-md mx-auto my-6 sm:my-10 bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden animate-in fade-in zoom-in-95">
-      <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-blue-950 p-6 sm:p-8 text-white text-center relative">
-        <div className="w-16 h-16 rounded-2xl bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center text-amber-400 mx-auto mb-4 shadow-inner">
+    <div className="max-w-md mx-auto my-6 sm:my-10 bg-white rounded-3xl border-2 border-orange-500 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95">
+      <div className="bg-gradient-to-br from-orange-600 via-amber-500 to-orange-700 p-6 sm:p-8 text-white text-center relative">
+        <div className="w-16 h-16 rounded-2xl bg-white/20 border-2 border-white/30 backdrop-blur-md flex items-center justify-center text-white mx-auto mb-4 shadow-lg">
           <Lock className="w-8 h-8" />
         </div>
-        <h2 className="text-lg sm:text-xl font-bold tracking-tight">{title}</h2>
-        <p className="text-xs text-slate-300 mt-2 leading-relaxed max-w-xs mx-auto">
+        <h2 className="font-display text-lg sm:text-xl font-black tracking-tight text-white">{title}</h2>
+        <p className="text-xs text-orange-100 mt-2 leading-relaxed max-w-xs mx-auto font-medium">
           {subtitle}
         </p>
       </div>
 
       <div className="p-6 sm:p-8 space-y-5">
         {errorMsg && (
-          <div className="p-3 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2.5 animate-shake">
+          <div className="p-3 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-2.5 font-bold">
             <AlertCircle className="w-4 h-4 shrink-0" />
-            <span className="font-medium">{errorMsg}</span>
+            <span>{errorMsg}</span>
           </div>
         )}
 
         <form onSubmit={handleVerifyPin} className="space-y-4">
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-                <KeyRound className="w-3.5 h-3.5 text-blue-600" />
+              <label className="text-xs font-black text-slate-800 flex items-center gap-1.5">
+                <KeyRound className="w-3.5 h-3.5 text-orange-600" />
                 <span>Mã PIN Ban Tổ Chức</span>
               </label>
               <button
                 type="button"
                 onClick={() => setShowPin(!showPin)}
-                className="text-[11px] text-slate-400 hover:text-slate-600 flex items-center gap-1"
+                className="text-[11px] text-slate-500 hover:text-slate-800 font-bold flex items-center gap-1 cursor-pointer"
               >
                 {showPin ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
                 <span>{showPin ? 'Ẩn' : 'Hiện'}</span>
@@ -287,18 +288,18 @@ export const OrganizerAuthGuard: React.FC<OrganizerAuthGuardProps> = ({
                 }}
                 placeholder="Nhập mã PIN..."
                 autoFocus
-                className="w-full text-center text-xl font-mono tracking-widest px-4 py-3.5 rounded-2xl border-2 border-slate-200 focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 focus:outline-none transition-all font-bold text-slate-900 bg-slate-50 focus:bg-white"
+                className="w-full text-center text-xl font-mono tracking-widest px-4 py-3.5 rounded-2xl border-2 border-slate-200 focus:border-orange-500 focus:outline-none transition-all font-black text-slate-900 bg-slate-50 focus:bg-white"
               />
             </div>
             
-            <div className="mt-2.5 p-2.5 bg-blue-50/80 rounded-xl border border-blue-100 flex items-start gap-2 text-[11px] text-blue-800">
-              <Sparkles className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+            <div className="mt-3 p-3 bg-amber-500/10 rounded-2xl border border-orange-200 flex items-start gap-2.5 text-[11px] text-orange-950 font-medium">
+              <Sparkles className="w-4 h-4 text-orange-600 shrink-0 mt-0.5" />
               <div>
-                <span className="font-semibold">Mã PIN mặc định cho BTC: </span>
+                <span className="font-black">Mã PIN mặc định cho BTC: </span>
                 <button
                   type="button"
                   onClick={() => setPinInput('2026')}
-                  className="font-mono font-bold text-blue-700 bg-white px-1.5 py-0.5 rounded border border-blue-200 hover:bg-blue-100 transition-colors ml-1"
+                  className="font-mono font-black text-orange-700 bg-white px-2 py-0.5 rounded-md border border-orange-300 hover:bg-orange-50 transition-colors ml-1 cursor-pointer"
                   title="Bấm để tự điền mã 2026"
                 >
                   2026
@@ -310,7 +311,7 @@ export const OrganizerAuthGuard: React.FC<OrganizerAuthGuardProps> = ({
 
           <button
             type="submit"
-            className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-sm shadow-lg shadow-blue-500/25 flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
+            className="arcade-btn-orange w-full py-3.5 rounded-2xl text-white font-black text-sm tracking-wide uppercase shadow-lg flex items-center justify-center gap-2 transition-all cursor-pointer"
           >
             <Unlock className="w-4 h-4" />
             <span>Mở Khóa Quyền Ban Tổ Chức</span>
@@ -321,7 +322,7 @@ export const OrganizerAuthGuard: React.FC<OrganizerAuthGuardProps> = ({
           <div className="pt-2 text-center border-t border-slate-100">
             <button
               onClick={onBackToStudent}
-              className="text-xs font-semibold text-slate-500 hover:text-slate-800 flex items-center justify-center gap-1 mx-auto transition-colors"
+              className="text-xs font-bold text-slate-600 hover:text-orange-600 flex items-center justify-center gap-1 mx-auto transition-colors cursor-pointer"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Quay lại giao diện Tân Sinh Viên</span>

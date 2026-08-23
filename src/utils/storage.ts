@@ -56,15 +56,136 @@ export function saveStations(stations: Station[]): void {
 }
 
 export function getActiveStudentId(): string | null {
-  return localStorage.getItem(ACTIVE_STUDENT_ID_KEY) || null;
+  try {
+    return localStorage.getItem(ACTIVE_STUDENT_ID_KEY) || null;
+  } catch (e) {
+    console.error('Failed to load active student id', e);
+    return null;
+  }
 }
 
 export function setActiveStudentId(id: string | null): void {
-  if (id) {
-    localStorage.setItem(ACTIVE_STUDENT_ID_KEY, id);
-  } else {
-    localStorage.removeItem(ACTIVE_STUDENT_ID_KEY);
+  try {
+    if (id) {
+      localStorage.setItem(ACTIVE_STUDENT_ID_KEY, id);
+    } else {
+      localStorage.removeItem(ACTIVE_STUDENT_ID_KEY);
+    }
+  } catch (e) {
+    console.error('Failed to save active student id', e);
   }
+}
+
+export function getActiveStudent(): Student | null {
+  const students = getStoredStudents();
+  if (!students.length) return null;
+  
+  const activeId = getActiveStudentId();
+  if (activeId) {
+    const found = students.find((s) => s.id === activeId);
+    if (found) return found;
+  }
+
+  // Fallback to first student and save as active
+  const fallback = students[0];
+  setActiveStudentId(fallback.id);
+  return fallback;
+}
+
+export function registerOrUpdateStudent(
+  data: {
+    mssv: string;
+    fullName: string;
+    faculty: string;
+    major: string;
+    studentClass: string;
+    email: string;
+    phone: string;
+  },
+  pendingStationId?: string
+): Student {
+  const students = getStoredStudents();
+  const stations = getStoredStations();
+  const cleanMssv = data.mssv.trim().toUpperCase();
+  const now = new Date();
+  const timestamp = now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) + ' ' + now.toLocaleDateString('vi-VN');
+
+  const existingIndex = students.findIndex((s) => s.mssv.trim().toUpperCase() === cleanMssv);
+
+  let targetStudent: Student;
+
+  if (existingIndex !== -1) {
+    // Update existing student
+    const existing = students[existingIndex];
+    let completed = [...existing.completedStations];
+    let history = [...existing.checkinHistory];
+
+    if (pendingStationId && !completed.includes(pendingStationId)) {
+      const station = stations.find((st) => st.id === pendingStationId);
+      completed.push(pendingStationId);
+      history.unshift({
+        stationId: pendingStationId,
+        stationName: station?.name || 'Trạm sự kiện',
+        timestamp,
+        method: 'nfc_tap',
+        recordedBy: station?.managerName || 'Thẻ NFC Trạm',
+      });
+    }
+
+    targetStudent = {
+      ...existing,
+      fullName: data.fullName.trim() || existing.fullName,
+      faculty: data.faculty || existing.faculty,
+      major: data.major.trim() || existing.major,
+      studentClass: data.studentClass.trim() || existing.studentClass,
+      email: data.email.trim() || existing.email,
+      phone: data.phone.trim() || existing.phone,
+      completedStations: completed,
+      checkinHistory: history,
+    };
+
+    students[existingIndex] = targetStudent;
+  } else {
+    // Create new student
+    let initialCompleted: string[] = [];
+    let initialHistory: any[] = [];
+
+    if (pendingStationId) {
+      const station = stations.find((st) => st.id === pendingStationId);
+      initialCompleted = [pendingStationId];
+      initialHistory = [
+        {
+          stationId: pendingStationId,
+          stationName: station?.name || 'Trạm sự kiện',
+          timestamp,
+          method: 'nfc_tap',
+          recordedBy: station?.managerName || 'Thẻ NFC Trạm',
+        },
+      ];
+    }
+
+    targetStudent = {
+      id: `stu-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+      mssv: cleanMssv,
+      fullName: data.fullName.trim(),
+      faculty: data.faculty,
+      major: data.major.trim() || 'Chuyên ngành Tân Sinh Viên',
+      studentClass: data.studentClass.trim() || '24KHOA01',
+      email: data.email.trim() || `${cleanMssv.toLowerCase()}@student.edu.vn`,
+      phone: data.phone.trim() || '0901234567',
+      registeredAt: timestamp,
+      completedStations: initialCompleted,
+      checkinHistory: initialHistory,
+    };
+
+    students.unshift(targetStudent);
+  }
+
+  // Save updated list & immediately make this student the active student
+  saveStudents(students);
+  setActiveStudentId(targetStudent.id);
+
+  return targetStudent;
 }
 
 const ORGANIZER_PIN_KEY = 'tsv_organizer_pin_v5';
@@ -152,12 +273,10 @@ export function checkinStudentToStation(
   const timestamp = now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' ' + now.toLocaleDateString('vi-VN');
 
   const newCompletedStations = [...student.completedStations, stationId];
-  const isEligible = newCompletedStations.length >= 5;
 
   const updatedStudent: Student = {
     ...student,
     completedStations: newCompletedStations,
-    isEligibleForReward: isEligible,
     checkinHistory: [
       {
         stationId,
