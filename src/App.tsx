@@ -50,6 +50,7 @@ import {
   checkinStudentToStation,
   isOrganizerAuthenticated
 } from './utils/storage';
+import {
   subscribeToStudents,
   subscribeToSingleStudent,
   saveStudentToFirestore,
