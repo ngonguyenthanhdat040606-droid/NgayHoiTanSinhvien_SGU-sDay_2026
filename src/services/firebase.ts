@@ -96,6 +96,52 @@ export const subscribeToStudents = (
 };
 
 /**
+ * Real-time listener for a SINGLE student document (Quota friendly)
+ */
+export const subscribeToSingleStudent = (
+  studentId: string,
+  onData: (student: Student | null) => void,
+  onError?: (err: Error) => void
+) => {
+  try {
+    const docRef = doc(db, STUDENTS_COLLECTION, studentId);
+    return onSnapshot(
+      docRef,
+      (docSnap) => {
+        if (!docSnap.exists()) {
+          onData(null);
+          return;
+        }
+        const data = docSnap.data();
+        const student: Student = {
+          id: docSnap.id,
+          mssv: data.mssv || '',
+          fullName: data.fullName || '',
+          faculty: data.faculty || '',
+          major: data.major || 'Tân Sinh Viên SGU',
+          studentClass: data.studentClass || '',
+          email: data.email || '',
+          phone: data.phone || '',
+          pinCode: data.pinCode || '',
+          registeredAt: data.registeredAt || '',
+          completedStations: Array.isArray(data.completedStations) ? data.completedStations : [],
+          checkinHistory: Array.isArray(data.checkinHistory) ? data.checkinHistory : []
+        };
+        onData(student);
+      },
+      (error) => {
+        console.error(`Firestore single student subscription error for ${studentId}:`, error);
+        if (onError) onError(error);
+      }
+    );
+  } catch (err: any) {
+    console.error('Failed to setup Firestore single student subscription:', err);
+    if (onError) onError(err);
+    return () => {};
+  }
+};
+
+/**
  * Fetch a student by MSSV directly from Firestore
  */
 export const getStudentByMssvFromFirestore = async (mssv: string): Promise<Student | null> => {

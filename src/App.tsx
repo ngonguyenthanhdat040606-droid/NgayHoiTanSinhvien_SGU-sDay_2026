@@ -47,10 +47,11 @@ import {
   setActiveStudentId,
   getActiveStudent,
   registerOrUpdateStudent,
-  checkinStudentToStation 
+  checkinStudentToStation,
+  isOrganizerAuthenticated
 } from './utils/storage';
-import {
   subscribeToStudents,
+  subscribeToSingleStudent,
   saveStudentToFirestore,
   recordStationCheckinInFirestore,
   seedInitialFirestoreStudents
@@ -183,28 +184,7 @@ export default function App() {
       console.warn('Firestore seed warning:', err);
     });
 
-    // Realtime subscription to Firebase Firestore
-    const unsubscribeFirestore = subscribeToStudents(
-      (remoteStudents) => {
-        if (remoteStudents && remoteStudents.length > 0) {
-          // Merge remote students with local cache
-          setStudents(remoteStudents);
-          saveStudents(remoteStudents);
-
-          // Update active student if present
-          const activeId = getActiveStudentId();
-          if (activeId) {
-            const found = remoteStudents.find((s) => s.id === activeId);
-            if (found) {
-              setStudentIdState(found.id);
-            }
-          }
-        }
-      },
-      (error) => {
-        console.warn('Using local storage fallback due to Firestore connection:', error);
-      }
-    );
+    // Firestore subscriptions are now handled by separate useEffect hooks below based on role/auth
 
     // Handle deep-link tag tapping for both iOS Safari and Android
     const handleUrlCheckin = () => {
@@ -262,11 +242,64 @@ export default function App() {
     window.addEventListener('hashchange', handleUrlCheckin);
     window.addEventListener('popstate', handleUrlCheckin);
     return () => {
-      unsubscribeFirestore();
       window.removeEventListener('hashchange', handleUrlCheckin);
       window.removeEventListener('popstate', handleUrlCheckin);
     };
   }, []);
+
+  // Sync active student's data individually to save Firestore read quota
+  useEffect(() => {
+    if (!activeStudentId) return;
+    
+    // Only subscribe to single student if NOT in organizer tabs
+    // (Organizer tabs will fetch all students anyway)
+    const isOrganizerMode = (activeTab === 'manager' || activeTab === 'analytics') && isOrganizerAuthenticated();
+    if (isOrganizerMode) return;
+
+    const unsubscribe = subscribeToSingleStudent(
+      activeStudentId,
+      (remoteStudent) => {
+        if (remoteStudent) {
+          setStudents((prev) => {
+            const idx = prev.findIndex((s) => s.id === remoteStudent.id);
+            if (idx >= 0) {
+              const next = [...prev];
+              next[idx] = remoteStudent;
+              saveStudents(next);
+              return next;
+            }
+            // If somehow not in list, add it
+            const next = [remoteStudent, ...prev];
+            saveStudents(next);
+            return next;
+          });
+        }
+      },
+      (error) => {
+        console.warn('Single student subscription error:', error);
+      }
+    );
+    return () => unsubscribe();
+  }, [activeStudentId, activeTab]);
+
+  // Sync all students ONLY for Organizers in manager/analytics tabs
+  useEffect(() => {
+    const isOrganizerMode = (activeTab === 'manager' || activeTab === 'analytics') && isOrganizerAuthenticated();
+    if (!isOrganizerMode) return;
+
+    const unsubscribe = subscribeToStudents(
+      (remoteStudents) => {
+        if (remoteStudents && remoteStudents.length > 0) {
+          setStudents(remoteStudents);
+          saveStudents(remoteStudents);
+        }
+      },
+      (error) => {
+        console.warn('All students subscription error:', error);
+      }
+    );
+    return () => unsubscribe();
+  }, [activeTab]);
 
   const activeStudent = activeStudentId ? students.find((s) => s.id === activeStudentId) || null : null;
 
