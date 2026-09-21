@@ -13,13 +13,13 @@ import { getAuth, signInAnonymously, onAuthStateChanged, User } from 'firebase/a
 import type { Student, StationCheckin } from '../types';
 
 let firebaseConfig: any = {
-  projectId: "vibrant-lamp-6q6d2",
-  appId: "1:405881521326:web:4882c2f6df9b02a12ad93f",
-  apiKey: "AIzaSyCk76BqLNrxLLnYUAHn6iEVZY9K0DmTMPQ",
-  authDomain: "vibrant-lamp-6q6d2.firebaseapp.com",
-  firestoreDatabaseId: "ai-studio-sgusday2025ngyhi-5077913d-9538-4f09-acf4-1e73237301ac",
-  storageBucket: "vibrant-lamp-6q6d2.firebasestorage.app",
-  messagingSenderId: "405881521326",
+  apiKey: "AIzaSyCBG_WcxSE4ldH0tIFq9QU1vhqztJuLI68",
+  authDomain: "thanhdat-505108.firebaseapp.com",
+  projectId: "thanhdat-505108",
+  storageBucket: "thanhdat-505108.firebasestorage.app",
+  messagingSenderId: "521620102936",
+  appId: "1:521620102936:web:9dc359eb8268aa0d88486d",
+  measurementId: "G-GN8XTLZZT4"
 };
 
 const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
