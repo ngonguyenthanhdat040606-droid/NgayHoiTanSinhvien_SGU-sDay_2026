@@ -123,7 +123,7 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
               {/* Arcade Action Ribbon */}
               <div className="mt-3 inline-flex items-center gap-2 bg-gradient-to-r from-orange-600 via-amber-500 to-orange-600 text-white px-5 sm:px-6 py-2 rounded-full font-vietnam-arcade text-xs sm:text-sm tracking-wide uppercase shadow-[0_4px_0_#c2410c,0_8px_20px_rgba(234,88,12,0.4)] border-2 border-white/90">
                 <Gamepad2 className="w-4 h-4 text-white animate-bounce" />
-                <span>HỘ CHIẾU ĐIỆN TỬ & CHINH PHỤC 9 TRẠM NGÀY HỘI</span>
+                <span>HỘ CHIẾU ĐIỆN TỬ & CHINH PHỤC CÁC TRẠM NGÀY HỘI</span>
               </div>
             </div>
 
