@@ -6,7 +6,7 @@ const STATIONS_KEY = 'tsv_stations_v5';
 const ACTIVE_STUDENT_ID_KEY = 'tsv_active_student_id_v5';
 const ORGANIZER_SESSION_KEY = 'tsv_organizer_session_v5';
 const ORGANIZER_PIN_KEY = 'tsv_organizer_pin_v5';
-const DEFAULT_ADMIN_PIN = '2026';
+const DEFAULT_ADMIN_PIN = '1212';
 
 export function getStoredStudents(): Student[] {
   try {
@@ -365,7 +365,7 @@ export function verifyOrganizerCredentials(
   }
 
   // 2. Station Manager Keys (e.g., TRAM1, TRAM2, etc.)
-  const stationMatch = cleanInput.toUpperCase().match(/^TRAM([1-9])(_2026)?$/);
+  const stationMatch = cleanInput.toUpperCase().match(/^TRAM([1-9]|10|11)(_2026)?$/);
   if (stationMatch) {
     const stationNum = parseInt(stationMatch[1], 10);
     const stationId = `station-${stationNum}`;
