@@ -86,7 +86,7 @@ export const NFCSetupGuide: React.FC<NFCSetupGuideProps> = ({ stations }) => {
         <div className="relative z-10 space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 text-xs font-bold uppercase tracking-wider">
             <Radio className="w-4 h-4 text-purple-400" />
-            Cẩm Nang Kỹ Thuật Ban Tổ Chức (BTC SGU’s Day 2025)
+            Cẩm Nang Kỹ Thuật Ban Tổ Chức (BTC SGU’s Day 2026)
           </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
             Hướng Dẫn Ghi 8 Thẻ NFC & Khắc Phục Lỗi 404 Safari (iOS)
@@ -166,7 +166,7 @@ export const NFCSetupGuide: React.FC<NFCSetupGuideProps> = ({ stations }) => {
           <div className="space-y-1">
             <strong className="block font-bold text-emerald-900">Giải pháp 1 chạm:</strong>
             <p className="text-emerald-900/90 leading-relaxed text-[11px]">
-              Ở bảng 8 trạm bên dưới, hãy bấm nút <strong>"Copy cho NFC Tools (Đã bỏ https://)"</strong>. Sau đó mở NFC Tools, giữ nguyên ô bên trái là <code className="font-bold">https://</code> và chỉ dán nội dung đã copy vào ô bên phải rồi bấm <strong>Ghi (Write)</strong>. Cả iPhone và Android sẽ mở trang và đóng dấu 100% thành công!
+              Ở bảng 9 trạm bên dưới, hãy bấm nút <strong>"Copy cho NFC Tools (Đã bỏ https://)"</strong>. Sau đó mở NFC Tools, giữ nguyên ô bên trái là <code className="font-bold">https://</code> và chỉ dán nội dung đã copy vào ô bên phải rồi bấm <strong>Ghi (Write)</strong>. Cả iPhone và Android sẽ mở trang và đóng dấu 100% thành công!
             </p>
           </div>
         </div>
@@ -266,7 +266,7 @@ export const NFCSetupGuide: React.FC<NFCSetupGuideProps> = ({ stations }) => {
                 Áp dụng
               </button>
             </div>
-            <span className="text-[10px] text-slate-500 block mt-1">Nhập link để tự động tạo link nạp cho 8 trạm</span>
+            <span className="text-[10px] text-slate-500 block mt-1">Nhập link để tự động tạo link nạp cho 9 trạm</span>
           </div>
         </div>
       </div>

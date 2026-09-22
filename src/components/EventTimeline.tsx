@@ -57,7 +57,7 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
 
   return (
     <div className="space-y-8 max-w-5xl mx-auto">
-      {/* SGU'S DAY 2025 - HERO BANNER WITH SGU CAMPUS PHOTO BACKGROUND */}
+      {/* SGU'S DAY 2026 - HERO BANNER WITH SGU CAMPUS PHOTO BACKGROUND */}
       <div className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-orange-400/80 p-1 sm:p-2 text-white">
         {/* Campus Photo Background */}
         <img 
@@ -91,7 +91,7 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
                 ĐẠI HỘI IX (2025 - 2028)
               </span>
               <span className="bg-emerald-500 text-white text-[10px] font-black px-2 py-0.5 rounded-md uppercase">
-                LEVEL UP 2025
+                LEVEL UP 2026
               </span>
             </div>
           </div>
@@ -103,7 +103,7 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
               <div className="flex items-center justify-center gap-2 mb-2">
                 <span className="inline-flex items-center gap-2 bg-black/40 border border-amber-300/60 backdrop-blur-md px-4 py-1.5 rounded-full text-amber-300 text-xs sm:text-sm font-vietnam-arcade tracking-wider uppercase shadow-md">
                   <Star className="w-3.5 h-3.5 fill-amber-300 text-amber-300 animate-spin" style={{ animationDuration: '6s' }} />
-                  <span>CHÀO ĐÓN TÂN SINH VIÊN KHÓA 2025</span>
+                  <span>CHÀO ĐÓN TÂN SINH VIÊN KHÓA 2026</span>
                   <Star className="w-3.5 h-3.5 fill-amber-300 text-amber-300 animate-spin" style={{ animationDuration: '6s' }} />
                 </span>
               </div>
@@ -118,7 +118,7 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
                     DAY
                   </span>
                   <span className="inline-flex items-center px-3.5 py-1 sm:px-5 sm:py-1.5 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-blue-600 via-indigo-600 to-blue-900 text-amber-300 font-arcade text-3xl sm:text-5xl md:text-6xl border-2 sm:border-4 border-amber-300 shadow-[0_6px_0_#1e3a8a,0_12px_24px_rgba(0,0,0,0.6)] transform -rotate-3 hover:rotate-0 transition-transform duration-200">
-                    2025
+                    2026
                   </span>
                 </h1>
               </div>
@@ -126,12 +126,12 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
               {/* Arcade Action Ribbon */}
               <div className="mt-3 inline-flex items-center gap-2 bg-gradient-to-r from-orange-600 via-amber-500 to-orange-600 text-white px-5 sm:px-6 py-2 rounded-full font-vietnam-arcade text-xs sm:text-sm tracking-wide uppercase shadow-[0_4px_0_#c2410c,0_8px_20px_rgba(234,88,12,0.4)] border-2 border-white/90">
                 <Gamepad2 className="w-4 h-4 text-white animate-bounce" />
-                <span>HỘ CHIẾU ĐIỆN TỬ & CHINH PHỤC 8 TRẠM NGÀY HỘI</span>
+                <span>HỘ CHIẾU ĐIỆN TỬ & CHINH PHỤC 9 TRẠM NGÀY HỘI</span>
               </div>
             </div>
 
             <p className="max-w-2xl mx-auto text-orange-100 text-xs sm:text-sm leading-relaxed font-medium">
-              Chủ Nhật, ngày <strong>19/10/2025</strong> tại Cơ sở chính ĐH Sài Gòn (273 An Dương Vương). Khám phá chuỗi <strong>18 hoạt động</strong> bùng nổ, điểm danh <strong>8 trạm NFC một chạm</strong> để hoàn thành Hộ chiếu điện tử và tham gia Gala Chung kết!
+              Chủ Nhật, ngày <strong>27/9/2026</strong> tại Cơ sở chính ĐH Sài Gòn (273 An Dương Vương). Khám phá chuỗi <strong>12 hoạt động</strong> bùng nổ, điểm danh <strong>9 trạm NFC một chạm</strong> để hoàn thành Hộ chiếu điện tử và tham gia Gala Chung kết!
             </p>
 
             {/* Action Buttons */}
@@ -159,15 +159,15 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
           {/* Arcade Stats Counter Footer */}
           <div className="relative z-10 grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-4 border-t border-white/15 text-center">
             <div className="bg-white/10 rounded-xl p-2.5 backdrop-blur-xs">
-              <span className="block text-2xl font-black text-amber-300 font-display">18</span>
+              <span className="block text-2xl font-black text-amber-300 font-display">12</span>
               <span className="text-[10px] text-orange-100 font-bold uppercase">Hoạt động thực tế</span>
             </div>
             <div className="bg-white/10 rounded-xl p-2.5 backdrop-blur-xs">
-              <span className="block text-2xl font-black text-emerald-300 font-display">8 TRẠM</span>
+              <span className="block text-2xl font-black text-emerald-300 font-display">9 TRẠM</span>
               <span className="text-[10px] text-orange-100 font-bold uppercase">Điểm danh NFC/QR</span>
             </div>
             <div className="bg-white/10 rounded-xl p-2.5 backdrop-blur-xs">
-              <span className="block text-2xl font-black text-blue-300 font-display">5/8+</span>
+              <span className="block text-2xl font-black text-blue-300 font-display">5/9+</span>
               <span className="text-[10px] text-orange-100 font-bold uppercase">Mốc hoàn thành tốt</span>
             </div>
             <div className="bg-white/10 rounded-xl p-2.5 backdrop-blur-xs">
@@ -184,15 +184,15 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
           <div>
             <h2 className="text-xl font-display font-black text-slate-900 flex items-center gap-2">
               <Trophy className="w-5 h-5 text-orange-600" />
-              <span>8 Trạm Điểm Danh Một Chạm (NFC / QR)</span>
+              <span>9 Trạm Điểm Danh Một Chạm (NFC / QR)</span>
             </h2>
             <p className="text-xs text-slate-600 font-medium mt-0.5">
-              8 trạm điểm danh cốt lõi ngày hội theo Kế hoạch 10/KH-BTK.
+              9 trạm điểm danh cốt lõi ngày hội theo Kế hoạch.
             </p>
           </div>
           <div className="bg-amber-100 border border-amber-300 text-amber-900 px-3 py-1 rounded-xl text-xs font-black self-start sm:self-auto flex items-center gap-1.5">
             <Sparkles className="w-4 h-4 text-orange-600" />
-            <span>Chinh phục 8 trạm ngày hội để ghi dấu ấn vào Hộ Chiếu Điện Tử</span>
+            <span>Chinh phục 9 trạm ngày hội để ghi dấu ấn vào Hộ Chiếu Điện Tử</span>
           </div>
         </div>
 
@@ -241,7 +241,7 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
           <div>
             <h2 className="text-xl font-display font-black text-slate-900 flex items-center gap-2">
               <Calendar className="w-5 h-5 text-blue-600" />
-              <span>Lịch Trình Hoạt Động “SGU’s Day 2025”</span>
+              <span>Lịch Trình Hoạt Động “SGU’s Day 2026”</span>
             </h2>
             <p className="text-xs text-slate-500 mt-0.5 font-medium">
               Từ 07g15 đến 21g00 • Đầy đủ thời gian, địa điểm và đơn vị thực hiện
@@ -264,7 +264,7 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
                 selectedFilter === 'checkin_stations' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-700 hover:text-blue-600'
               }`}
             >
-              ⭐ 8 Trạm Điểm Danh
+              ⭐ 9 Trạm Điểm Danh
             </button>
             <button
               onClick={() => setSelectedFilter('main_stage')}
@@ -293,7 +293,7 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
           </div>
         </div>
 
-        {/* 18 Timeline Events List */}
+        {/* 12 Timeline Events List */}
         <div className="space-y-4">
           {filteredEvents.map((evt) => {
             const isBookmarked = bookmarkedIds.includes(evt.id);

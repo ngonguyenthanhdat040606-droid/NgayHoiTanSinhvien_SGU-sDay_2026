@@ -521,7 +521,7 @@ export default function App() {
               </div>
               <h3 className="text-xl font-bold text-slate-900">Chưa có Thẻ Tân Sinh Viên</h3>
               <p className="text-xs text-slate-500">
-                Hãy đăng ký thông tin để nhận ngay thẻ e-Pass cá nhân hóa và bắt đầu thu thập 8 con dấu trạm sự kiện SGU’s Day 2025!
+                Hãy đăng ký thông tin để nhận ngay thẻ e-Pass cá nhân hóa và bắt đầu thu thập 9 con dấu trạm sự kiện SGU’s Day 2026!
               </p>
               <button
                 onClick={() => setIsRegisterModalOpen(true)}
@@ -544,7 +544,7 @@ export default function App() {
 
         {activeTab === 'manager' && (
           <OrganizerAuthGuard
-            title="Bàn Quản Lý 8 Trạm Sự Kiện (BTC)"
+            title="Bàn Quản Lý 9 Trạm Sự Kiện (BTC)"
             subtitle="Chỉ dành cho Ban Tổ Chức & Trưởng Trạm để điểm danh thủ công, tra cứu sinh viên và xuất dữ liệu."
             onBackToStudent={() => setActiveTab('student_pass')}
           >
@@ -560,7 +560,7 @@ export default function App() {
 
         {activeTab === 'nfc_guide' && (
           <OrganizerAuthGuard
-            title="Hướng Dẫn & Nạp 8 Thẻ NFC Trạm (BTC)"
+            title="Hướng Dẫn & Nạp 9 Thẻ NFC Trạm (BTC)"
             subtitle="Khu vực cấu hình và ghi dữ liệu thẻ NFC dành cho Ban Kỹ thuật & Tổ chức."
             onBackToStudent={() => setActiveTab('student_pass')}
           >
@@ -625,7 +625,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <img src={sguLogo} alt="Logo SGU" className="h-6 w-auto object-contain" />
-            <span className="font-bold text-slate-800">SGU’s Day 2025</span>
+            <span className="font-bold text-slate-800">SGU’s Day 2026</span>
             <span>•</span>
             <span>Đoàn Thanh niên - Hội Sinh viên Trường Đại học Sài Gòn</span>
           </div>
@@ -633,7 +633,7 @@ export default function App() {
           <div className="flex items-center gap-4 text-[11px] text-slate-400">
             <span>Hỗ trợ thẻ NFC ISO 14443-3A (Mifare Classic 1K)</span>
             <span>•</span>
-            <span>Web NFC & QR Dynamic Check-in 8 Trạm</span>
+            <span>Web NFC & QR Dynamic Check-in 9 Trạm</span>
           </div>
         </div>
       </footer>

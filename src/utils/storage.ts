@@ -6,7 +6,7 @@ const STATIONS_KEY = 'tsv_stations_v5';
 const ACTIVE_STUDENT_ID_KEY = 'tsv_active_student_id_v5';
 const ORGANIZER_SESSION_KEY = 'tsv_organizer_session_v5';
 const ORGANIZER_PIN_KEY = 'tsv_organizer_pin_v5';
-const DEFAULT_ADMIN_PIN = '2025';
+const DEFAULT_ADMIN_PIN = '2026';
 
 export function getStoredStudents(): Student[] {
   try {
@@ -350,9 +350,9 @@ export function verifyOrganizerCredentials(
   // 1. Admin Master Passwords
   if (
     cleanInput === currentPin ||
-    cleanInput === 'SGU2025' ||
-    cleanInput === 'ADMIN_SGU_2025' ||
-    cleanInput === 'BTC@SGU2025'
+    cleanInput === 'SGU2026' ||
+    cleanInput === 'ADMIN_SGU_2026' ||
+    cleanInput === 'BTC@SGU2026'
   ) {
     const session: OrganizerSession = {
       authenticated: true,
@@ -365,7 +365,7 @@ export function verifyOrganizerCredentials(
   }
 
   // 2. Station Manager Keys (e.g., TRAM1, TRAM2, etc.)
-  const stationMatch = cleanInput.toUpperCase().match(/^TRAM([1-8])(_2025)?$/);
+  const stationMatch = cleanInput.toUpperCase().match(/^TRAM([1-9])(_2026)?$/);
   if (stationMatch) {
     const stationNum = parseInt(stationMatch[1], 10);
     const stationId = `station-${stationNum}`;
@@ -455,7 +455,7 @@ export function checkinStudentToStation(
 
   return {
     success: true,
-    message: `Điểm danh thành công! ${student.fullName} đã thu thập thêm con dấu "${station.shortName}". (${newCompletedStations.length}/8 trạm)`,
+    message: `Điểm danh thành công! ${student.fullName} đã thu thập thêm con dấu "${station.shortName}". (${newCompletedStations.length}/9 trạm)`,
     student: updatedStudent,
   };
 }

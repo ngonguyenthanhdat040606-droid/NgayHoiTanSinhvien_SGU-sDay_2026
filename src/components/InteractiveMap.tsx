@@ -47,7 +47,7 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
         <div>
           <h2 className="text-xl sm:text-2xl font-display font-black text-slate-900 flex items-center gap-2">
             <Compass className="w-6 h-6 text-orange-600" />
-            <span>Sơ Đồ Khuôn Viên & 8 Trạm Ngày Hội SGU’s Day 2025</span>
+            <span>Sơ Đồ Khuôn Viên & 9 trạm Ngày Hội SGU’s Day 2026</span>
           </h2>
           <p className="text-xs sm:text-sm text-slate-600 mt-0.5 font-medium">
             Cơ sở chính Trường ĐH Sài Gòn (273 An Dương Vương, P. Chợ Quán, TP.HCM).
@@ -62,7 +62,7 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
               selectedZone === 'all' ? 'bg-orange-500 text-white shadow-xs' : 'text-slate-700 hover:text-orange-600'
             }`}
           >
-            Tất cả (8 Trạm)
+            Tất cả (9 trạm)
           </button>
           <button
             onClick={() => setSelectedZone('A')}
@@ -139,7 +139,7 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
         <div className="flex items-center justify-between mb-4">
           <span className="text-xs font-mono font-black tracking-wider uppercase text-amber-400 flex items-center gap-1.5">
             <Radio className="w-3.5 h-3.5 animate-pulse text-emerald-400" />
-            BẢN ĐỒ TỌA ĐỘ SGU’S DAY 2025 • 273 AN DƯƠNG VƯƠNG
+            BẢN ĐỒ TỌA ĐỘ SGU’S DAY 2026 • 273 AN DƯƠNG VƯƠNG
           </span>
           <span className="text-xs text-orange-200 hidden sm:block font-medium">
             Chạm vào trạm để xem nhiệm vụ và quà tặng
@@ -176,7 +176,7 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
                   onMouseLeave={() => setHoveredStation(null)}
                   className={`relative p-3.5 rounded-2xl border-2 transition-all cursor-pointer transform hover:-translate-y-1 hover:shadow-xl flex flex-col justify-between ${
                     isCheckedIn
-                      ? 'bg-gradient-to-br from-emerald-950/90 to-teal-950/80 border-emerald-500 shadow-emerald-900/30'
+                      ? 'bg-gradient-to-br from-emerald-950/90 to-teal-950/90 border-emerald-500 shadow-emerald-900/30'
                       : 'bg-slate-900 border-slate-700 hover:border-orange-400'
                   } ${isDimmed ? 'opacity-30 scale-95' : 'opacity-100'}`}
                 >
@@ -226,7 +226,7 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
           </div>
 
           {/* Campus Landmarks Footer */}
-          <div className="flex flex-wrap items-center justify-between gap-3 text-[11px] text-slate-400 border-t border-slate-800/80 pt-3 relative z-10 font-medium">
+          <div className="flex flex-wrap items-center justify-between gap-3 text-[11px] text-slate-400 border-t border-slate-800/90 pt-3 relative z-10 font-medium">
             <div className="flex flex-wrap items-center gap-3">
               <span>📍 Sân KLF: Triển Lãm 14 Khoa & CLB</span>
               <span>🍲 Sân Khu A: Phiên Chợ & Ẩm Thực</span>

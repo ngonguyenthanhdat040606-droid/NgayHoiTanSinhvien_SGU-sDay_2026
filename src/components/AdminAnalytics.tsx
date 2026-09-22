@@ -99,7 +99,7 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
               </span>
             </div>
             <p className="text-xs text-orange-100 font-medium mt-0.5">
-              Tất cả lượt chạm NFC và quét QR tại 8 trạm đều được cập nhật tức thì lên hệ cơ sở dữ liệu đám mây của Ban Tổ Chức.
+              Tất cả lượt chạm NFC và quét QR tại 9 trạm đều được cập nhật tức thì lên hệ cơ sở dữ liệu đám mây của Ban Tổ Chức.
             </p>
           </div>
         </div>
@@ -123,7 +123,7 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
 
         <div className="bg-white p-5 rounded-3xl border-2 border-orange-200 shadow-xs space-y-2">
           <div className="flex items-center justify-between text-slate-600 text-xs font-black uppercase">
-            <span>Lượt Check-in 8 Trạm</span>
+            <span>Lượt Check-in 9 trạm</span>
             <TrendingUp className="w-4 h-4 text-emerald-600" />
           </div>
           <div className="text-3xl font-display font-black text-emerald-600">{totalCheckinLogs}</div>
@@ -143,7 +143,7 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
 
         <div className="bg-white p-5 rounded-3xl border-2 border-orange-200 shadow-xs space-y-2">
           <div className="flex items-center justify-between text-slate-600 text-xs font-black uppercase">
-            <span>Hoàn Thành 8/8 Trạm</span>
+            <span>Hoàn Thành 8/9 trạm</span>
             <Award className="w-4 h-4 text-purple-600" />
           </div>
           <div className="text-3xl font-display font-black text-purple-600">{totalCompletedAll}</div>
@@ -157,7 +157,7 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
           <div>
             <h3 className="font-display font-black text-base text-slate-900 flex items-center gap-2">
               <BarChart3 className="w-5 h-5 text-orange-600" />
-              <span>Tiến Độ Tham Gia Tại 8 Trạm Ngày Hội SGU’s Day 2025</span>
+              <span>Tiến Độ Tham Gia Tại 9 trạm Ngày Hội SGU’s Day 2026</span>
             </h3>
             <p className="text-xs text-slate-500 mt-0.5 font-medium">
               Thống kê lượng sinh viên đã check-in tại từng trạm theo thời gian thực
@@ -239,7 +239,7 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
                 <th className="py-2.5 px-2">Họ và Tên</th>
                 <th className="py-2.5 px-2">Khoa</th>
                 <th className="py-2.5 px-2">Lớp</th>
-                <th className="py-2.5 px-2 text-right">Tiến độ 8 Trạm</th>
+                <th className="py-2.5 px-2 text-right">Tiến độ 9 trạm</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">

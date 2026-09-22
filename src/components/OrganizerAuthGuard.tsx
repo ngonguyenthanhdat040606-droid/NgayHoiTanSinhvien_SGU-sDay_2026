@@ -130,7 +130,7 @@ export const OrganizerAuthGuard: React.FC<OrganizerAuthGuardProps> = ({
               </div>
               <p className="text-[11px] text-slate-600 font-medium mt-0.5">
                 {isAdmin
-                  ? 'Đã mở khóa toàn bộ quyền điểm danh, quản lý 8 trạm, cấu hình NFC và thống kê xuất file.'
+                  ? 'Đã mở khóa toàn bộ quyền điểm danh, quản lý 9 trạm, cấu hình NFC và thống kê xuất file.'
                   : `Đang quản lý điểm danh và tra cứu sinh viên tại ${session.managerName || 'Trạm sự kiện'}.`}
               </p>
             </div>

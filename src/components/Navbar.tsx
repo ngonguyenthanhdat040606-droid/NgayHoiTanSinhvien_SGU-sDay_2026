@@ -41,16 +41,16 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="flex items-center gap-2 font-bold tracking-wide">
             <span className="inline-flex items-center gap-1 bg-white text-orange-600 px-2.5 py-0.5 rounded-full text-[11px] font-extrabold uppercase shadow-sm">
               <Gamepad2 className="w-3.5 h-3.5 text-orange-600" />
-              SGU’S DAY 2025
+              SGU’S DAY 2026
             </span>
             <span className="truncate text-white drop-shadow-xs">
-              🎉 Ngày Hội Tân Sinh Viên • Thu thập 8 dấu trạm & Chinh phục SGU’s Day 2025!
+              🎉 Ngày Hội Tân Sinh Viên • Thu thập 8 dấu trạm & Chinh phục SGU’s Day 2026!
             </span>
           </div>
           <div className="hidden sm:flex items-center gap-4 text-white font-semibold">
             <span className="flex items-center gap-1.5 bg-black/20 px-2.5 py-0.5 rounded-full text-[11px] border border-white/20">
               <Radio className="w-3.5 h-3.5 animate-pulse text-emerald-300" />
-              <span>Chạm NFC & QR 8 Trạm Siêu Tốc</span>
+              <span>Chạm NFC & QR 9 trạm Siêu Tốc</span>
             </span>
           </div>
         </div>
@@ -65,7 +65,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => setActiveTab('timeline')}
           >
             {/* SGU Official Logo Cluster */}
-            <div className="relative flex items-center justify-center p-1 bg-white rounded-2xl shadow-sm border border-slate-200/80 group-hover:border-orange-400 group-hover:shadow-md transition-all">
+            <div className="relative flex items-center justify-center p-1 bg-white rounded-2xl shadow-sm border border-slate-200/90 group-hover:border-orange-400 group-hover:shadow-md transition-all">
               <img 
                 src={sguLogo} 
                 alt="Cụm Logo SGU - Hội Sinh Viên Trường Đại Học Sài Gòn" 
@@ -113,7 +113,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}
             >
               <CreditCard className="w-4 h-4" />
-              <span>Thẻ e-Pass ({completedCount}/8 Trạm)</span>
+              <span>Thẻ e-Pass ({completedCount}/9 trạm)</span>
               {activeStudent && (
                 <span className={`ml-1 px-1.5 py-0.2 rounded-full text-[10px] font-black ${
                   completedCount >= 5 ? 'bg-amber-400 text-slate-950 animate-pulse' : 'bg-white/20 text-white'
@@ -208,7 +208,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     {activeStudent.fullName}
                   </div>
                   <div className="text-[10px] text-orange-700 font-bold font-mono">
-                    {activeStudent.mssv} • <span className="text-emerald-700 font-extrabold">{completedCount}/8 Trạm</span>
+                    {activeStudent.mssv} • <span className="text-emerald-700 font-extrabold">{completedCount}/9 trạm</span>
                   </div>
                 </div>
               </div>
@@ -262,7 +262,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             }`}
           >
             <MapPin className="w-3.5 h-3.5" />
-            <span>Sơ Đồ 8 Trạm</span>
+            <span>Sơ Đồ 9 trạm</span>
           </button>
 
           <button

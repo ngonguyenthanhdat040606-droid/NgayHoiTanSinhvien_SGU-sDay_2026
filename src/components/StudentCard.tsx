@@ -39,7 +39,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
   useEffect(() => {
     // Generate QR for student e-Pass: contains MSSV and student ID
     const payload = JSON.stringify({
-      type: 'FRESHMAN_PASS_SGU_2025',
+      type: 'FRESHMAN_PASS_SGU_2026',
       mssv: student.mssv,
       id: student.id,
       name: student.fullName,
@@ -58,7 +58,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
       .catch((err) => console.error('Error generating QR code', err));
   }, [student]);
 
-  const totalStations = stations.length || 8;
+  const totalStations = stations.length || 9;
   const completedStationsCount = student.completedStations.length;
   const isFullComplete = completedStationsCount === totalStations;
 
@@ -87,10 +87,10 @@ export const StudentCard: React.FC<StudentCardProps> = ({
               <div className="font-display font-black text-base sm:text-lg flex items-center gap-2">
                 <span>
                   {isFullComplete
-                    ? `CHÚC MỪNG! Bạn đã hoàn thành trọn vẹn 8/8 Trạm SGU’s Day 2025!`
+                    ? `CHÚC MỪNG! Bạn đã hoàn thành trọn vẹn 9/9 Trạm SGU’s Day 2026!`
                     : completedStationsCount > 0
-                      ? `Tiến độ Hộ Chiếu Tân Sinh Viên: Đã điểm danh ${completedStationsCount}/8 trạm!`
-                      : `Hành trình Hộ Chiếu Tân Sinh Viên SGU (0/8 trạm)`}
+                      ? `Tiến độ Hộ Chiếu Tân Sinh Viên: Đã điểm danh ${completedStationsCount}/9 trạm!`
+                      : `Hành trình Hộ Chiếu Tân Sinh Viên SGU (0/9 trạm)`}
                 </span>
               </div>
               <p className={`text-xs sm:text-sm mt-0.5 font-medium ${isFullComplete || completedStationsCount > 0 ? 'text-white/90' : 'text-slate-700'
@@ -135,7 +135,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
                 </span>
               </div>
               <span className="text-[11px] font-arcade bg-gradient-to-r from-orange-500 to-amber-500 text-white px-2.5 py-0.5 rounded-lg shadow-[0_2px_0_#9a3412] border border-white/30">
-                SGU’S DAY 2025
+                SGU’S DAY 2026
               </span>
             </div>
 
@@ -207,7 +207,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
                 </div>
               )}
               <p className="text-[11px] text-slate-500 font-medium mt-2 max-w-xs">
-                Xuất trình mã này tại 8 trạm sự kiện để Quản lý trạm quét điểm danh nhanh.
+                Xuất trình mã này tại 9 trạm sự kiện để Quản lý trạm quét điểm danh nhanh.
               </p>
             </div>
 
@@ -231,10 +231,10 @@ export const StudentCard: React.FC<StudentCardProps> = ({
               <div>
                 <h3 className="text-lg font-display font-black text-slate-900 flex items-center gap-2">
                   <Award className="w-5 h-5 text-orange-600" />
-                  <span>Hộ Chiếu 8 Con Dấu Trạm SGU’s Day 2025</span>
+                  <span>Hộ Chiếu 9 Con Dấu Trạm SGU’s Day 2026</span>
                 </h3>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  Khám phá và điểm danh 8 trạm sự kiện trong ngày hội.
+                  Khám phá và điểm danh 9 trạm sự kiện trong ngày hội.
                 </p>
               </div>
 
@@ -255,8 +255,8 @@ export const StudentCard: React.FC<StudentCardProps> = ({
               />
             </div>
 
-            {/* 8 Stations Stamp Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5">
+            {/* 9 Stations Stamp Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-5">
               {stations.map((station) => {
                 const isCompleted = student.completedStations.includes(station.id);
                 const checkinInfo = student.checkinHistory.find((c) => c.stationId === station.id);
@@ -278,7 +278,10 @@ export const StudentCard: React.FC<StudentCardProps> = ({
                         TRẠM {station.stationNumber}
                       </span>
                       {isCompleted && (
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                        <div className="flex items-center gap-1">
+                          {station.id === 'station-9' && <span className="text-[10px] bg-yellow-100 text-yellow-700 px-1 rounded-sm font-bold border border-yellow-300">🏆</span>}
+                          <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                        </div>
                       )}
                     </div>
 
@@ -317,7 +320,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
             {/* Checkin Action CTA */}
             <div className="mt-5 p-4 rounded-2xl bg-gradient-to-r from-orange-50 via-amber-50 to-orange-100 border-2 border-orange-300 flex flex-col sm:flex-row items-center justify-between gap-3">
               <div className="text-left text-xs text-slate-900">
-                <span className="font-display font-black block text-sm text-orange-950">Bạn đang đứng tại trạm nào trong số 8 trạm?</span>
+                <span className="font-display font-black block text-sm text-orange-950">Bạn đang đứng tại trạm nào trong số 9 trạm?</span>
                 <span className="font-medium text-slate-700">Chạm lưng điện thoại vào thẻ NFC của Quản lý trạm hoặc quét mã QR để nhận con dấu ngay!</span>
               </div>
               <button

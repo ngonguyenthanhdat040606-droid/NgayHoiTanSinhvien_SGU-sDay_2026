@@ -31,7 +31,7 @@ service cloud.firestore {
       allow update: if isSignedIn()
         && (!('mssv' in resource.data) || request.resource.data.mssv == resource.data.mssv)
         && request.resource.data.completedStations is list
-        && request.resource.data.completedStations.size() <= 8;
+        && request.resource.data.completedStations.size() <= 9;
 
       // 4. Disallow client-side deletion to prevent malicious data wipe
       allow delete: if isOrganizer();
@@ -46,7 +46,7 @@ service cloud.firestore {
       allow create: if isSignedIn()
         && request.resource.data.stationId in [
           'station-1', 'station-2', 'station-3', 'station-4',
-          'station-5', 'station-6', 'station-7', 'station-8'
+          'station-5', 'station-6', 'station-7', 'station-8', 'station-9'
         ]
         && request.resource.data.timestamp is string;
 
