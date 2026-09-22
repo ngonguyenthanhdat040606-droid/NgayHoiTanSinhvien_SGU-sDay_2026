@@ -58,7 +58,7 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
   return (
     <div className="space-y-8 max-w-5xl mx-auto">
       {/* SGU'S DAY 2026 - HERO BANNER WITH SGU CAMPUS PHOTO BACKGROUND */}
-      <div className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-orange-400/80 p-1 sm:p-2 text-white">
+      <div className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-orange-400/110 p-1 sm:p-2 text-white">
         {/* Campus Photo Background */}
         <img 
           src={campusImg} 
@@ -66,7 +66,7 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
           className="absolute inset-0 w-full h-full object-cover object-center scale-105"
         />
         {/* Cinematic Dark Gradient & Vignette Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-900/75 to-slate-950/90 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/115 via-slate-900/75 to-slate-950/90 pointer-events-none" />
         
         {/* Decorative Top Arcade Header Strip */}
         <div className="relative z-10 backdrop-blur-[1px] rounded-2xl p-4 sm:p-8 overflow-hidden">
@@ -128,7 +128,7 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
             </div>
 
             <p className="max-w-2xl mx-auto text-orange-100 text-xs sm:text-sm leading-relaxed font-medium">
-              Chủ Nhật, ngày <strong>27/9/2026</strong> tại Cơ sở chính ĐH Sài Gòn (273 An Dương Vương). Khám phá chuỗi <strong>12 hoạt động</strong> bùng nổ, điểm danh <strong>9 trạm NFC một chạm</strong> để hoàn thành Hộ chiếu điện tử và tham gia Gala Chung kết!
+              Chủ Nhật, ngày <strong>27/9/2026</strong> tại Cơ sở chính ĐH Sài Gòn (273 An Dương Vương). Khám phá chuỗi <strong>22 hoạt động</strong> bùng nổ, điểm danh <strong>11 trạm NFC một chạm</strong> để hoàn thành Hộ chiếu điện tử và tham gia Gala Chung kết!
             </p>
 
             {/* Action Buttons */}
@@ -163,15 +163,15 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
           <div>
             <h2 className="text-xl font-display font-black text-slate-900 flex items-center gap-2">
               <Trophy className="w-5 h-5 text-orange-600" />
-              <span>9 Trạm Điểm Danh Một Chạm (NFC / QR)</span>
+              <span>11 Trạm Điểm Danh Một Chạm (NFC / QR)</span>
             </h2>
             <p className="text-xs text-slate-600 font-medium mt-0.5">
-              9 trạm điểm danh cốt lõi ngày hội theo Kế hoạch.
+              11 trạm điểm danh cốt lõi ngày hội theo Kế hoạch.
             </p>
           </div>
           <div className="bg-amber-100 border border-amber-300 text-amber-900 px-3 py-1 rounded-xl text-xs font-black self-start sm:self-auto flex items-center gap-1.5">
             <Sparkles className="w-4 h-4 text-orange-600" />
-            <span>Chinh phục 9 trạm ngày hội để ghi dấu ấn vào Hộ Chiếu Điện Tử</span>
+            <span>Chinh phục 11 trạm ngày hội để ghi dấu ấn vào Hộ Chiếu Điện Tử</span>
           </div>
         </div>
 
@@ -243,7 +243,7 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
                 selectedFilter === 'checkin_stations' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-700 hover:text-blue-600'
               }`}
             >
-              ⭐ 9 Trạm Điểm Danh
+              ⭐ 11 Trạm Điểm Danh
             </button>
             <button
               onClick={() => setSelectedFilter('main_stage')}

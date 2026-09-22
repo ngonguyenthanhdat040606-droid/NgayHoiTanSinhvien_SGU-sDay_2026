@@ -544,7 +544,7 @@ export default function App() {
 
         {activeTab === 'manager' && (
           <OrganizerAuthGuard
-            title="Bàn Quản Lý 9 Trạm Sự Kiện (BTC)"
+            title="Bàn Quản Lý 11 Trạm Sự Kiện (BTC)"
             subtitle="Chỉ dành cho Ban Tổ Chức & Trưởng Trạm để điểm danh thủ công, tra cứu sinh viên và xuất dữ liệu."
             onBackToStudent={() => setActiveTab('student_pass')}
           >
@@ -621,7 +621,7 @@ export default function App() {
       />
 
       {/* Footer */}
-      <footer className="mt-auto border-t border-slate-200 bg-white/80 backdrop-blur-xs py-6 text-center text-xs text-slate-500">
+      <footer className="mt-auto border-t border-slate-200 bg-white/110 backdrop-blur-xs py-6 text-center text-xs text-slate-500">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <img src={sguLogo} alt="Logo SGU" className="h-6 w-auto object-contain" />
@@ -633,7 +633,7 @@ export default function App() {
           <div className="flex items-center gap-4 text-[11px] text-slate-400">
             <span>Hỗ trợ thẻ NFC ISO 14443-3A (Mifare Classic 1K)</span>
             <span>•</span>
-            <span>Web NFC & QR Dynamic Check-in 9 Trạm</span>
+            <span>Web NFC & QR Dynamic Check-in 11 Trạm</span>
           </div>
         </div>
       </footer>

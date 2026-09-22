@@ -88,7 +88,7 @@ export const NFCAndroidPermissionCard: React.FC<NFCAndroidPermissionCardProps> =
         <p className="text-blue-800 leading-relaxed text-[11px]">
           iPhone sử dụng tính năng <strong>Background NFC Tag Reading</strong> tự động. Bạn không cần cấp quyền trong Safari:
         </p>
-        <div className="bg-white/80 p-2.5 rounded-xl border border-blue-100 space-y-1 text-[11px] text-slate-700">
+        <div className="bg-white/110 p-2.5 rounded-xl border border-blue-100 space-y-1 text-[11px] text-slate-700">
           <p>👉 <strong>Cách làm:</strong> Chỉ cần áp đỉnh trên của iPhone vào thẻ NFC tại trạm &rarr; Chạm vào biểu ngữ thông báo xuất hiện trên màn hình để đóng dấu!</p>
         </div>
       </div>
@@ -192,7 +192,7 @@ export const NFCAndroidPermissionCard: React.FC<NFCAndroidPermissionCardProps> =
       )}
 
       {/* Expandable Step-by-Step Android NFC Guide */}
-      <div className="border-t border-slate-200/80 pt-2.5">
+      <div className="border-t border-slate-200/110 pt-2.5">
         <button
           onClick={() => setIsGuideExpanded(!isGuideExpanded)}
           className="w-full flex items-center justify-between text-xs font-bold text-slate-700 hover:text-blue-700 py-1 transition-colors"

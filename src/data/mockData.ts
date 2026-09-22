@@ -181,6 +181,46 @@ export const INITIAL_STATIONS: Station[] = [
     estimatedMinutes: 10,
     requirements: 'Hoàn thành bài kiểm tra thể lực và quét thẻ nhận Chứng nhận điện tử.',
   },
+  {
+    id: 'station-10',
+    stationNumber: 10,
+    activityNumber: 2,
+    name: 'Trạm 10: Khu vực “Check - in” Ngày hội',
+    shortName: 'Check-in Ngày hội',
+    tagline: 'Khu vực đón tiếp & check-in',
+    description: 'Check-in, đăng tải và thực hiện các thử thách tương tác trên mạng xã hội.',
+    location: 'Sảnh Hội trường A',
+    zone: 'A',
+    icon: 'CheckCircle2',
+    color: 'from-blue-500 to-cyan-600',
+    managerName: 'Đ/c Nguyễn Mai Thảo',
+    managerPhone: '0911 222 333',
+    assignedUnit: 'LCH SV khoa Giáo dục Chính trị',
+    nfcTagId: 'CC:DD:EE:FF',
+    stampBadge: '✅',
+    estimatedMinutes: 5,
+    requirements: 'Hoàn thành check-in tại bàn đón tiếp.',
+  },
+  {
+    id: 'station-11',
+    stationNumber: 11,
+    activityNumber: 4,
+    name: 'Trạm 11: Phiên chợ sinh viên, phối hợp cùng các đơn vị cung cấp dịch vụ hỗ trợ cho sinh viên',
+    shortName: 'Phiên chợ sinh viên',
+    tagline: 'Tham quan & mua sắm',
+    description: 'Gian hàng giao lưu, trưng bày và trao đổi sản phẩm hỗ trợ học tập.',
+    location: 'Sân khu A',
+    zone: 'A',
+    icon: 'ShoppingBag',
+    color: 'from-pink-500 to-rose-600',
+    managerName: 'Đ/c Khiếu Thị Thùy Dương',
+    managerPhone: '0933 444 555',
+    assignedUnit: 'LCH SV khoa GD Mầm non',
+    nfcTagId: '11:22:33:44',
+    stampBadge: '🛍️',
+    estimatedMinutes: 15,
+    requirements: 'Tham quan phiên chợ và check-in tại 1 gian hàng bất kỳ.',
+  },
 ];
 
 export const INITIAL_STUDENTS: Student[] = [];
@@ -198,7 +238,7 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
     title: 'Khu vực “Check - in” Ngày hội', location: 'Sảnh Hội trường A',
     category: 'station_activity', description: 'Check-in, đăng tải và thực hiện các thử thách tương tác trên mạng xã hội.',
     inCharge: 'Đ/c Nguyễn Mai Thảo', assignedUnit: 'LCH SV khoa Giáo dục Chính trị',
-    isHighlight: false, isCheckinStation: false
+    isHighlight: true, isCheckinStation: true, stationId: 'station-10'
   },
   {
     id: 'act-3', activityNumber: 3, time: '08:30', endTime: '11:00',
@@ -209,10 +249,10 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
   },
   {
     id: 'act-4', activityNumber: 4, time: '09:30', endTime: '14:30',
-    title: 'Phiên chợ sinh viên & dịch vụ hỗ trợ', location: 'Sân khu A',
+    title: 'Phiên chợ sinh viên, phối hợp cùng các đơn vị cung cấp dịch vụ hỗ trợ cho sinh viên', location: 'Sân khu A',
     category: 'market_food', description: 'Gian hàng giao lưu, trưng bày và trao đổi sản phẩm hỗ trợ học tập.',
     inCharge: 'Đ/c Khiếu Thị Thùy Dương', assignedUnit: 'LCH SV khoa GD Mầm non',
-    isHighlight: false, isCheckinStation: false
+    isHighlight: true, isCheckinStation: true, stationId: 'station-11'
   },
   {
     id: 'act-5', activityNumber: 5, time: '10:30', endTime: '12:00',

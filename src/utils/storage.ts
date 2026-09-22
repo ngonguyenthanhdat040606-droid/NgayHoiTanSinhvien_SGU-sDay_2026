@@ -455,7 +455,7 @@ export function checkinStudentToStation(
 
   return {
     success: true,
-    message: `Điểm danh thành công! ${student.fullName} đã thu thập thêm con dấu "${station.shortName}". (${newCompletedStations.length}/9 trạm)`,
+    message: `Điểm danh thành công! ${student.fullName} đã thu thập thêm con dấu "${station.shortName}". (${newCompletedStations.length}/11 trạm)`,
     student: updatedStudent,
   };
 }
