@@ -44,7 +44,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               SGU’S DAY 2026
             </span>
             <span className="truncate text-white drop-shadow-xs">
-              🎉 Ngày Hội Tân Sinh Viên • Thu thập 9 dấu trạm & Chinh phục SGU’s Day 2026!
+              🎉 Ngày Hội Tân Sinh Viên • Thu thập dấu trạm & Chinh phục SGU’s Day 2026!
             </span>
           </div>
           <div className="hidden sm:flex items-center gap-4 text-white font-semibold">

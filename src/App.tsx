@@ -521,7 +521,7 @@ export default function App() {
               </div>
               <h3 className="text-xl font-bold text-slate-900">Chưa có Thẻ Tân Sinh Viên</h3>
               <p className="text-xs text-slate-500">
-                Hãy đăng ký thông tin để nhận ngay thẻ e-Pass cá nhân hóa và bắt đầu thu thập 9 con dấu trạm sự kiện SGU’s Day 2026!
+                Hãy đăng ký thông tin để nhận ngay thẻ e-Pass cá nhân hóa và bắt đầu thu thập các con dấu trạm sự kiện SGU’s Day 2026!
               </p>
               <button
                 onClick={() => setIsRegisterModalOpen(true)}
