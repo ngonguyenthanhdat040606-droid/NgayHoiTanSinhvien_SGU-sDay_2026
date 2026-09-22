@@ -126,7 +126,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
         {/* LEFT: Digital Freshman Pass (e-Pass) */}
         <div className="lg:col-span-5 bg-white rounded-3xl border-2 border-orange-300 shadow-xl overflow-hidden relative">
           {/* Card Top Header - SGU Moodboard Blue/Orange Arcade */}
-          <div className="bg-gradient-to-tr from-blue-700 via-blue-800 to-indigo-900 p-6 text-white relative overflow-hidden">
+          <div className="bg-gradient-to-tr from-blue-700 via-blue-800 to-indigo-900 p-4 sm:p-6 text-white relative overflow-hidden">
             <div className="absolute -right-6 -top-6 w-32 h-32 bg-amber-400/20 rounded-full blur-xl pointer-events-none" />
             <div className="flex items-center justify-between relative z-10">
               <div className="flex items-center gap-2">
@@ -166,7 +166,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
           </div>
 
           {/* Card Body - Details & QR Code */}
-          <div className="p-6 space-y-5">
+          <div className="p-4 sm:p-6 space-y-5">
             <div className="grid grid-cols-2 gap-3 text-xs bg-amber-500/10 p-3.5 rounded-2xl border border-orange-200">
               <div>
                 <span className="text-slate-500 font-bold block text-[11px]">Khoa</span>
@@ -226,7 +226,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
 
         {/* RIGHT: Stamp Rally Passport (8 Station Badges) */}
         <div className="lg:col-span-7 space-y-6">
-          <div className="bg-white rounded-3xl border-2 border-orange-300 shadow-xl p-6">
+          <div className="bg-white rounded-3xl border-2 border-orange-300 shadow-xl p-4 sm:p-6">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h3 className="text-lg font-display font-black text-slate-900 flex items-center gap-2">
@@ -266,7 +266,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
                     key={station.id}
                     id={`stamp-card-${station.id}`}
                     onClick={() => onSelectStation(station)}
-                    className={`relative p-3.5 rounded-2xl border-2 transition-all cursor-pointer text-left flex flex-col justify-between min-h-[145px] group hover:shadow-lg ${isCompleted
+                    className={`relative p-2.5 sm:p-3.5 rounded-2xl border-2 transition-all cursor-pointer text-left flex flex-col justify-between min-h-[130px] sm:min-h-[145px] group hover:shadow-lg ${isCompleted
                         ? 'bg-gradient-to-br from-emerald-50 via-teal-50 to-white border-emerald-400 shadow-sm ring-2 ring-emerald-400/30'
                         : 'bg-slate-50 border-slate-200 hover:border-orange-400 hover:bg-orange-50/40'
                       }`}
@@ -334,7 +334,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
           </div>
 
           {/* Activity / Checkin History Log */}
-          <div className="bg-white rounded-3xl border-2 border-orange-200 shadow-md p-6">
+          <div className="bg-white rounded-3xl border-2 border-orange-200 shadow-md p-4 sm:p-6">
             <h3 className="text-sm font-display font-black text-slate-900 mb-3 flex items-center gap-2">
               <Clock className="w-4 h-4 text-orange-600" />
               <span>Lịch Sử Điểm Danh & Hoạt Động Của Bạn</span>

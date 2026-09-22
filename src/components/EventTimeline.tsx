@@ -107,7 +107,7 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
 
               {/* 3D Impressive Arcade Hero Title */}
               <div className="py-2">
-                <h1 className="font-arcade-title text-5xl sm:text-7xl md:text-8xl tracking-wider leading-none select-none flex items-center justify-center flex-wrap gap-x-3 sm:gap-x-4 gap-y-2">
+                <h1 className="font-arcade-title text-4xl sm:text-7xl md:text-8xl tracking-wider leading-none select-none flex items-center justify-center flex-wrap gap-x-3 sm:gap-x-4 gap-y-2">
                   <span className="text-white drop-shadow-[0_4px_0_#0284c7] sm:drop-shadow-[0_8px_0_#0369a1] filter">
                     SGU’S
                   </span>
@@ -291,7 +291,7 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
               >
                 <div className="flex items-start gap-3 sm:gap-4">
                   {/* Time Badge - Clean Time Only */}
-                  <div className={`rounded-2xl p-2.5 sm:p-3 text-center min-w-[90px] sm:min-w-[105px] shrink-0 shadow-xs flex flex-col items-center justify-center ${
+                  <div className={`rounded-2xl p-2 sm:p-3 text-center min-w-[75px] sm:min-w-[105px] shrink-0 shadow-xs flex flex-col items-center justify-center ${
                     evt.isCheckinStation ? 'bg-orange-600 text-white' : 'bg-slate-900 text-white'
                   }`}>
                     <Clock className="w-3.5 h-3.5 text-amber-300 mb-1" />

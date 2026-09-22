@@ -245,7 +245,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                 </div>
               )}
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="space-y-1">
                   <label className="font-black text-slate-800">Mã Số Sinh Viên (MSSV) *</label>
                   <input
@@ -284,7 +284,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                 </select>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="space-y-1">
                   <label className="font-black text-slate-800">Ngành Học</label>
                   <input
@@ -308,7 +308,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="space-y-1">
                   <label className="font-black text-slate-800">Số Điện Thoại</label>
                   <input

@@ -480,7 +480,7 @@ export default function App() {
 
       {/* Global Toast Alert */}
       {toastMessage && (
-        <div className="fixed top-20 right-4 z-50 animate-in slide-in-from-top-4 duration-200 max-w-md">
+        <div className="fixed top-20 left-4 right-4 sm:left-auto sm:right-4 z-50 animate-in slide-in-from-top-4 duration-200 sm:max-w-md">
           <div className={`p-4 rounded-2xl shadow-xl border flex items-center gap-3 ${
             toastMessage.type === 'success'
               ? 'bg-slate-900 text-white border-emerald-500/50'
