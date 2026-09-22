@@ -87,9 +87,6 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="bg-amber-400 text-slate-950 text-[10px] font-black font-mono px-2.5 py-0.5 rounded-md uppercase tracking-wider shadow-xs">
-                ĐẠI HỘI IX (2025 - 2028)
-              </span>
               <span className="bg-emerald-500 text-white text-[10px] font-black px-2 py-0.5 rounded-md uppercase">
                 LEVEL UP 2026
               </span>
@@ -156,25 +153,7 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
             </div>
           </div>
 
-          {/* Arcade Stats Counter Footer */}
-          <div className="relative z-10 grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-4 border-t border-white/15 text-center">
-            <div className="bg-white/10 rounded-xl p-2.5 backdrop-blur-xs">
-              <span className="block text-2xl font-black text-amber-300 font-display">12</span>
-              <span className="text-[10px] text-orange-100 font-bold uppercase">Hoạt động thực tế</span>
-            </div>
-            <div className="bg-white/10 rounded-xl p-2.5 backdrop-blur-xs">
-              <span className="block text-2xl font-black text-emerald-300 font-display">9 TRẠM</span>
-              <span className="text-[10px] text-orange-100 font-bold uppercase">Điểm danh NFC/QR</span>
-            </div>
-            <div className="bg-white/10 rounded-xl p-2.5 backdrop-blur-xs">
-              <span className="block text-2xl font-black text-blue-300 font-display">5/9+</span>
-              <span className="text-[10px] text-orange-100 font-bold uppercase">Mốc hoàn thành tốt</span>
-            </div>
-            <div className="bg-white/10 rounded-xl p-2.5 backdrop-blur-xs">
-              <span className="block text-2xl font-black text-pink-300 font-display">100%</span>
-              <span className="text-[10px] text-orange-100 font-bold uppercase">Sinh Viên 5 Tốt SGU</span>
-            </div>
-          </div>
+
         </div>
       </div>
 

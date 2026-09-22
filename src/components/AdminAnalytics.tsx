@@ -58,17 +58,24 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
   );
 
   const exportStudentList = () => {
-    const headers = ['STT', 'MSSV', 'Họ và Tên', 'Khoa', 'Lớp', 'Email', 'SĐT', 'Số Trạm Hoàn Thành'];
-    const rows = students.map((s, index) => [
-      index + 1,
-      s.mssv,
-      `"${s.fullName}"`,
-      `"${s.faculty}"`,
-      s.studentClass,
-      s.email,
-      s.phone,
-      `${s.completedStations.length}/${totalStations}`,
-    ]);
+    const headers = ['STT', 'MSSV', 'Họ và Tên', 'Khoa', 'Lớp', 'Email', 'SĐT', 'Số Trạm Hoàn Thành', 'Các Trạm Đã Tham Gia'];
+    const rows = students.map((s, index) => {
+      const completedNames = s.completedStations
+        .map((stationId) => stations.find((st) => st.id === stationId)?.name || stationId)
+        .join(', ');
+
+      return [
+        index + 1,
+        s.mssv,
+        `"${s.fullName}"`,
+        `"${s.faculty}"`,
+        s.studentClass,
+        s.email,
+        s.phone,
+        `${s.completedStations.length}/${totalStations}`,
+        `"${completedNames}"`,
+      ];
+    });
 
     const csvContent = 'data:text/csv;charset=utf-8,\uFEFF' + [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
     const encodedUri = encodeURI(csvContent);

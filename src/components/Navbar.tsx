@@ -44,7 +44,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               SGU’S DAY 2026
             </span>
             <span className="truncate text-white drop-shadow-xs">
-              🎉 Ngày Hội Tân Sinh Viên • Thu thập 8 dấu trạm & Chinh phục SGU’s Day 2026!
+              🎉 Ngày Hội Tân Sinh Viên • Thu thập 9 dấu trạm & Chinh phục SGU’s Day 2026!
             </span>
           </div>
           <div className="hidden sm:flex items-center gap-4 text-white font-semibold">
@@ -79,7 +79,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   SGU’S <span className="text-orange-600">DAY</span>
                 </span>
                 <span className="bg-gradient-to-b from-blue-600 to-indigo-700 text-amber-300 font-arcade text-[10px] sm:text-[11px] px-2 py-0.5 rounded-lg shadow-[0_2px_0_#1e3a8a] border border-blue-400/40">
-                  2025
+                  2026
                 </span>
               </div>
               <p className="text-[11px] text-slate-600 font-bold hidden sm:block">
@@ -100,7 +100,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}
             >
               <Calendar className="w-4 h-4" />
-              <span>18 Lịch Trình</span>
+              <span>12 Lịch Trình</span>
             </button>
 
             <button
@@ -118,7 +118,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span className={`ml-1 px-1.5 py-0.2 rounded-full text-[10px] font-black ${
                   completedCount >= 5 ? 'bg-amber-400 text-slate-950 animate-pulse' : 'bg-white/20 text-white'
                 }`}>
-                  {completedCount}/8
+                  {completedCount}/9
                 </span>
               )}
             </button>
@@ -170,7 +170,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   ? 'bg-purple-600 text-white shadow-md'
                   : 'text-purple-900 bg-purple-50 hover:bg-purple-100'
               }`}
-              title="Cẩm nang nạp link 8 thẻ NFC cho BTC"
+              title="Cẩm nang nạp link 9 thẻ NFC cho BTC"
             >
               {isOrganizer ? <BookOpen className="w-4 h-4 text-white" /> : <Lock className="w-3.5 h-3.5 text-purple-700" />}
               <span>HD Ghi Thẻ</span>
@@ -234,7 +234,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             }`}
           >
             <Calendar className="w-3.5 h-3.5" />
-            <span>18 Lịch Trình</span>
+            <span>12 Lịch Trình</span>
           </button>
 
           <button
@@ -244,7 +244,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             }`}
           >
             <CreditCard className="w-3.5 h-3.5" />
-            <span>e-Pass ({completedCount}/8)</span>
+            <span>e-Pass ({completedCount}/9)</span>
           </button>
 
           <button

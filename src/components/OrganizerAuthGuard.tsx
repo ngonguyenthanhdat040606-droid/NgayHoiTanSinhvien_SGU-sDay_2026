@@ -302,37 +302,7 @@ export const OrganizerAuthGuard: React.FC<OrganizerAuthGuardProps> = ({
               />
             </div>
 
-            <div className="mt-3 p-3.5 bg-amber-500/10 rounded-2xl border border-orange-200 space-y-2 text-[11px] text-orange-950 font-medium">
-              <div className="flex items-start gap-2">
-                <Sparkles className="w-4 h-4 text-orange-600 shrink-0 mt-0.5" />
-                <div>
-                  <span className="font-black text-slate-900 block">Mã truy cập nhanh phân quyền:</span>
-                  <div className="flex flex-wrap gap-1.5 mt-1.5">
-                    <button
-                      type="button"
-                      onClick={() => setPinInput('2025')}
-                      className="font-mono font-black text-xs text-orange-700 bg-white px-2 py-1 rounded-lg border border-orange-300 hover:bg-orange-50 transition-colors cursor-pointer"
-                    >
-                      👑 BTC: 2025
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setPinInput('TRAM1')}
-                      className="font-mono font-black text-xs text-blue-700 bg-white px-2 py-1 rounded-lg border border-blue-300 hover:bg-blue-50 transition-colors cursor-pointer"
-                    >
-                      📍 Trạm 1: TRAM1
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setPinInput('TRAM3')}
-                      className="font-mono font-black text-xs text-blue-700 bg-white px-2 py-1 rounded-lg border border-blue-300 hover:bg-blue-50 transition-colors cursor-pointer"
-                    >
-                      📍 Trạm 3: TRAM3
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+
           </div>
 
           <button
