@@ -454,21 +454,23 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
                     Hướng camera vào mã QR được in tại bàn của Trạm sự kiện
                   </p>
 
-                  <div className="text-left bg-slate-50 p-3.5 rounded-2xl border border-slate-200 text-xs">
-                    <span className="font-bold text-slate-900 block mb-2">Hoặc chọn trạm nhanh để quét mã QR:</span>
-                    <div className="grid grid-cols-2 gap-2">
-                      {stations.map((st) => (
-                        <button
-                          key={st.id}
-                          onClick={() => handleStationCheckin(st.id, 'qr_scan')}
-                          className="p-2.5 rounded-xl bg-white hover:bg-orange-50 border border-slate-200 text-left text-slate-800 hover:text-orange-700 font-bold text-xs transition-colors flex items-center gap-2 truncate cursor-pointer shadow-2xs"
-                        >
-                          <span className="text-base">{st.stampBadge}</span>
-                          <span className="truncate">{st.shortName}</span>
-                        </button>
-                      ))}
+                  {isOrganizerAuthenticated() && (
+                    <div className="text-left bg-slate-50 p-3.5 rounded-2xl border border-slate-200 text-xs">
+                      <span className="font-bold text-slate-900 block mb-2">Hoặc chọn trạm nhanh để quét mã QR (Chỉ dành cho BTC thử nghiệm):</span>
+                      <div className="grid grid-cols-2 gap-2">
+                        {stations.map((st) => (
+                          <button
+                            key={st.id}
+                            onClick={() => handleStationCheckin(st.id, 'qr_scan')}
+                            className="p-2.5 rounded-xl bg-white hover:bg-orange-50 border border-slate-200 text-left text-slate-800 hover:text-orange-700 font-bold text-xs transition-colors flex items-center gap-2 truncate cursor-pointer shadow-2xs"
+                          >
+                            <span className="text-base">{st.stampBadge}</span>
+                            <span className="truncate">{st.shortName}</span>
+                          </button>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               )}
 
