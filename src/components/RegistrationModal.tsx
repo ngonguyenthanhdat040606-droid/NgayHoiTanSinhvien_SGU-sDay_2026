@@ -209,14 +209,35 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                   </div>
                 </div>
               </div>
-              <button
-                type="button"
-                onClick={handleLogout}
-                className="text-[11px] font-black text-rose-600 hover:text-rose-700 bg-white border border-rose-200 hover:bg-rose-50 px-2.5 py-1.5 rounded-xl flex items-center gap-1 transition-all cursor-pointer shrink-0"
-              >
-                <LogOut className="w-3.5 h-3.5" />
-                <span>Đăng xuất</span>
-              </button>
+              <div className="flex items-center gap-1.5 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMssv(activeStudent.mssv);
+                    setFullName(activeStudent.fullName);
+                    setFaculty(activeStudent.faculty);
+                    setMajor(activeStudent.major);
+                    setStudentClass(activeStudent.studentClass);
+                    setEmail(activeStudent.email);
+                    setPhone(activeStudent.phone);
+                    setPinCode(activeStudent.pinCode || '');
+                    setRegisterError('');
+                    setTab('register');
+                  }}
+                  className="text-[11px] font-black text-blue-600 hover:text-blue-700 bg-white border border-blue-200 hover:bg-blue-50 px-2.5 py-1.5 rounded-xl flex items-center gap-1 transition-all cursor-pointer"
+                >
+                  <UserPlus className="w-3.5 h-3.5" />
+                  <span>Sửa thông tin</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="text-[11px] font-black text-rose-600 hover:text-rose-700 bg-white border border-rose-200 hover:bg-rose-50 px-2.5 py-1.5 rounded-xl flex items-center gap-1 transition-all cursor-pointer"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  <span>Đăng xuất</span>
+                </button>
+              </div>
             </div>
           )}
 
