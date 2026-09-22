@@ -272,10 +272,11 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                   <input
                     type="text"
                     required
+                    disabled={!!activeStudent}
                     value={mssv}
                     onChange={(e) => setMssv(e.target.value)}
                     placeholder="VD: 24100999"
-                    className="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 text-slate-900 font-mono font-black focus:border-orange-500 focus:outline-none uppercase"
+                    className={`w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 text-slate-900 font-mono font-black focus:border-orange-500 focus:outline-none uppercase ${activeStudent ? 'bg-slate-100 opacity-70 cursor-not-allowed' : ''}`}
                   />
                 </div>
 
@@ -381,7 +382,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                 className="arcade-btn-orange w-full py-3.5 rounded-2xl text-white font-black text-sm tracking-wide uppercase shadow-lg transition-all mt-4 flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Sparkles className="w-4 h-4 text-amber-300" />
-                <span>Hoàn tất & Cấp Thẻ e-Pass</span>
+                <span>{activeStudent ? 'Lưu thay đổi' : 'Hoàn tất & Cấp Thẻ e-Pass'}</span>
               </button>
             </form>
           ) : (
