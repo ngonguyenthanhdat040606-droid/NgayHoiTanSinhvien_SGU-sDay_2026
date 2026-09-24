@@ -17,6 +17,7 @@ import {
   PartyPopper
 } from 'lucide-react';
 import { Student, Station } from '../types';
+import { DRUG_PREVENTION_PRIORITY_MSSV } from '../data/priorityData';
 
 interface StudentCardProps {
   student: Student;
@@ -61,6 +62,8 @@ export const StudentCard: React.FC<StudentCardProps> = ({
   const totalStations = stations.length || 9;
   const completedStationsCount = student.completedStations.length;
   const isFullComplete = completedStationsCount === totalStations;
+  
+  const isDrugPreventionVIP = DRUG_PREVENTION_PRIORITY_MSSV.includes(student.mssv);
 
   const handleCopyMSSV = () => {
     navigator.clipboard.writeText(student.mssv);
@@ -167,6 +170,27 @@ export const StudentCard: React.FC<StudentCardProps> = ({
 
           {/* Card Body - Details & QR Code */}
           <div className="p-4 sm:p-6 space-y-5">
+            {isDrugPreventionVIP && (
+              <div className="bg-gradient-to-r from-red-600 to-rose-600 rounded-2xl p-4 text-white shadow-xl shadow-red-500/20 border-2 border-red-400 animate-in zoom-in-95 duration-300">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center text-2xl shrink-0 border border-white/30 shadow-inner">
+                    🎟️
+                  </div>
+                  <div>
+                    <h4 className="font-display font-black text-lg tracking-wide leading-tight">
+                      VÉ GIỮ CHỖ ƯU TIÊN
+                    </h4>
+                    <p className="text-xs font-semibold text-red-100 line-clamp-1 mt-0.5">
+                      Tọa đàm "Phòng chống ma túy"
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-3 pt-3 border-t border-red-500/50 text-[10px] sm:text-xs font-medium text-red-50 leading-relaxed">
+                  * Xuất trình thẻ này cho Ban Tổ Chức tại cửa <strong>Hội trường lầu 7 khu E</strong> lúc <strong>10h00</strong>. Bạn sẽ được ưu tiên vào trước.
+                </div>
+              </div>
+            )}
+
             <div className="grid grid-cols-2 gap-3 text-xs bg-amber-500/10 p-3.5 rounded-2xl border border-orange-200">
               <div>
                 <span className="text-slate-500 font-bold block text-[11px]">Khoa</span>
