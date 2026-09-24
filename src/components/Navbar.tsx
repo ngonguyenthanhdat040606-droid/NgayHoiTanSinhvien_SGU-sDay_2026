@@ -118,7 +118,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span className={`ml-1 px-1.5 py-0.2 rounded-full text-[10px] font-black ${
                   completedCount >= 5 ? 'bg-amber-400 text-slate-950 animate-pulse' : 'bg-white/20 text-white'
                 }`}>
-                  {completedCount}/9
+                  {completedCount}/11
                 </span>
               )}
             </button>
@@ -244,7 +244,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             }`}
           >
             <CreditCard className="w-3.5 h-3.5" />
-            <span>e-Pass ({completedCount}/9)</span>
+            <span>e-Pass ({completedCount}/11)</span>
           </button>
 
           <button

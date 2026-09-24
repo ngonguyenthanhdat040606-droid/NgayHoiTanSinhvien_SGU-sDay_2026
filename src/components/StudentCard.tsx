@@ -59,7 +59,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
       .catch((err) => console.error('Error generating QR code', err));
   }, [student]);
 
-  const totalStations = stations.length || 9;
+  const totalStations = stations.length || 11;
   const completedStationsCount = student.completedStations.length;
   const isFullComplete = completedStationsCount === totalStations;
   
@@ -90,7 +90,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
               <div className="font-display font-black text-base sm:text-lg flex items-center gap-2">
                 <span>
                   {isFullComplete
-                    ? `CHÚC MỪNG! Bạn đã hoàn thành trọn vẹn 9/11 Trạm SGU’s Day 2026!`
+                    ? `CHÚC MỪNG! Bạn đã hoàn thành trọn vẹn 11/11 Trạm SGU’s Day 2026!`
                     : completedStationsCount > 0
                       ? `Tiến độ Hộ Chiếu Tân Sinh Viên: Đã điểm danh ${completedStationsCount}/11 trạm!`
                       : `Hành trình Hộ Chiếu Tân Sinh Viên SGU (0/11 trạm)`}
@@ -234,7 +234,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
               <div>
                 <h3 className="text-lg font-display font-black text-slate-900 flex items-center gap-2">
                   <Award className="w-5 h-5 text-orange-600" />
-                  <span>Hộ Chiếu 9 Con Dấu Trạm SGU’s Day 2026</span>
+                  <span>Hộ Chiếu 11 Con Dấu Trạm SGU’s Day 2026</span>
                 </h3>
                 <p className="text-xs text-slate-500 mt-0.5">
                   Khám phá và điểm danh 11 trạm sự kiện trong ngày hội.
