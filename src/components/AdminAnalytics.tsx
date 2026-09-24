@@ -58,11 +58,15 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
   );
 
   const exportStudentList = () => {
-    const headers = ['STT', 'MSSV', 'Họ và Tên', 'Khoa', 'Lớp', 'Email', 'SĐT', 'Số Trạm Hoàn Thành', 'Các Trạm Đã Tham Gia'];
+    const headers = ['STT', 'MSSV', 'Họ và Tên', 'Khoa', 'Lớp', 'Email', 'SĐT', 'Thời Gian Đăng Ký', 'Số Trạm Hoàn Thành', 'Các Trạm Đã Tham Gia', 'Chi tiết Điểm Danh (Thời gian)'];
     const rows = students.map((s, index) => {
       const completedNames = s.completedStations
         .map((stationId) => stations.find((st) => st.id === stationId)?.name || stationId)
         .join(', ');
+        
+      const checkinDetails = s.checkinHistory && s.checkinHistory.length > 0 
+        ? s.checkinHistory.map(c => `${c.stationName} (${c.timestamp})`).join(' | ')
+        : '';
 
       return [
         index + 1,
@@ -72,8 +76,10 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
         s.studentClass,
         s.email,
         s.phone,
+        `"${s.registeredAt || ''}"`,
         `${s.completedStations.length}/${totalStations}`,
         `"${completedNames}"`,
+        `"${checkinDetails}"`
       ];
     });
 
