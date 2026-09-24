@@ -170,27 +170,6 @@ export const StudentCard: React.FC<StudentCardProps> = ({
 
           {/* Card Body - Details & QR Code */}
           <div className="p-4 sm:p-6 space-y-5">
-            {isDrugPreventionVIP && (
-              <div className="bg-gradient-to-r from-red-600 to-rose-600 rounded-2xl p-4 text-white shadow-xl shadow-red-500/20 border-2 border-red-400 animate-in zoom-in-95 duration-300">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center text-2xl shrink-0 border border-white/30 shadow-inner">
-                    🎟️
-                  </div>
-                  <div>
-                    <h4 className="font-display font-black text-lg tracking-wide leading-tight">
-                      VÉ GIỮ CHỖ ƯU TIÊN
-                    </h4>
-                    <p className="text-xs font-semibold text-red-100 line-clamp-1 mt-0.5">
-                      Tọa đàm "Phòng chống ma túy"
-                    </p>
-                  </div>
-                </div>
-                <div className="mt-3 pt-3 border-t border-red-500/50 text-[10px] sm:text-xs font-medium text-red-50 leading-relaxed">
-                  * Xuất trình thẻ này cho Ban Tổ Chức tại cửa <strong>Hội trường lầu 7 khu E</strong> lúc <strong>10h00</strong>. Bạn sẽ được ưu tiên vào trước.
-                </div>
-              </div>
-            )}
-
             <div className="grid grid-cols-2 gap-3 text-xs bg-amber-500/10 p-3.5 rounded-2xl border border-orange-200">
               <div>
                 <span className="text-slate-500 font-bold block text-[11px]">Khoa</span>
@@ -281,6 +260,33 @@ export const StudentCard: React.FC<StudentCardProps> = ({
 
             {/* 9 Stations Stamp Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-5">
+              {isDrugPreventionVIP && (
+                <div className="relative p-2.5 sm:p-3.5 rounded-2xl border-2 transition-all cursor-default text-left flex flex-col justify-between min-h-[130px] sm:min-h-[145px] group hover:shadow-lg bg-gradient-to-br from-rose-50 via-red-50 to-white border-red-400 shadow-sm ring-2 ring-red-400/30">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[9px] font-black font-mono px-1.5 py-0.5 rounded-md bg-red-600 text-white shadow-sm">
+                      ƯU TIÊN
+                    </span>
+                    <div className="flex items-center gap-1">
+                      <span className="text-[10px] bg-red-100 text-red-700 px-1 rounded-sm font-bold border border-red-300">VIP</span>
+                    </div>
+                  </div>
+                  
+                  <div className="my-1.5 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl transition-transform group-hover:scale-110 shadow-md bg-gradient-to-tr from-red-500 to-rose-500 text-white ring-4 ring-red-200">
+                      🎟️
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h4 className="text-xs font-black text-slate-950 line-clamp-2">
+                      Tọa đàm "Phòng chống ma túy"
+                    </h4>
+                    <p className="text-[9px] text-red-700 mt-0.5 font-bold line-clamp-1 flex items-center gap-1">
+                      <Clock className="w-2.5 h-2.5" /> 10:00 - Lầu 7 E
+                    </p>
+                  </div>
+                </div>
+              )}
               {stations.map((station) => {
                 const isCompleted = student.completedStations.includes(station.id);
                 const checkinInfo = student.checkinHistory.find((c) => c.stationId === station.id);
