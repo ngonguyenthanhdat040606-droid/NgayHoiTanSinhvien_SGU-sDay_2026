@@ -89,13 +89,13 @@ export const INITIAL_STATIONS: Station[] = [
     shortName: 'Sinh viên 5 tốt',
     tagline: 'Lan tỏa cảm hứng chinh phục danh hiệu',
     description: 'Gặp gỡ, lắng nghe chia sẻ kinh nghiệm từ các gương Sinh viên 5 tốt tiêu biểu, định hướng lộ trình phấn đấu cho tân sinh viên.',
-    location: 'Hội trường E',
+    location: 'Hội trường A',
     zone: 'C',
     icon: 'Award',
     color: 'from-blue-700 to-cyan-600',
-    managerName: 'Đ/c Mai Ngọc Anh',
+    managerName: 'Đ/c Trần Trung Trí',
     managerPhone: '0977 889 900',
-    assignedUnit: 'LCH SV khoa Toán - Ứng dụng',
+    assignedUnit: 'LCH SV khoa Quản trị Kinh doanh',
     nfcTagId: '99:BB:CC:DD',
     stampBadge: '⭐',
     estimatedMinutes: 10,
@@ -270,14 +270,14 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
   },
   {
     id: 'act-7', activityNumber: 7, time: '10:30', endTime: '12:00',
-    title: 'Sân chơi “Thanh niên khỏe”', location: 'Sân khu nghệ thuật',
+    title: 'Sân chơi “Thanh niên khỏe”', location: 'Khu vực Sân thể thao đa năng',
     category: 'station_activity', description: 'Sát hạch thể lực và cấp giấy chứng nhận Thanh niên khỏe.',
     inCharge: 'Đ/c Mai Ngọc Anh', assignedUnit: 'LCH SV khoa Toán - Ứng dụng',
     isHighlight: true, isCheckinStation: true, stationId: 'station-9'
   },
   {
     id: 'act-8', activityNumber: 8, time: '10:30', endTime: '12:00',
-    title: 'Sân chơi “Kì thủ SGU tranh tài”', location: 'Cơ sở chính trường',
+    title: 'Sân chơi “Kì thủ SGU tranh tài”', location: 'C.B107, C.B109',
     category: 'station_activity', description: 'Giải thi đấu đối kháng và giao lưu nhóm cờ vua, cờ tướng, cờ vây.',
     inCharge: 'Đ/c Lê Đỗ Anh Khoa', assignedUnit: 'CLB Cờ trường',
     isHighlight: true, isCheckinStation: true, stationId: 'station-2'
@@ -305,14 +305,14 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
   },
   {
     id: 'act-12', activityNumber: 12, time: '10:00', endTime: '11:30',
-    title: 'Toạ đàm “Sinh viên 5 tốt”', location: 'Hội trường E',
+    title: 'Toạ đàm “Sinh viên 5 tốt”', location: 'Hội trường A',
     category: 'station_activity', description: 'Trao đổi về danh hiệu SV5T và trang bị kiến thức, kỹ năng.',
     inCharge: 'Đ/c Trần Trung Trí', assignedUnit: 'LCH SV khoa Quản trị Kinh doanh',
     isHighlight: true, isCheckinStation: true, stationId: 'station-5'
   },
   {
     id: 'act-13', activityNumber: 13, time: '13:30', endTime: '15:00',
-    title: 'Sân chơi Ngoại ngữ “The Language Hub”', location: 'Sảnh Hội trường A',
+    title: 'Sân chơi Ngoại ngữ “The Language Hub”', location: 'Sảnh HTA',
     category: 'station_activity', description: 'Rèn luyện vốn từ vựng và kỹ năng giao tiếp tiếng Anh cơ bản.',
     inCharge: 'Đ/c Đặng Vỹ Khang', assignedUnit: 'LCH SV khoa Ngoại ngữ',
     isHighlight: true, isCheckinStation: true, stationId: 'station-6'
@@ -340,7 +340,7 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
   },
   {
     id: 'act-17', activityNumber: 17, time: '13:30', endTime: '15:30',
-    title: 'Tọa đàm “Decode Stress - Gỡ rối nút thắt”', location: 'Hội trường lầu 7 khu E',
+    title: 'Tọa đàm “Decode Stress - Gỡ rối nút thắt”', location: 'Lầu 7 khu E',
     category: 'station_activity', description: 'Trang bị kiến thức chăm sóc sức khỏe tâm thần sinh viên.',
     inCharge: 'Đ/c Huỳnh Ngọc Bảo Khang', assignedUnit: 'LCH SV khoa Giáo dục',
     isHighlight: true, isCheckinStation: true, stationId: 'station-8'
