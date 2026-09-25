@@ -169,7 +169,7 @@ export const INITIAL_STATIONS: Station[] = [
     shortName: 'Thanh Niên Khỏe',
     tagline: 'Kiểm tra thể lực - Cấp chứng nhận',
     description: 'Khu vực kiểm tra sát hạch thể lực theo chuẩn Hội Sinh viên. Điểm danh tại đây sẽ được cấp Giấy chứng nhận Thanh niên khỏe.',
-    location: 'Khu vực Sân thể thao đa năng',
+    location: 'Sân khu nghệ thuật',
     zone: 'B',
     icon: 'Zap',
     color: 'from-amber-500 to-orange-600',
@@ -270,7 +270,7 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
   },
   {
     id: 'act-7', activityNumber: 7, time: '10:30', endTime: '12:00',
-    title: 'Sân chơi “Thanh niên khỏe”', location: 'Khu vực Sân thể thao đa năng',
+    title: 'Sân chơi “Thanh niên khỏe”', location: 'Sân khu nghệ thuật',
     category: 'station_activity', description: 'Sát hạch thể lực và cấp giấy chứng nhận Thanh niên khỏe.',
     inCharge: 'Đ/c Mai Ngọc Anh', assignedUnit: 'LCH SV khoa Toán - Ứng dụng',
     isHighlight: true, isCheckinStation: true, stationId: 'station-9'
