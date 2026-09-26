@@ -32,6 +32,7 @@ async function resetCheckins() {
     for (const studentDoc of snapshot.docs) {
       batch.update(studentDoc.ref, {
         completedStations: [],
+        completedBooths: [],
         checkinHistory: []
       });
       count++;
@@ -50,7 +51,27 @@ async function resetCheckins() {
       console.log(`Committed remaining ${count} records.`);
     }
 
-    console.log("SUCCESS: All student check-ins have been reset.");
+    console.log("Fetching station_checkins to delete...");
+    const checkinsRef = collection(db, 'station_checkins');
+    const checkinsSnap = await getDocs(checkinsRef);
+    console.log(`Found ${checkinsSnap.size} checkin logs. Deleting...`);
+    
+    let deleteBatch = writeBatch(db);
+    let delCount = 0;
+    for (const doc of checkinsSnap.docs) {
+        deleteBatch.delete(doc.ref);
+        delCount++;
+        if (delCount === 400) {
+            await deleteBatch.commit();
+            deleteBatch = writeBatch(db);
+            delCount = 0;
+        }
+    }
+    if (delCount > 0) {
+        await deleteBatch.commit();
+    }
+
+    console.log("SUCCESS: All student check-ins and logs have been reset.");
     process.exit(0);
   } catch (error) {
     console.error("Error resetting check-ins:", error);
