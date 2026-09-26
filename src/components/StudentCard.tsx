@@ -17,7 +17,7 @@ import {
   PartyPopper
 } from 'lucide-react';
 import { Student, Station } from '../types';
-import { DRUG_PREVENTION_PRIORITY_MSSV } from '../data/priorityData';
+import { VIP_LISTS } from '../data/vipLists';
 
 interface StudentCardProps {
   student: Student;
@@ -63,7 +63,10 @@ export const StudentCard: React.FC<StudentCardProps> = ({
   const completedStationsCount = student.completedStations.length;
   const isFullComplete = completedStationsCount === totalStations;
   
-  const isDrugPreventionVIP = DRUG_PREVENTION_PRIORITY_MSSV.includes(student.mssv);
+  const isVIPForStation = (stationId: string) => {
+    const list = VIP_LISTS[stationId] || [];
+    return list.includes(student.mssv) || list.includes(student.mssv.toUpperCase());
+  };
 
   const handleCopyMSSV = () => {
     navigator.clipboard.writeText(student.mssv);
@@ -293,7 +296,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
                               {student.completedBooths?.length || 0}/6 GIAN
                             </span>
                           )}
-                          {station.id === 'station-12' && isDrugPreventionVIP && (
+                          {isVIPForStation(station.id) && (
                             <span className="text-[9px] bg-red-600 text-white px-1.5 py-0.5 rounded-md font-bold shadow-sm">ƯU TIÊN</span>
                           )}
                         </div>
