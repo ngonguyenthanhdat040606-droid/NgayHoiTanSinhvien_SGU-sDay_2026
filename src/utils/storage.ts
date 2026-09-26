@@ -2,7 +2,7 @@ import { Student, Station, OrganizerSession } from '../types';
 import { INITIAL_STATIONS, INITIAL_STUDENTS } from '../data/mockData';
 
 const STUDENTS_KEY = 'tsv_students_v6';
-const STATIONS_KEY = 'tsv_stations_v10';
+const STATIONS_KEY = 'tsv_stations_v11';
 const ACTIVE_STUDENT_ID_KEY = 'tsv_active_student_id_v5';
 const ORGANIZER_SESSION_KEY = 'tsv_organizer_session_v5';
 const ORGANIZER_PIN_KEY = 'tsv_organizer_pin_v5';

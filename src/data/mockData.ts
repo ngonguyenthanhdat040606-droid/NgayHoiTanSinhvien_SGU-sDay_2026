@@ -225,8 +225,8 @@ export const INITIAL_STATIONS: Station[] = [
     id: 'station-12',
     stationNumber: 12,
     activityNumber: 21,
-    name: 'Trạm 12: Toạ đàm "Thức tỉnh GenZ"',
-    shortName: 'Thức tỉnh GenZ',
+    name: 'Trạm 12: Tọa đàm "Phòng chống ma túy"',
+    shortName: 'Phòng chống ma túy',
     tagline: 'Phòng, chống ma tuý và các chất gây nghiện',
     description: 'Trang bị kiến thức phòng ngừa tác hại của ma tuý, nhận diện các chất gây nghiện mới, xây dựng lối sống lành mạnh trong giới trẻ.',
     location: 'Lầu 7 khu E',
@@ -418,7 +418,7 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
   },
   {
     id: 'act-21', activityNumber: 21, time: '10:00', endTime: '12:00',
-    title: 'Toạ đàm "Thức tỉnh GenZ"', location: 'Lầu 7 khu E',
+    title: 'Tọa đàm "Phòng chống ma túy"', location: 'Lầu 7 khu E',
     category: 'ceremony', description: 'Phòng, chống ma tuý và các chất gây nghiện.',
     inCharge: 'Đ/c Đặng Vỹ Khang', assignedUnit: 'LCH SV khoa Ngoại ngữ',
     isHighlight: true, isCheckinStation: true, stationId: 'station-12'
