@@ -50,7 +50,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="hidden sm:flex items-center gap-4 text-white font-semibold">
             <span className="flex items-center gap-1.5 bg-black/20 px-2.5 py-0.5 rounded-full text-[11px] border border-white/20">
               <Radio className="w-3.5 h-3.5 animate-pulse text-emerald-300" />
-              <span>Chạm NFC & QR 11 trạm Siêu Tốc</span>
+              <span>Chạm NFC & QR 12 trạm Siêu Tốc</span>
             </span>
           </div>
         </div>
@@ -113,12 +113,12 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}
             >
               <CreditCard className="w-4 h-4" />
-              <span>Thẻ e-Pass ({completedCount}/11 trạm)</span>
+              <span>Thẻ e-Pass ({completedCount}/12 trạm)</span>
               {activeStudent && (
                 <span className={`ml-1 px-1.5 py-0.2 rounded-full text-[10px] font-black ${
                   completedCount >= 5 ? 'bg-amber-400 text-slate-950 animate-pulse' : 'bg-white/20 text-white'
                 }`}>
-                  {completedCount}/11
+                  {completedCount}/12
                 </span>
               )}
             </button>
@@ -208,7 +208,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     {activeStudent.fullName}
                   </div>
                   <div className="text-[10px] text-orange-700 font-bold font-mono">
-                    {activeStudent.mssv} • <span className="text-emerald-700 font-extrabold">{completedCount}/11 trạm</span>
+                    {activeStudent.mssv} • <span className="text-emerald-700 font-extrabold">{completedCount}/12 trạm</span>
                   </div>
                 </div>
               </div>
@@ -244,7 +244,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             }`}
           >
             <CreditCard className="w-3.5 h-3.5" />
-            <span>e-Pass ({completedCount}/11)</span>
+            <span>e-Pass ({completedCount}/12)</span>
           </button>
 
           <button
@@ -262,7 +262,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             }`}
           >
             <MapPin className="w-3.5 h-3.5" />
-            <span>Sơ Đồ 11 trạm</span>
+            <span>Sơ Đồ 12 trạm</span>
           </button>
 
           <button

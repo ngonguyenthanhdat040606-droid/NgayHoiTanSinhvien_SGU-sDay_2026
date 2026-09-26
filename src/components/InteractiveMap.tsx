@@ -47,7 +47,7 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
         <div>
           <h2 className="text-xl sm:text-2xl font-display font-black text-slate-900 flex items-center gap-2">
             <Compass className="w-6 h-6 text-orange-600" />
-            <span>Sơ Đồ Khuôn Viên & 11 trạm Ngày Hội SGU’s Day 2026</span>
+            <span>Sơ Đồ Khuôn Viên & 12 trạm Ngày Hội SGU’s Day 2026</span>
           </h2>
           <p className="text-xs sm:text-sm text-slate-600 mt-0.5 font-medium">
             Cơ sở chính Trường ĐH Sài Gòn (273 An Dương Vương, P. Chợ Quán, TP.HCM).
@@ -62,7 +62,7 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
               selectedZone === 'all' ? 'bg-orange-500 text-white shadow-xs' : 'text-slate-700 hover:text-orange-600'
             }`}
           >
-            Tất cả (11 trạm)
+            Tất cả (12 trạm)
           </button>
           <button
             onClick={() => setSelectedZone('A')}

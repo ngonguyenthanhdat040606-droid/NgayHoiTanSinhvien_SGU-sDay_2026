@@ -166,7 +166,7 @@ export const NFCSetupGuide: React.FC<NFCSetupGuideProps> = ({ stations }) => {
           <div className="space-y-1">
             <strong className="block font-bold text-emerald-900">Giải pháp 1 chạm:</strong>
             <p className="text-emerald-900/90 leading-relaxed text-[11px]">
-              Ở bảng 11 trạm bên dưới, hãy bấm nút <strong>"Copy cho NFC Tools (Đã bỏ https://)"</strong>. Sau đó mở NFC Tools, giữ nguyên ô bên trái là <code className="font-bold">https://</code> và chỉ dán nội dung đã copy vào ô bên phải rồi bấm <strong>Ghi (Write)</strong>. Cả iPhone và Android sẽ mở trang và đóng dấu 100% thành công!
+              Ở bảng 12 trạm bên dưới, hãy bấm nút <strong>"Copy cho NFC Tools (Đã bỏ https://)"</strong>. Sau đó mở NFC Tools, giữ nguyên ô bên trái là <code className="font-bold">https://</code> và chỉ dán nội dung đã copy vào ô bên phải rồi bấm <strong>Ghi (Write)</strong>. Cả iPhone và Android sẽ mở trang và đóng dấu 100% thành công!
             </p>
           </div>
         </div>
@@ -266,7 +266,7 @@ export const NFCSetupGuide: React.FC<NFCSetupGuideProps> = ({ stations }) => {
                 Áp dụng
               </button>
             </div>
-            <span className="text-[10px] text-slate-500 block mt-1">Nhập link để tự động tạo link nạp cho 11 trạm</span>
+            <span className="text-[10px] text-slate-500 block mt-1">Nhập link để tự động tạo link nạp cho 12 trạm</span>
           </div>
         </div>
       </div>

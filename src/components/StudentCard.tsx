@@ -59,7 +59,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
       .catch((err) => console.error('Error generating QR code', err));
   }, [student]);
 
-  const totalStations = stations.length || 11;
+  const totalStations = stations.length || 12;
   const completedStationsCount = student.completedStations.length;
   const isFullComplete = completedStationsCount === totalStations;
   
@@ -90,10 +90,10 @@ export const StudentCard: React.FC<StudentCardProps> = ({
               <div className="font-display font-black text-base sm:text-lg flex items-center gap-2">
                 <span>
                   {isFullComplete
-                    ? `CHÚC MỪNG! Bạn đã hoàn thành trọn vẹn 11/11 Trạm SGU’s Day 2026!`
+                    ? `CHÚC MỪNG! Bạn đã hoàn thành trọn vẹn 11/12 Trạm SGU’s Day 2026!`
                     : completedStationsCount > 0
-                      ? `Tiến độ Hộ Chiếu Tân Sinh Viên: Đã điểm danh ${completedStationsCount}/11 trạm!`
-                      : `Hành trình Hộ Chiếu Tân Sinh Viên SGU (0/11 trạm)`}
+                      ? `Tiến độ Hộ Chiếu Tân Sinh Viên: Đã điểm danh ${completedStationsCount}/12 trạm!`
+                      : `Hành trình Hộ Chiếu Tân Sinh Viên SGU (0/12 trạm)`}
                 </span>
               </div>
               <p className={`text-xs sm:text-sm mt-0.5 font-medium ${isFullComplete || completedStationsCount > 0 ? 'text-white/90' : 'text-slate-700'
@@ -210,7 +210,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
                 </div>
               )}
               <p className="text-[11px] text-slate-500 font-medium mt-2 max-w-xs">
-                Xuất trình mã này tại 11 trạm sự kiện để Quản lý trạm quét điểm danh nhanh.
+                Xuất trình mã này tại 12 trạm sự kiện để Quản lý trạm quét điểm danh nhanh.
               </p>
             </div>
 
@@ -237,7 +237,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
                   <span>Hộ Chiếu 11 Con Dấu Trạm SGU’s Day 2026</span>
                 </h3>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  Khám phá và điểm danh 11 trạm sự kiện trong ngày hội.
+                  Khám phá và điểm danh 12 trạm sự kiện trong ngày hội.
                 </p>
               </div>
 
@@ -350,7 +350,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
             {/* Checkin Action CTA */}
             <div className="mt-5 p-4 rounded-2xl bg-gradient-to-r from-orange-50 via-amber-50 to-orange-100 border-2 border-orange-300 flex flex-col sm:flex-row items-center justify-between gap-3">
               <div className="text-left text-xs text-slate-900">
-                <span className="font-display font-black block text-sm text-orange-950">Bạn đang đứng tại trạm nào trong số 11 trạm?</span>
+                <span className="font-display font-black block text-sm text-orange-950">Bạn đang đứng tại trạm nào trong số 12 trạm?</span>
                 <span className="font-medium text-slate-700">Chạm lưng điện thoại vào thẻ NFC của Quản lý trạm hoặc quét mã QR để nhận con dấu ngay!</span>
               </div>
               <button

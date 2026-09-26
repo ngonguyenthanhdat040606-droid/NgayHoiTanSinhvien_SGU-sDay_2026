@@ -221,6 +221,26 @@ export const INITIAL_STATIONS: Station[] = [
     estimatedMinutes: 15,
     requirements: 'Tham quan phiên chợ và check-in tại 1 gian hàng bất kỳ.',
   },
+  {
+    id: 'station-12',
+    stationNumber: 12,
+    activityNumber: 21,
+    name: 'Trạm 12: Toạ đàm "Thức tỉnh GenZ"',
+    shortName: 'Thức tỉnh GenZ',
+    tagline: 'Phòng, chống ma tuý và các chất gây nghiện',
+    description: 'Trang bị kiến thức phòng ngừa tác hại của ma tuý, nhận diện các chất gây nghiện mới, xây dựng lối sống lành mạnh trong giới trẻ.',
+    location: 'Lầu 7 khu E',
+    zone: 'C',
+    icon: 'Shield',
+    color: 'from-fuchsia-600 to-pink-600',
+    managerName: 'Đ/c Đặng Vỹ Khang',
+    managerPhone: '0918 223 344',
+    assignedUnit: 'LCH SV khoa Ngoại ngữ',
+    nfcTagId: 'BB:CC:DD:EE',
+    stampBadge: '🚫',
+    estimatedMinutes: 10,
+    requirements: 'Tham dự tọa đàm và hoàn thành trắc nghiệm kiến thức phòng chống ma túy.',
+  }
 ];
 
 export const INITIAL_STUDENTS: Student[] = [];
@@ -368,10 +388,10 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
   },
   {
     id: 'act-21', activityNumber: 21, time: '10:00', endTime: '12:00',
-    title: 'Toạ đàm "Thức tỉnh GenZ"', location: 'Hội trường lầu 7 khu E',
+    title: 'Toạ đàm "Thức tỉnh GenZ"', location: 'Lầu 7 khu E',
     category: 'ceremony', description: 'Phòng, chống ma tuý và các chất gây nghiện.',
     inCharge: 'Đ/c Đặng Vỹ Khang', assignedUnit: 'LCH SV khoa Ngoại ngữ',
-    isHighlight: false, isCheckinStation: false
+    isHighlight: true, isCheckinStation: true, stationId: 'station-12'
   },
   {
     id: 'act-22', activityNumber: 22, time: '17:30', endTime: '21:00',

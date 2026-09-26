@@ -205,7 +205,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                 <div>
                   <div className="font-black text-slate-900 line-clamp-1">{activeStudent.fullName}</div>
                   <div className="text-[11px] text-slate-500 font-mono">
-                    MSSV: <strong className="text-blue-600">{activeStudent.mssv}</strong> • Đã thu thập: <strong>{activeStudent.completedStations.length}/11</strong> trạm
+                    MSSV: <strong className="text-blue-600">{activeStudent.mssv}</strong> • Đã thu thập: <strong>{activeStudent.completedStations.length}/12</strong> trạm
                   </div>
                 </div>
               </div>
@@ -387,7 +387,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
             </form>
           ) : (
             <form onSubmit={handleLoginSubmit} className="space-y-4 text-xs">
-              <div className="p-3.5 bg-blue-50/110 border border-blue-200 rounded-2xl text-slate-700 text-xs leading-relaxed space-y-1">
+              <div className="p-3.5 bg-blue-50/120 border border-blue-200 rounded-2xl text-slate-700 text-xs leading-relaxed space-y-1">
                 <div className="font-black text-blue-900 flex items-center gap-1.5">
                   <ShieldCheck className="w-4 h-4 text-blue-600" />
                   <span>Đăng nhập kích hoạt Thẻ e-Pass</span>

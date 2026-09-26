@@ -149,7 +149,7 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
         if (matchedStation) {
           handleStationCheckin(matchedStation.id, 'nfc_tap');
         } else {
-          setErrorMessage('Đã đọc thẻ NFC nhưng mã thẻ chưa được gán vào 11 trạm sự kiện.');
+          setErrorMessage('Đã đọc thẻ NFC nhưng mã thẻ chưa được gán vào 12 trạm sự kiện.');
         }
       },
       (error) => {
@@ -277,7 +277,7 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
                   onClick={onClose}
                   className="arcade-btn-orange flex-1 py-3 px-4 rounded-2xl text-white font-black text-xs shadow-md transition-all flex items-center justify-center gap-1.5 cursor-pointer uppercase"
                 >
-                  <span>Xem Hộ Chiếu 11 Dấu</span>
+                  <span>Xem Hộ Chiếu 12 Dấu</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -299,7 +299,7 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
                       </span>
                     </div>
                     <div className="text-[11px] text-slate-600 font-mono font-bold">
-                      MSSV: <strong className="text-orange-700">{student?.mssv || '---'}</strong> • Đã thu thập: <strong className="text-emerald-700">{student?.completedStations.length || 0}/11</strong> Trạm
+                      MSSV: <strong className="text-orange-700">{student?.mssv || '---'}</strong> • Đã thu thập: <strong className="text-emerald-700">{student?.completedStations.length || 0}/12</strong> Trạm
                     </div>
                   </div>
                 </div>
@@ -478,7 +478,7 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
               {scanMode === 'simulate' && (
                 <div className="space-y-3">
                   <div className="p-3 bg-amber-50 border border-amber-300 rounded-2xl text-amber-950 text-xs font-bold">
-                    <strong>Chế độ Kiểm thử / Mô phỏng:</strong> Bấm chọn 1 trong 11 trạm dưới đây để mô phỏng hành động chạm thẻ NFC tại bàn Quản lý trạm (Hỗ trợ thử nghiệm ngay trên máy tính/điện thoại).
+                    <strong>Chế độ Kiểm thử / Mô phỏng:</strong> Bấm chọn 1 trong 12 trạm dưới đây để mô phỏng hành động chạm thẻ NFC tại bàn Quản lý trạm (Hỗ trợ thử nghiệm ngay trên máy tính/điện thoại).
                   </div>
 
                   <div className="space-y-2">

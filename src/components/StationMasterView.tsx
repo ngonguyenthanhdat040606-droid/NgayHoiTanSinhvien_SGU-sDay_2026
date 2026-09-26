@@ -151,7 +151,7 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/20 text-amber-300 border border-orange-500/40 text-xs font-black uppercase tracking-wider">
               <ShieldCheck className="w-4 h-4 text-orange-400" />
-              BÀN QUẢN LÝ 11 trạm SỰ KIỆN • SGU’S DAY 2026
+              BÀN QUẢN LÝ 12 trạm SỰ KIỆN • SGU’S DAY 2026
             </div>
             <h2 className="font-display text-2xl sm:text-3xl font-black tracking-tight text-white">
               Hệ Thống Trực Trạm & Ghi Nhận Điểm Danh
