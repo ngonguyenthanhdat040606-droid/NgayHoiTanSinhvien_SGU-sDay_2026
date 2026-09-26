@@ -260,33 +260,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
 
             {/* 9 Stations Stamp Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-5">
-              {isDrugPreventionVIP && (
-                <div className="relative p-2.5 sm:p-3.5 rounded-2xl border-2 transition-all cursor-default text-left flex flex-col justify-between min-h-[130px] sm:min-h-[145px] group hover:shadow-lg bg-gradient-to-br from-rose-50 via-red-50 to-white border-red-400 shadow-sm ring-2 ring-red-400/30">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[9px] font-black font-mono px-1.5 py-0.5 rounded-md bg-red-600 text-white shadow-sm">
-                      ƯU TIÊN
-                    </span>
-                    <div className="flex items-center gap-1">
-                      <span className="text-[10px] bg-red-100 text-red-700 px-1 rounded-sm font-bold border border-red-300">VIP</span>
-                    </div>
-                  </div>
-                  
-                  <div className="my-1.5 flex items-center justify-center">
-                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl transition-transform group-hover:scale-110 shadow-md bg-gradient-to-tr from-red-500 to-rose-500 text-white ring-4 ring-red-200">
-                      🎟️
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h4 className="text-xs font-black text-slate-950 line-clamp-2">
-                      Tọa đàm "Phòng chống ma túy"
-                    </h4>
-                    <p className="text-[9px] text-red-700 mt-0.5 font-bold line-clamp-1 flex items-center gap-1">
-                      <Clock className="w-2.5 h-2.5" /> 10:00 - Lầu 7 E
-                    </p>
-                  </div>
-                </div>
-              )}
+
               {stations.filter(s => !s.id.startsWith('booth-')).map((station) => {
                 const isCompleted = student.completedStations.includes(station.id);
                 const checkinInfo = student.checkinHistory.find((c) => c.stationId === station.id);
@@ -307,11 +281,17 @@ export const StudentCard: React.FC<StudentCardProps> = ({
                         }`}>
                         TRẠM {station.stationNumber}
                       </span>
-                      {isCompleted && (
+                      {isCompleted ? (
                         <div className="flex items-center gap-1">
                           {station.id === 'station-9' && <span className="text-[10px] bg-yellow-100 text-yellow-700 px-1 rounded-sm font-bold border border-yellow-300">🏆</span>}
                           <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                         </div>
+                      ) : (
+                        station.id === 'station-12' && isDrugPreventionVIP && (
+                          <div className="flex items-center gap-1">
+                            <span className="text-[9px] bg-red-600 text-white px-1.5 py-0.5 rounded-md font-bold shadow-sm">ƯU TIÊN</span>
+                          </div>
+                        )
                       )}
                     </div>
 
