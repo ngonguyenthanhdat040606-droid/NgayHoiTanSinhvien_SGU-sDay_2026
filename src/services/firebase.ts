@@ -78,6 +78,7 @@ export const subscribeToStudents = (
             pinCode: data.pinCode || '',
             registeredAt: data.registeredAt || '',
             completedStations: Array.isArray(data.completedStations) ? data.completedStations : [],
+            completedBooths: Array.isArray(data.completedBooths) ? data.completedBooths : [],
             checkinHistory: Array.isArray(data.checkinHistory) ? data.checkinHistory : []
           });
         });
@@ -125,6 +126,7 @@ export const subscribeToSingleStudent = (
           pinCode: data.pinCode || '',
           registeredAt: data.registeredAt || '',
           completedStations: Array.isArray(data.completedStations) ? data.completedStations : [],
+          completedBooths: Array.isArray(data.completedBooths) ? data.completedBooths : [],
           checkinHistory: Array.isArray(data.checkinHistory) ? data.checkinHistory : []
         };
         onData(student);
@@ -167,6 +169,7 @@ export const getStudentByMssvFromFirestore = async (mssv: string): Promise<Stude
           pinCode: data.pinCode || '',
           registeredAt: data.registeredAt || '',
           completedStations: Array.isArray(data.completedStations) ? data.completedStations : [],
+          completedBooths: Array.isArray(data.completedBooths) ? data.completedBooths : [],
           checkinHistory: Array.isArray(data.checkinHistory) ? data.checkinHistory : []
         };
       }

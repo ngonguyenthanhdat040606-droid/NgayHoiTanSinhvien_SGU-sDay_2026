@@ -176,7 +176,7 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
-          {stations.map((st) => (
+          {stations.filter(s => !s.id.startsWith('booth-')).map((st) => (
             <div
               key={st.id}
               onClick={() => onSelectStation(st)}

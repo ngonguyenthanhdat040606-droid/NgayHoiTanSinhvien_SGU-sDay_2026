@@ -59,7 +59,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
       .catch((err) => console.error('Error generating QR code', err));
   }, [student]);
 
-  const totalStations = stations.length || 12;
+  const totalStations = stations.filter(s => !s.id.startsWith('booth-')).length || 12;
   const completedStationsCount = student.completedStations.length;
   const isFullComplete = completedStationsCount === totalStations;
   
@@ -287,7 +287,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
                   </div>
                 </div>
               )}
-              {stations.map((station) => {
+              {stations.filter(s => !s.id.startsWith('booth-')).map((station) => {
                 const isCompleted = student.completedStations.includes(station.id);
                 const checkinInfo = student.checkinHistory.find((c) => c.stationId === station.id);
 

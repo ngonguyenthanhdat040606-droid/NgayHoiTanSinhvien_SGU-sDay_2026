@@ -161,9 +161,9 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
             </div>
           </div>
 
-          {/* 8 CHECK-IN STATIONS PLACED ON CAMPUS GRID */}
+          {/* CHECK-IN STATIONS PLACED ON CAMPUS GRID */}
           <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 items-stretch">
-            {stations.map((st) => {
+            {stations.filter(s => !s.id.startsWith('booth-')).map((st) => {
               const isCheckedIn = student?.completedStations.includes(st.id);
               const isDimmed = selectedZone !== 'all' && st.zone !== selectedZone;
 

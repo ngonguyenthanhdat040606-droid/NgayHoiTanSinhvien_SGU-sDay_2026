@@ -1,8 +1,8 @@
 import { Student, Station, OrganizerSession } from '../types';
 import { INITIAL_STATIONS, INITIAL_STUDENTS } from '../data/mockData';
 
-const STUDENTS_KEY = 'tsv_students_v5';
-const STATIONS_KEY = 'tsv_stations_v9';
+const STUDENTS_KEY = 'tsv_students_v6';
+const STATIONS_KEY = 'tsv_stations_v10';
 const ACTIVE_STUDENT_ID_KEY = 'tsv_active_student_id_v5';
 const ORGANIZER_SESSION_KEY = 'tsv_organizer_session_v5';
 const ORGANIZER_PIN_KEY = 'tsv_organizer_pin_v5';
@@ -419,7 +419,10 @@ export function checkinStudentToStation(
   }
 
   const student = students[studentIndex];
-  const isAlreadyCheckedIn = student.completedStations.includes(stationId);
+  const isBooth = stationId.startsWith('booth-');
+  const isAlreadyCheckedIn = isBooth 
+    ? (student.completedBooths || []).includes(stationId)
+    : student.completedStations.includes(stationId);
 
   if (isAlreadyCheckedIn) {
     return {
@@ -433,11 +436,13 @@ export function checkinStudentToStation(
   const now = new Date();
   const timestamp = now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' ' + now.toLocaleDateString('vi-VN');
 
-  const newCompletedStations = [...student.completedStations, stationId];
+  const newCompletedStations = isBooth ? student.completedStations : [...student.completedStations, stationId];
+  const newCompletedBooths = isBooth ? [...(student.completedBooths || []), stationId] : (student.completedBooths || []);
 
-  const updatedStudent: Student = {
+  let updatedStudent: Student = {
     ...student,
     completedStations: newCompletedStations,
+    completedBooths: newCompletedBooths,
     checkinHistory: [
       {
         stationId,
@@ -450,12 +455,41 @@ export function checkinStudentToStation(
     ],
   };
 
+  // If they just completed the 6th booth, automatically complete Trạm 11 too
+  if (isBooth && newCompletedBooths.length === 6 && !newCompletedStations.includes('station-11')) {
+    const station11 = stations.find(s => s.id === 'station-11');
+    if (station11) {
+      updatedStudent = {
+        ...updatedStudent,
+        completedStations: [...newCompletedStations, 'station-11'],
+        checkinHistory: [
+          {
+            stationId: 'station-11',
+            stationName: station11.name,
+            timestamp,
+            method: 'manager_scan',
+            recordedBy: 'Hệ thống tự động',
+          },
+          ...updatedStudent.checkinHistory,
+        ],
+      };
+    }
+  }
+
   students[studentIndex] = updatedStudent;
   saveStudents(students);
 
+  let successMessage = `Điểm danh thành công! ${student.fullName} đã thu thập thêm con dấu "${station.shortName}". (${updatedStudent.completedStations.length}/12 trạm)`;
+  if (isBooth) {
+    successMessage = `Điểm danh thành công "${station.shortName}"! (Đã hoàn thành ${newCompletedBooths.length}/6 gian hàng của Trạm 11)`;
+    if (newCompletedBooths.length === 6) {
+      successMessage += ` 🎉 CHÚC MỪNG! Đã hoàn thành toàn bộ Trạm 11.`;
+    }
+  }
+
   return {
     success: true,
-    message: `Điểm danh thành công! ${student.fullName} đã thu thập thêm con dấu "${station.shortName}". (${newCompletedStations.length}/11 trạm)`,
+    message: successMessage,
     student: updatedStudent,
   };
 }

@@ -32,6 +32,7 @@ export interface Student {
   pinCode?: string; // Mã PIN 4 số bảo vệ thẻ e-Pass
   registeredAt: string;
   completedStations: string[]; // array of station IDs
+  completedBooths?: string[]; // array of booth IDs for Trạm 11
   checkinHistory: StationCheckin[];
 }
 

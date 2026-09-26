@@ -219,7 +219,7 @@ export const INITIAL_STATIONS: Station[] = [
     nfcTagId: '11:22:33:44',
     stampBadge: '🛍️',
     estimatedMinutes: 15,
-    requirements: 'Tham quan phiên chợ và check-in tại 1 gian hàng bất kỳ.',
+    requirements: 'Tham quan và điểm danh đầy đủ tại 6 gian hàng: Agribank, Vietcombank, Oppo, Viettel, Trung tâm tiếng Anh IM, Weset.',
   },
   {
     id: 'station-12',
@@ -240,6 +240,36 @@ export const INITIAL_STATIONS: Station[] = [
     stampBadge: '🚫',
     estimatedMinutes: 10,
     requirements: 'Tham dự tọa đàm và hoàn thành trắc nghiệm kiến thức phòng chống ma túy.',
+  },
+  {
+    id: 'booth-agribank', stationNumber: 11, name: 'Gian hàng Agribank (Trạm 11)', shortName: 'Agribank',
+    tagline: 'Phiên chợ sinh viên', description: 'Gian hàng tài trợ Agribank', location: 'Sân khu A', zone: 'A',
+    icon: 'Store', color: 'from-orange-500 to-red-500', managerName: 'BTC', managerPhone: '', nfcTagId: 'BOOTH:AGRIBANK', stampBadge: '🏦', estimatedMinutes: 5, requirements: ''
+  },
+  {
+    id: 'booth-vietcombank', stationNumber: 11, name: 'Gian hàng Vietcombank (Trạm 11)', shortName: 'Vietcombank',
+    tagline: 'Phiên chợ sinh viên', description: 'Gian hàng tài trợ Vietcombank', location: 'Sân khu A', zone: 'A',
+    icon: 'Store', color: 'from-emerald-500 to-green-600', managerName: 'BTC', managerPhone: '', nfcTagId: 'BOOTH:VIETCOMBANK', stampBadge: '🏦', estimatedMinutes: 5, requirements: ''
+  },
+  {
+    id: 'booth-oppo', stationNumber: 11, name: 'Gian hàng Oppo (Trạm 11)', shortName: 'Oppo',
+    tagline: 'Phiên chợ sinh viên', description: 'Gian hàng tài trợ Oppo', location: 'Sân khu A', zone: 'A',
+    icon: 'Store', color: 'from-green-400 to-emerald-500', managerName: 'BTC', managerPhone: '', nfcTagId: 'BOOTH:OPPO', stampBadge: '📱', estimatedMinutes: 5, requirements: ''
+  },
+  {
+    id: 'booth-viettel', stationNumber: 11, name: 'Gian hàng Viettel (Trạm 11)', shortName: 'Viettel',
+    tagline: 'Phiên chợ sinh viên', description: 'Gian hàng tài trợ Viettel', location: 'Sân khu A', zone: 'A',
+    icon: 'Store', color: 'from-red-500 to-rose-600', managerName: 'BTC', managerPhone: '', nfcTagId: 'BOOTH:VIETTEL', stampBadge: '📶', estimatedMinutes: 5, requirements: ''
+  },
+  {
+    id: 'booth-im', stationNumber: 11, name: 'Trung tâm tiếng Anh IM (Trạm 11)', shortName: 'Tiếng Anh IM',
+    tagline: 'Phiên chợ sinh viên', description: 'Gian hàng tiếng Anh IM', location: 'Sân khu A', zone: 'A',
+    icon: 'Store', color: 'from-blue-500 to-indigo-600', managerName: 'BTC', managerPhone: '', nfcTagId: 'BOOTH:IM', stampBadge: '🇬🇧', estimatedMinutes: 5, requirements: ''
+  },
+  {
+    id: 'booth-weset', stationNumber: 11, name: 'Gian hàng Weset (Trạm 11)', shortName: 'Weset',
+    tagline: 'Phiên chợ sinh viên', description: 'Gian hàng Weset', location: 'Sân khu A', zone: 'A',
+    icon: 'Store', color: 'from-cyan-500 to-blue-500', managerName: 'BTC', managerPhone: '', nfcTagId: 'BOOTH:WESET', stampBadge: '🌐', estimatedMinutes: 5, requirements: ''
   }
 ];
 
