@@ -365,7 +365,7 @@ export function verifyOrganizerCredentials(
   }
 
   // 2. Station Manager Keys (e.g., TRAM1, TRAM2, etc.)
-  const stationMatch = cleanInput.toUpperCase().match(/^TRAM([1-9]|10|11)(_2026)?$/);
+  const stationMatch = cleanInput.toUpperCase().match(/^TRAM([1-9]|10|11|12)(_2026)?$/);
   if (stationMatch) {
     const stationNum = parseInt(stationMatch[1], 10);
     const stationId = `station-${stationNum}`;
@@ -385,6 +385,29 @@ export function verifyOrganizerCredentials(
       session,
       message: `Đăng nhập quyền Trưởng Trạm ${stationNum} (${station?.shortName || ''}) thành công!`,
     };
+  }
+
+  // 3. Booth Manager Keys (e.g., BOOTH_AGRIBANK, BOOTH_VIETTEL, etc.)
+  const boothMatch = cleanInput.toUpperCase().match(/^BOOTH_([A-Z0-9]+)(_2026)?$/);
+  if (boothMatch) {
+    const boothName = boothMatch[1].toLowerCase();
+    const stationId = `booth-${boothName}`;
+    const stations = getStoredStations();
+    const station = stations.find((s) => s.id === stationId);
+    
+    if (!station) {
+      return { success: false, message: `Mã PIN gian hàng ${boothMatch[1]} không tồn tại trong hệ thống!` };
+    }
+
+    const session: OrganizerSession = {
+      authenticated: true,
+      role: 'station_manager',
+      stationId,
+      managerName: `Quản lý Gian hàng ${boothMatch[1]}`,
+      expiresAt: Date.now() + 24 * 60 * 60 * 1000,
+    };
+    setOrganizerSession(session, true);
+    return { success: true, session, message: `Đăng nhập quản lý Gian hàng ${boothMatch[1]} thành công!` };
   }
 
   return {

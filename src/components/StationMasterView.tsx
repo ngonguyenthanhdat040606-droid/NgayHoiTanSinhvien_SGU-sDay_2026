@@ -50,14 +50,19 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
   onOpenNfcGuide,
 }) => {
   const session = getOrganizerSession();
+  
+  const availableStations = session?.role === 'admin' 
+    ? stations 
+    : stations.filter(s => s.id === session?.stationId);
+
   const [selectedStationId, setSelectedStationId] = useState<string>(
-    session?.stationId || stations[0]?.id || 'station-1'
+    session?.stationId || availableStations[0]?.id || 'station-1'
   );
   const [inputMssv, setInputMssv] = useState<string>('');
   const [searchFilter, setSearchFilter] = useState<string>('');
   const [actionAlert, setActionAlert] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
-  const currentStation = stations.find((s) => s.id === selectedStationId) || stations[0];
+  const currentStation = stations.find((s) => s.id === selectedStationId) || availableStations[0] || stations[0];
 
   // Filter students who have checked in at THIS station
   const checkedInStudents = useMemo(() => {
@@ -179,7 +184,7 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
           Chọn Trạm bạn đang trực ca (Tương ứng 8 hoạt động có điểm danh):
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-          {stations.map((st) => {
+          {availableStations.map((st) => {
             const isSelected = st.id === currentStation.id;
             const count = students.filter((s) => s.completedStations.includes(st.id)).length;
 
