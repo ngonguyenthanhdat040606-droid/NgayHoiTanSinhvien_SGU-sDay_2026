@@ -60,7 +60,8 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
   const exportStudentList = () => {
     const headers = ['STT', 'MSSV', 'Họ và Tên', 'Khoa', 'Lớp', 'Email', 'SĐT', 'Thời Gian Đăng Ký', 'Số Trạm Hoàn Thành', 'Các Trạm Đã Tham Gia', 'Chi tiết Điểm Danh (Thời gian)'];
     const rows = students.map((s, index) => {
-      const completedNames = s.completedStations
+      const allCompletedIds = [...s.completedStations, ...(s.completedBooths || [])];
+      const completedNames = allCompletedIds
         .map((stationId) => stations.find((st) => st.id === stationId)?.name || stationId)
         .join(', ');
         
