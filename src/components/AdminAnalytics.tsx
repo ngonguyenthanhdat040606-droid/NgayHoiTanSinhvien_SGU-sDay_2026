@@ -31,11 +31,14 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
   const totalRegistered = students.length;
   const totalCompleted5Plus = students.filter((s) => s.completedStations.length >= 5).length;
   const totalCompletedAll = students.filter((s) => s.completedStations.length === totalStations).length;
-  const totalCheckinLogs = students.reduce((acc, s) => acc + s.completedStations.length, 0);
+  const totalCheckinLogs = students.reduce((acc, s) => acc + s.completedStations.length + (s.completedBooths?.length || 0), 0);
 
   // Station counts
-  const stationStats = stations.filter(s => !s.id.startsWith('booth-')).map((st) => {
-    const count = students.filter((s) => s.completedStations.includes(st.id)).length;
+  const stationStats = stations.map((st) => {
+    const isBooth = st.id.startsWith('booth-');
+    const count = students.filter((s) => 
+      isBooth ? (s.completedBooths || []).includes(st.id) : s.completedStations.includes(st.id)
+    ).length;
     const percentage = totalRegistered > 0 ? Math.round((count / totalRegistered) * 100) : 0;
     return {
       ...st,
