@@ -483,7 +483,10 @@ export const StudentCheckinModal: React.FC<StudentCheckinModalProps> = ({
 
                   <div className="space-y-2">
                     {stations.map((st) => {
-                      const isCompleted = student?.completedStations.includes(st.id);
+                      const isBooth = st.id.startsWith('booth-');
+                      const isCompleted = isBooth 
+                        ? (student?.completedBooths || []).includes(st.id)
+                        : student?.completedStations.includes(st.id);
                       return (
                         <div
                           key={st.id}

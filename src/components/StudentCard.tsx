@@ -287,11 +287,16 @@ export const StudentCard: React.FC<StudentCardProps> = ({
                           <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                         </div>
                       ) : (
-                        station.id === 'station-12' && isDrugPreventionVIP && (
-                          <div className="flex items-center gap-1">
+                        <div className="flex items-center gap-1">
+                          {station.id === 'station-11' && (student.completedBooths?.length || 0) > 0 && (
+                            <span className="text-[9px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded-md font-bold shadow-sm border border-blue-200">
+                              {student.completedBooths?.length || 0}/6 GIAN
+                            </span>
+                          )}
+                          {station.id === 'station-12' && isDrugPreventionVIP && (
                             <span className="text-[9px] bg-red-600 text-white px-1.5 py-0.5 rounded-md font-bold shadow-sm">ƯU TIÊN</span>
-                          </div>
-                        )
+                          )}
+                        </div>
                       )}
                     </div>
 
