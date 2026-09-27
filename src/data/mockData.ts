@@ -189,7 +189,7 @@ export const INITIAL_STATIONS: Station[] = [
     shortName: 'Check-in Ngày hội',
     tagline: 'Khu vực đón tiếp & check-in',
     description: 'Check-in, đăng tải và thực hiện các thử thách tương tác trên mạng xã hội.',
-    location: 'Sảnh Hội trường A',
+    location: 'Khu KLF',
     zone: 'A',
     icon: 'CheckCircle2',
     color: 'from-blue-500 to-cyan-600',
@@ -285,7 +285,7 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
   },
   {
     id: 'act-2', activityNumber: 2, time: '10:30', endTime: '16:00',
-    title: 'Khu vực “Check - in” Ngày hội', location: 'Sảnh Hội trường A',
+    title: 'Khu vực “Check - in” Ngày hội', location: 'Khu KLF',
     category: 'station_activity', description: 'Check-in, đăng tải và thực hiện các thử thách tương tác trên mạng xã hội.',
     inCharge: 'Đ/c Nguyễn Mai Thảo', assignedUnit: 'LCH SV khoa Giáo dục Chính trị',
     isHighlight: true, isCheckinStation: true, stationId: 'station-10'
