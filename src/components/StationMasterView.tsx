@@ -66,7 +66,12 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
 
   // Filter students who have checked in at THIS station
   const checkedInStudents = useMemo(() => {
-    return students.filter((stu) => stu.completedStations.includes(currentStation.id));
+    return students.filter((stu) => {
+      if (currentStation.id.startsWith('booth-')) {
+        return (stu.completedBooths || []).includes(currentStation.id);
+      }
+      return stu.completedStations.includes(currentStation.id);
+    });
   }, [students, currentStation.id]);
 
   // Filtered checkin list by search
@@ -186,7 +191,10 @@ export const StationMasterView: React.FC<StationMasterViewProps> = ({
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
           {availableStations.map((st) => {
             const isSelected = st.id === currentStation.id;
-            const count = students.filter((s) => s.completedStations.includes(st.id)).length;
+            const isBooth = st.id.startsWith('booth-');
+            const count = students.filter((s) => 
+              isBooth ? (s.completedBooths || []).includes(st.id) : s.completedStations.includes(st.id)
+            ).length;
 
             return (
               <button
