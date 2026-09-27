@@ -157,7 +157,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
             </div>
             <div>
               <h3 className="font-display font-black text-base sm:text-lg leading-tight text-white drop-shadow-xs">
-                Cổng Tân Sinh Viên SGU’s Day 2025
+                Cổng Tân Sinh Viên SGU’s Day 2026
               </h3>
               <p className="text-xs text-orange-100 mt-0.5 font-semibold">
                 Đăng ký & Quản lý Thẻ e-Pass cá nhân
