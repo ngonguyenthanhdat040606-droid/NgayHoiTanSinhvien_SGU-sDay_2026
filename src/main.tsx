@@ -9,7 +9,7 @@ if (isLocked) {
   createRoot(document.getElementById('root')!).render(
     <div style={{ padding: '50px', textAlign: 'center', fontFamily: 'sans-serif' }}>
       <h1>Hệ thống đã đóng</h1>
-      <p>Sự kiện đã kết thúc. Website tạm thời khóa để bảo trì dữ liệu.</p>
+      <p>Sự kiện đã kết thúc. Website tạm thời khóa để bảo trì.</p>
     </div>
   );
 } else {
