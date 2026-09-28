@@ -348,12 +348,7 @@ export function verifyOrganizerCredentials(
   const currentPin = getOrganizerPin();
 
   // 1. Admin Master Passwords
-  if (
-    cleanInput === currentPin ||
-    cleanInput === 'SGU2026' ||
-    cleanInput === 'ADMIN_SGU_2026' ||
-    cleanInput === 'BTC@SGU2026'
-  ) {
+  if (cleanInput === currentPin) {
     const session: OrganizerSession = {
       authenticated: true,
       role: 'admin',
