@@ -18,7 +18,7 @@ const auth = getAuth(app);
 
 async function applyManualCheckins() {
   try {
-    const rawData = fs.readFileSync('manual_checkins.json', 'utf8');
+    const rawData = fs.readFileSync('manual_checkins_batch4.json', 'utf8');
     const manualData = JSON.parse(rawData); // { 'booth-vietcombank': [...], 'station-3': [...], 'station-7': [...] }
     
     // Create mapping: MSSV -> { stations: Set, booths: Set }

@@ -61,12 +61,34 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
   );
 
   const exportStudentList = () => {
-    const headers = ['STT', 'MSSV', 'Họ và Tên', 'Khoa', 'Lớp', 'Email', 'SĐT', 'Thời Gian Đăng Ký', 'Số Trạm Hoàn Thành', 'Các Trạm Đã Tham Gia', 'Chi tiết Điểm Danh (Thời gian)'];
+    const headers = [
+      'STT', 
+      'MSSV', 
+      'Họ và Tên', 
+      'Khoa', 
+      'Lớp', 
+      'Email', 
+      'SĐT', 
+      'Thời Gian Đăng Ký', 
+      'Tiến độ 12 Trạm Chính', 
+      'Tổng Số Gian Hàng (Doanh nghiệp)',
+      'Tổng Toàn Bộ Hoạt Động (Trạm + Gian Hàng)', 
+      'Các Trạm Chính Đã Tham Gia', 
+      'Các Gian Hàng Doanh Nghiệp Đã Tham Gia',
+      'Chi tiết Điểm Danh (Thời gian)'
+    ];
+
     const rows = students.map((s, index) => {
-      const allCompletedIds = [...s.completedStations, ...(s.completedBooths || [])];
-      const completedNames = allCompletedIds
+      const booths = s.completedBooths || [];
+      const allCompletedIds = [...s.completedStations, ...booths];
+      
+      const stationNames = s.completedStations
         .map((stationId) => stations.find((st) => st.id === stationId)?.name || stationId)
-        .join(', ');
+        .join('; ');
+
+      const boothNames = booths
+        .map((boothId) => stations.find((st) => st.id === boothId)?.name || boothId)
+        .join('; ');
         
       const checkinDetails = s.checkinHistory && s.checkinHistory.length > 0 
         ? s.checkinHistory.map(c => `${c.stationName} (${c.timestamp})`).join(' | ')
@@ -82,7 +104,10 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
         s.phone,
         `"${s.registeredAt || ''}"`,
         `${s.completedStations.length}/${totalStations}`,
-        `"${completedNames}"`,
+        `${booths.length}/6`,
+        `${allCompletedIds.length}`,
+        `"${stationNames}"`,
+        `"${boothNames}"`,
         `"${checkinDetails}"`
       ];
     });
