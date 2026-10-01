@@ -78,6 +78,13 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
       'Chi tiết Điểm Danh (Thời gian)'
     ];
 
+    const escapeCSV = (str: string | number) => {
+      if (str === null || str === undefined) return '""';
+      const s = String(str);
+      // If it contains a comma, quote, or newline, it must be quoted and internal quotes doubled.
+      return `"${s.replace(/"/g, '""')}"`;
+    };
+
     const rows = students.map((s, index) => {
       const booths = s.completedBooths || [];
       const allCompletedIds = [...s.completedStations, ...booths];
@@ -96,19 +103,19 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
 
       return [
         index + 1,
-        s.mssv,
-        `"${s.fullName}"`,
-        `"${s.faculty}"`,
-        s.studentClass,
-        s.email,
-        s.phone,
-        `"${s.registeredAt || ''}"`,
-        `${s.completedStations.length}/${totalStations}`,
-        `${booths.length}/6`,
-        `${allCompletedIds.length}`,
-        `"${stationNames}"`,
-        `"${boothNames}"`,
-        `"${checkinDetails}"`
+        escapeCSV(s.mssv),
+        escapeCSV(s.fullName),
+        escapeCSV(s.faculty),
+        escapeCSV(s.studentClass),
+        escapeCSV(s.email),
+        escapeCSV(s.phone),
+        escapeCSV(s.registeredAt || ''),
+        escapeCSV(`${s.completedStations.length}/${totalStations}`),
+        escapeCSV(`${booths.length}/6`),
+        escapeCSV(allCompletedIds.length),
+        escapeCSV(stationNames),
+        escapeCSV(boothNames),
+        escapeCSV(checkinDetails)
       ];
     });
 
